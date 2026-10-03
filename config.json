@@ -1,0 +1,36 @@
+{
+  "filtros": {
+    "termos_busca": [
+      "estagio",
+      "estágio",
+      "junior",
+      "júnior",
+      "trainee",
+      "backend",
+      "golang",
+      "sql",
+      "java",
+      "node",
+      "fullstack",
+      "react",
+      "Flutter"
+    ],
+    "termos_exclusao": [
+      "senior",
+      "sênior",
+      "sr.",
+      "sr ",
+      "pleno",
+      "tech lead",
+      "especialista",
+      "coordenador"
+    ]
+  },
+  "fontes_habilitadas": [
+    "backend_br",
+    "frontend_br",
+    "remoteok"
+  ],
+  "max_vagas_por_execucao": 25,
+  "salvar_preview_html": true
+}

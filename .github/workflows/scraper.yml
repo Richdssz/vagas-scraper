@@ -1,0 +1,56 @@
+name: Vagas Scraper Automático
+
+on:
+  schedule:
+    # =========================================================================
+    # FREQUÊNCIA DE EXECUÇÃO (CRON EM UTC)
+    # Obs: Horário de Brasília (BRT) = UTC - 3h
+    #
+    # Exemplos de frequências:
+    # - 1x ao dia (09:00 BRT):        '0 12 * * *'
+    # - 2x ao dia (09:00 e 18:00):     '0 12,21 * * *'
+    # - 3x ao dia (09:00, 14:00, 19:00): '0 12,17,22 * * *'  <-- ATUAL
+    # - A cada 4 horas:               '0 */4 * * *'
+    # =========================================================================
+    - cron: '0 12,17,22 * * *'
+
+  # Permite disparar manualmente a qualquer momento pelo botão "Run workflow" no GitHub
+  workflow_dispatch:
+
+# Permissão necessária para o bot salvar as alterações do arquivo vagas_vistas.json
+permissions:
+  contents: write
+
+jobs:
+  executar-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Clonar repositório
+        uses: actions/checkout@v4
+
+      - name: ⚡ Configurar Ambiente Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache: true
+
+      - name: 📦 Baixar dependências
+        run: go mod download
+
+      - name: 🚀 Executar Scraper e Notificar
+        env:
+          EMAIL_REMETENTE: ${{ secrets.EMAIL_REMETENTE }}
+          EMAIL_SENHA_APP: ${{ secrets.EMAIL_SENHA_APP }}
+          EMAIL_DESTINATARIO: ${{ secrets.EMAIL_DESTINATARIO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST || 'smtp.gmail.com' }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT || '587' }}
+          DRY_RUN: 'false'
+        run: go run main.go
+
+      - name: 💾 Salvar histórico atualizado no Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add vagas_vistas.json
+          git diff --staged --quiet || (git commit -m "chore: atualizar histórico de vagas enviadas [skip ci]" && git push)

@@ -1,0 +1,21 @@
+# Binários compilados
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+scraper
+scraper_linux
+
+# Arquivos de ambiente e credenciais
+.env
+*.env.local
+
+# Arquivos temporários de teste
+preview_email.html
+
+# IDEs e editores
+.idea/
+.vscode/
+*.swp
+*.swo
