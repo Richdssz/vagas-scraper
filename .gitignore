@@ -6,6 +6,8 @@
 *.dylib
 scraper
 scraper_linux
+scraper-android
+painel
 
 # Arquivos de ambiente e credenciais
 .env
