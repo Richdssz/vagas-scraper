@@ -1,70 +1,70 @@
-# ⚡ Vagas Scraper (Go) • Painel Web & Automação Híbrida
+# ⚡ Vagas Scraper (Go) • Binários Separados & Painel Web
 
-> Rastreador de vagas multicanal ultraleve com **Painel Visual Web Local (Porta 8080)**, **Deduplicação Cruzada Inteligente** (unifica a mesma vaga encontrada em portais diferentes) e suporte a execução automática no **Agendador de Tarefas do Windows** ou no **GitHub Actions**.
-
----
-
-## 🎯 Destaques do Projeto
-
-- **Painel Visual no Navegador:** Basta rodar `go run main.go` ou clicar duas vezes no `scraper.exe` para abrir a interface gráfica em `http://localhost:8080`.
-- **Deduplicação Cruzada Inteligente:** Se a mesma vaga for anunciada no **LinkedIn**, na **Gupy** e no **GitHub**, o robô gera **um único card** com botões para todos os portais onde ela foi encontrada!
-- **9 Portais de Vagas Concorrentes:**
-  1. 💼 **LinkedIn** (API Pública de Visitantes - sem necessidade de login)
-  2. 🏢 **Gupy** (Portal Oficial de RH)
-  3. 🐙 **Backend-BR** (Mural do GitHub)
-  4. 💻 **Frontend-BR** (Mural do GitHub)
-  5. ⚛️ **React-Brasil** (Mural do GitHub)
-  6. 🧪 **QA-Brasil** (Mural do GitHub)
-  7. 🚀 **ProgramaThor** (Startups e Tech BR)
-  8. 🌐 **RemoteOK** (Vagas Remotas Globais)
-  9. ☕ **WeWorkRemotely** (Feed RSS de Programação)
-- **Ultraleve:** O executável completo (`scraper.exe`) tem apenas ~11 MB e roda em menos de 1.5 segundo.
-- **Dois Modos de Automação:**
-  - **Agendador do Windows (Local):** Registre com 1 clique no painel para rodar 3x ao dia (09h, 14h, 19h) silenciosamente em segundo plano.
-  - **GitHub Actions (Nuvem):** Agendado no `.github/workflows/scraper.yml` para rodar na nuvem do GitHub sem precisar do computador ligado.
+> Rastreador de vagas multicanal ultraleve dividido em **dois executáveis dedicados**: um para configuração visual (`painel.exe`) e outro para execução autônoma em segundo plano (`scraper.exe`).
 
 ---
 
-## 🚀 Como Iniciar o Painel Visual
+## 📦 Os Dois Executáveis Separados
 
-No terminal dentro da pasta `vagas-scraper`:
+| Executável | Função Principal | Como roda? |
+| :--- | :--- | :--- |
+| 🎛️ **`painel.exe`** | **Painel de Controle Visual:** Abre o navegador em `http://localhost:8080` para você adicionar/remover termos, ligar/desligar portais, testar e configurar o agendador. | Dois cliques quando você quiser alterar configurações ou ver vagas na tela. |
+| ⚡ **`scraper.exe`** | **Motor de Varredura Silencioso:** Varre 9 portais, deduplica, dispara o e-mail e desliga imediatamente em menos de 1.5s. | Chamado 3x ao dia pelo **Agendador do Windows**, **Termux** ou **GitHub Actions**. |
+
+---
+
+## 🎯 9 Portais de Vagas Concorrentes
+
+1. 💼 **LinkedIn** (API Pública de Visitantes - sem login)
+2. 🏢 **Gupy** (Portal Oficial de RH)
+3. 🐙 **Backend-BR** (Mural do GitHub)
+4. 💻 **Frontend-BR** (Mural do GitHub)
+5. ⚛️ **React-Brasil** (Mural do GitHub)
+6. 🧪 **QA-Brasil** (Mural do GitHub)
+7. 🚀 **ProgramaThor** (Startups e Tech BR)
+8. 🌐 **RemoteOK** (Vagas Remotas Globais)
+9. ☕ **WeWorkRemotely** (Feed RSS de Programação)
+
+---
+
+## 🚀 Como Usar
+
+### 1. Para Abrir o Painel de Configurações
+Dê 2 cliques em **`painel.exe`** (ou execute no terminal):
+```powershell
+.\painel.exe
+```
+O navegador abrirá automaticamente em **`http://localhost:8080`**.
+
+### 2. Para Executar a Varredura Manualmente em Segundo Plano
+Dê 2 cliques em **`scraper.exe`** (ou execute no terminal):
+```powershell
+.\scraper.exe
+```
+*(Ou teste em modo simulação com `.\scraper.exe --dry-run`).*
+
+---
+
+## 🔨 Como Recompilar Ambos (Se Alterar Código)
 
 ```powershell
-go run main.go
+# Compila o painel visual
+go build -ldflags="-s -w" -o painel.exe ./cmd/painel
+
+# Compila o motor silencioso
+go build -ldflags="-s -w" -o scraper.exe ./cmd/scraper
+
+# Compila para o Galaxy S10+ (Termux / Linux ARM64)
+$env:GOOS="linux"; $env:GOARCH="arm64"; go build -ldflags="-s -w" -o scraper-android ./cmd/scraper
 ```
-*(Ou dê 2 cliques no `scraper.exe`).*
-
-O navegador abrirá automaticamente em:
-👉 **`http://localhost:8080`**
-
-Na interface você pode:
-1. **Adicionar/remover termos desejados** (ex: `golang`, `estágio`, `junior`, `react`).
-2. **Adicionar/remover termos proibidos** (ex: `senior`, `pleno`, `lead`).
-3. **Marcar quais portais de vagas consultar**.
-4. **Configurar seu e-mail do Gmail** para alertas.
-5. **Clicar em "Buscar Vagas Agora"** para ver os resultados ao vivo na tela com os links diretos de cada plataforma.
-6. **Clicar em "Registrar no Agendador do Windows"** para ativar o ciclo diário automático.
 
 ---
 
-## 🛠️ Comandos Rápidos
+## ⏰ Automação (3x ao Dia)
 
-| Comando | O que faz |
-| :--- | :--- |
-| `go run main.go` | Inicia o servidor web na porta 8080 e abre o painel no navegador. |
-| `go run main.go --port 3000` | Inicia o servidor web em uma porta personalizada. |
-| `go run main.go --scrape` | Executa a varredura silenciosa e encerra imediatamente (modo usado pelo agendador). |
-| `go run main.go --scrape --dry-run` | Varre as vagas sem disparar e-mails reais e gera `preview_email.html`. |
-| `go run main.go --limpar-historico` | Reseta a lista de vagas já vistas em `vagas_vistas.json`. |
-
----
-
-## ☁️ Ativação no GitHub Actions
-
-Se preferir rodar 100% na nuvem sem deixar a máquina ligada:
-1. Suba este repositório para o seu GitHub quando quiser.
-2. Em **Settings -> Secrets and variables -> Actions**, adicione:
-   - `EMAIL_REMETENTE`
-   - `EMAIL_SENHA_APP`
-   - `EMAIL_DESTINATARIO`
-3. O workflow [`.github/workflows/scraper.yml`](.github/workflows/scraper.yml) já está pronto e programado para rodar às 09:00, 14:00 e 19:00 (BRT).
+- **No Windows:** Abra o `painel.exe` e clique no botão verde **"⚡ Registrar no Agendador do Windows (1 Clique)"**. Ele registrará o `scraper.exe` para rodar às 09:00, 14:00 e 19:00.
+- **No S10+ (Termux):** Configure no `crontab -e`:
+  ```cron
+  0 9,14,19 * * * /data/data/com.termux/files/home/scraper-android
+  ```
+- **No GitHub Actions:** O workflow [`.github/workflows/scraper.yml`](.github/workflows/scraper.yml) já está pronto para rodar o `./cmd/scraper`.

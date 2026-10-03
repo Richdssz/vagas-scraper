@@ -46,7 +46,7 @@ jobs:
           SMTP_HOST: ${{ secrets.SMTP_HOST || 'smtp.gmail.com' }}
           SMTP_PORT: ${{ secrets.SMTP_PORT || '587' }}
           DRY_RUN: 'false'
-        run: go run main.go
+        run: go run ./cmd/scraper
 
       - name: 💾 Salvar histórico atualizado no Git
         run: |
