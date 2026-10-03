@@ -1,0 +1,143 @@
+package scrapers
+
+import (
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"net/http"
+	"net/url"
+	"regexp"
+	"strings"
+	"time"
+	"vagas-scraper/internal/models"
+
+	"github.com/PuerkitoBio/goquery"
+)
+
+// GupyScraper extrai oportunidades do portal público da Gupy
+type GupyScraper struct {
+	termoBusca string
+}
+
+func NovoGupyScraper(termoBusca string) *GupyScraper {
+	if termoBusca == "" {
+		termoBusca = "desenvolvedor"
+	}
+	return &GupyScraper{termoBusca: termoBusca}
+}
+
+func (g *GupyScraper) Nome() string {
+	return "Gupy"
+}
+
+func (g *GupyScraper) Buscar() ([]models.Vaga, error) {
+	termo := url.QueryEscape(g.termoBusca)
+	urlBusca := fmt.Sprintf("https://portal.gupy.io/job-search/term=%s", termo)
+
+	req, err := http.NewRequest("GET", urlBusca, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+	req.Header.Set("Accept-Language", "pt-BR,pt;q=0.9")
+
+	client := &http.Client{Timeout: 12 * time.Second}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("[Gupy] falha na requisição: %w", err)
+	}
+	defer resp.Body.Close()
+
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("[Gupy] falha ao processar HTML: %w", err)
+	}
+
+	var vagas []models.Vaga
+
+	// Método 1: Tenta ler o JSON estruturado do Next.js (__NEXT_DATA__)
+	nextDataScript := doc.Find("#__NEXT_DATA__").Text()
+	if nextDataScript != "" {
+		vagas = extrairVagasNextData(nextDataScript)
+	}
+
+	// Método 2: Se não vier pelo JSON do Next.js, faz varredura por links e cards no HTML
+	if len(vagas) == 0 {
+		doc.Find("a[href*='gupy.io/job/'], div[data-testid='job-card-wrapper']").Each(func(i int, s *goquery.Selection) {
+			link, _ := s.Attr("href")
+			if link == "" {
+				link, _ = s.Find("a").Attr("href")
+			}
+			if link == "" {
+				return
+			}
+
+			titulo := strings.TrimSpace(s.Find("h3, h2, [class*='title']").First().Text())
+			if titulo == "" {
+				titulo = strings.TrimSpace(s.Text())
+			}
+			if len(titulo) > 80 {
+				titulo = titulo[:80] + "..."
+			}
+
+			empresa := strings.TrimSpace(s.Find("[class*='company'], [class*='careerPage']").First().Text())
+			if empresa == "" {
+				empresa = "Empresa via Gupy"
+			}
+
+			id := fmt.Sprintf("gupy-%x", sha256.Sum256([]byte(link)))[:16]
+
+			vagas = append(vagas, models.Vaga{
+				ID:          id,
+				Titulo:      titulo,
+				Empresa:     empresa,
+				Localizacao: "Brasil / Gupy",
+				Link:        link,
+				Fonte:       "Gupy",
+				Data:        time.Now(),
+			})
+		})
+	}
+
+	return vagas, nil
+}
+
+func extrairVagasNextData(rawJSON string) []models.Vaga {
+	var root map[string]any
+	if err := json.Unmarshal([]byte(rawJSON), &root); err != nil {
+		return nil
+	}
+
+	// Localiza array de vagas dentro de pageProps
+	var vagas []models.Vaga
+	dataBytes, _ := json.Marshal(root)
+	dataStr := string(dataBytes)
+
+	// Regex para capturar objetos com "careerPageName", "name" e links de vagas
+	re := regexp.MustCompile(`"id":\s*(\d+)[^}]*?"name":\s*"([^"]+)"[^}]*?"careerPageName":\s*"([^"]+)"`)
+	matches := re.FindAllStringSubmatch(dataStr, 25)
+
+	for _, m := range matches {
+		if len(m) >= 4 {
+			jobID := m[1]
+			nome := m[2]
+			empresa := m[3]
+
+			// Link direto de candidatura na Gupy
+			link := fmt.Sprintf("https://portal.gupy.io/jobs/%s", jobID)
+			id := fmt.Sprintf("gupy-%s", jobID)
+
+			vagas = append(vagas, models.Vaga{
+				ID:          id,
+				Titulo:      nome,
+				Empresa:     empresa,
+				Localizacao: "Brasil / Remoto",
+				Link:        link,
+				Fonte:       "Gupy",
+				Data:        time.Now(),
+			})
+		}
+	}
+
+	return vagas
+}

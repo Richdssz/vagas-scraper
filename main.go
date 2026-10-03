@@ -8,29 +8,43 @@ import (
 	"sync"
 	"time"
 	"vagas-scraper/internal/config"
+	"vagas-scraper/internal/dedup"
 	"vagas-scraper/internal/models"
 	"vagas-scraper/internal/notifier"
 	"vagas-scraper/internal/scrapers"
 	"vagas-scraper/internal/storage"
+	"vagas-scraper/internal/web"
 )
 
-const versao = "1.0.0"
+const versao = "1.2.0"
 
 func main() {
+	modoScrape := flag.Bool("scrape", false, "Executa uma varredura silenciosa e encerra (usado no agendador/cron)")
+	portaWeb := flag.String("port", "8080", "Porta para o painel web local")
 	caminhoConfig := flag.String("config", "config.json", "Caminho do arquivo de configuração JSON")
-	dryRunFlag := flag.Bool("dry-run", false, "Executa sem disparar e-mails reais (gera preview HTML)")
-	limparHistorico := flag.Bool("limpar-historico", false, "Limpa o arquivo de histórico de vagas vistas")
+	dryRunFlag := flag.Bool("dry-run", false, "Executa em modo simulação sem disparar e-mails reais")
+	limparHistorico := flag.Bool("limpar-historico", false, "Limpa o histórico de vagas vistas")
 	exibirVersao := flag.Bool("version", false, "Exibe a versão do programa")
 	flag.Parse()
 
 	if *exibirVersao {
-		fmt.Printf("Vagas Scraper v%s (compilado em Go puro)\n", versao)
+		fmt.Printf("Vagas Scraper v%s • Ultraleve em Go Puro\n", versao)
 		return
 	}
 
-	log.Printf("🚀 Iniciando Vagas Scraper v%s...", versao)
+	// SE NÃO FOR MODO SCRAPE HEADLESS: Inicia o Servidor Web e abre no navegador!
+	if !*modoScrape {
+		log.Printf("🚀 Iniciando Painel Visual do Vagas Scraper v%s...", versao)
+		servidor := web.NovoServidorWeb(*portaWeb, *caminhoConfig)
+		if err := servidor.Iniciar(); err != nil {
+			log.Fatalf("❌ Erro ao iniciar servidor web: %v", err)
+		}
+		return
+	}
 
-	// 1. Carrega configurações
+	// MODO SCRAPE HEADLESS (Executado pelo Agendador do Windows ou GitHub Actions)
+	log.Printf("⚡ Executando ciclo agendado do Vagas Scraper v%s...", versao)
+
 	cfg, err := config.Carregar(*caminhoConfig)
 	if err != nil {
 		log.Fatalf("❌ Erro de configuração: %v", err)
@@ -40,40 +54,53 @@ func main() {
 		cfg.DryRun = true
 	}
 
-	// 2. Gerenciador de histórico (Deduplicação)
 	caminhoHistorico := "vagas_vistas.json"
 	if *limparHistorico {
 		_ = os.Remove(caminhoHistorico)
-		log.Println("🧹 Histórico de vagas limpo com sucesso.")
+		log.Println("🧹 Histórico de vagas limpo.")
 	}
 
 	repoStorage, err := storage.NovoStorage(caminhoHistorico)
 	if err != nil {
-		log.Fatalf("❌ Erro ao inicializar armazenamento: %v", err)
+		log.Fatalf("❌ Erro ao abrir histórico: %v", err)
 	}
-	log.Printf("📦 Histórico atual: %d vagas já registradas.", repoStorage.TotalVistas())
 
-	// 3. Monta lista de rastreadores ativos
+	// 1. Instancia fontes habilitadas
+	termoPrincipal := "desenvolvedor"
+	if len(cfg.Filtros.TermosBusca) > 0 {
+		termoPrincipal = cfg.Filtros.TermosBusca[0]
+	}
+
 	var listaScrapers []scrapers.Scraper
 	for _, fonte := range cfg.FontesHabilitadas {
 		switch fonte {
+		case "linkedin":
+			listaScrapers = append(listaScrapers, scrapers.NovoLinkedInScraper(termoPrincipal))
+		case "gupy":
+			listaScrapers = append(listaScrapers, scrapers.NovoGupyScraper(termoPrincipal))
 		case "backend_br":
 			listaScrapers = append(listaScrapers, scrapers.NovoGitHubScraper("backend-br/vagas", "Backend-BR"))
 		case "frontend_br":
 			listaScrapers = append(listaScrapers, scrapers.NovoGitHubScraper("frontendbr/vagas", "Frontend-BR"))
+		case "react_brasil":
+			listaScrapers = append(listaScrapers, scrapers.NovoGitHubScraper("react-brasil/vagas", "React-Brasil"))
+		case "qa_brasil":
+			listaScrapers = append(listaScrapers, scrapers.NovoGitHubScraper("qa-brasil/vagas", "QA-Brasil"))
+		case "programathor":
+			listaScrapers = append(listaScrapers, scrapers.NovoProgramaThorScraper())
 		case "remoteok":
 			listaScrapers = append(listaScrapers, scrapers.NovoRemoteOKScraper())
-		default:
-			log.Printf("⚠️ Fonte desconhecida ignorada: %s", fonte)
+		case "weworkremotely":
+			listaScrapers = append(listaScrapers, scrapers.NovoWeWorkRemotelyScraper())
 		}
 	}
 
 	if len(listaScrapers) == 0 {
-		log.Fatal("❌ Nenhuma fonte de vagas habilitada no config.json.")
+		log.Fatal("❌ Nenhuma fonte habilitada no config.json.")
 	}
 
-	// 4. Executa os scrapers em paralelo (Goroutines)
-	log.Printf("🔍 Consultando %d fontes de vagas em paralelo...", len(listaScrapers))
+	// 2. Consulta em paralelo
+	log.Printf("🔍 Consultando %d fontes em paralelo...", len(listaScrapers))
 	inicio := time.Now()
 
 	var wg sync.WaitGroup
@@ -86,11 +113,10 @@ func main() {
 			defer wg.Done()
 			resultado, err := scraper.Buscar()
 			if err != nil {
-				log.Printf("⚠️ Erro na fonte [%s]: %v", scraper.Nome(), err)
+				log.Printf("⚠️ [%s]: %v", scraper.Nome(), err)
 				return
 			}
 			log.Printf("✔️ [%s] retornou %d oportunidades.", scraper.Nome(), len(resultado))
-
 			mu.Lock()
 			todasVagas = append(todasVagas, resultado...)
 			mu.Unlock()
@@ -99,56 +125,45 @@ func main() {
 
 	wg.Wait()
 	duracao := time.Since(inicio)
-	log.Printf("⚡ Varredura concluída em %v. Total bruto coletado: %d vagas.", duracao.Round(time.Millisecond), len(todasVagas))
+	log.Printf("⚡ Varredura concluída em %v. Total bruto: %d vagas.", duracao.Round(time.Millisecond), len(todasVagas))
 
-	// 5. Filtra vagas de interesse e remove duplicatas
+	// 3. Deduplicação Cruzada Multi-Plataforma
+	vagasMescladas := dedup.MesclarVagasCruzadas(todasVagas)
+	log.Printf("🧬 Após unificação de vagas presentes em múltiplos portais: %d vagas únicas.", len(vagasMescladas))
+
+	// 4. Filtra vagas
 	novasVagas := make([]models.Vaga, 0)
 	idsParaRegistrar := make(map[string]string)
-	idsNestaRodada := make(map[string]bool)
 
-	for _, vaga := range todasVagas {
-		// Evita duplicatas da mesma rodada
-		if idsNestaRodada[vaga.ID] {
+	for _, vaga := range vagasMescladas {
+		if repoStorage.JaVista(vaga.ID) || repoStorage.JaVista(vaga.ChaveCanonica) {
 			continue
 		}
 
-		// Verifica se já vimos em execuções anteriores
-		if repoStorage.JaVista(vaga.ID) {
-			continue
-		}
-
-		// Aplica filtros de termos desejados e exclusões
 		if scrapers.FiltroAceitaVaga(vaga, cfg.Filtros.TermosBusca, cfg.Filtros.TermosExclusao) {
-			idsNestaRodada[vaga.ID] = true
 			novasVagas = append(novasVagas, vaga)
 			idsParaRegistrar[vaga.ID] = vaga.Titulo
+			idsParaRegistrar[vaga.ChaveCanonica] = vaga.Titulo
 
 			if len(novasVagas) >= cfg.MaxVagasPorExecucao {
-				log.Printf("🛑 Limite máximo de %d vagas por execução atingido.", cfg.MaxVagasPorExecucao)
 				break
 			}
 		}
 	}
 
-	// 6. Notificação e atualização do histórico
 	if len(novasVagas) == 0 {
-		log.Println("✨ Nenhuma nova vaga correspondente encontrada nesta execução.")
+		log.Println("✨ Nenhuma nova vaga não vista encontrada nesta rodada.")
 		return
 	}
 
-	log.Printf("🎯 %d novas vagas selecionadas após filtros e deduplicação!", len(novasVagas))
+	log.Printf("🎯 %d novas vagas selecionadas e prontas para notificação!", len(novasVagas))
 
 	notif := notifier.NovoNotificador(cfg)
 	if err := notif.Enviar(novasVagas); err != nil {
 		log.Fatalf("❌ Erro ao enviar notificação: %v", err)
 	}
 
-	// Salva as novas vagas no histórico para não repetir
-	if err := repoStorage.Adicionar(idsParaRegistrar); err != nil {
-		log.Printf("⚠️ Falha ao atualizar histórico de vagas vistas: %v", err)
-	} else {
-		log.Printf("💾 Histórico atualizado com %d novas entradas.", len(idsParaRegistrar))
-	}
-
-	log.Println("🏁 Execução concluída com sucesso.")
+	_ = repoStorage.Adicionar(idsParaRegistrar)
+	log.Printf("💾 Histórico atualizado com novas entradas.")
+	log.Println("🏁 Execução concluída.")
 }

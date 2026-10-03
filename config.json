@@ -8,12 +8,11 @@
       "trainee",
       "backend",
       "golang",
-      "sql",
+      "go",
       "java",
       "node",
       "fullstack",
-      "react",
-      "Flutter"
+      "react"
     ],
     "termos_exclusao": [
       "senior",
@@ -27,10 +26,14 @@
     ]
   },
   "fontes_habilitadas": [
+    "linkedin",
+    "gupy",
     "backend_br",
     "frontend_br",
-    "remoteok"
+    "programathor",
+    "remoteok",
+    "weworkremotely"
   ],
-  "max_vagas_por_execucao": 25,
+  "max_vagas_por_execucao": 30,
   "salvar_preview_html": true
 }

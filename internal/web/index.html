@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vagas Scraper • Painel de Controle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-border: #1f293d;
+      --surface-hover: #172033;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #6366f1;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(9, 13, 22, 0.8) 100%);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      font-size: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .brand h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+    }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+    .btn-success {
+      background: #059669;
+      color: white;
+      padding: 10px 20px;
+    }
+    .btn-success:hover { background: #10b981; }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 10px 16px;
+    }
+    .btn-outline:hover { background: var(--surface-hover); border-color: #334155; }
+
+    main {
+      padding-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background-color: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    /* Tag Input Style */
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      background: #0d131f;
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      min-height: 48px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .tag-blue { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .tag-red { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    .tag-remove {
+      cursor: pointer;
+      opacity: 0.7;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .tag-remove:hover { opacity: 1; }
+
+    .tag-input {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      flex-grow: 1;
+      min-width: 140px;
+    }
+
+    /* Sources Grid */
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .source-card {
+      background: #0d131f;
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .source-card:hover { border-color: #3b82f6; background: #131c2d; }
+    .source-card.selected { border-color: var(--primary); background: rgba(59, 130, 246, 0.08); }
+
+    .source-checkbox {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .source-info h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      color: var(--text-main);
+    }
+    .source-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Inputs grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      background: #0d131f;
+      border: 1px solid var(--surface-border);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--primary); }
+
+    /* Results section */
+    .results-box {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .job-item {
+      background: #0d131f;
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 18px;
+      transition: transform 0.15s ease;
+    }
+    .job-item:hover { transform: translateY(-2px); border-color: #334155; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 12px;
+    }
+
+    .job-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #60a5fa;
+    }
+
+    .job-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .job-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-job-link {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+      padding: 6px 14px;
+      font-size: 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+    .btn-job-link:hover { background: var(--primary); color: white; }
+
+    .badge-multi {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--surface-border);
+      margin-bottom: 20px;
+      gap: 16px;
+    }
+    .tab-btn {
+      background: none;
+      color: var(--text-muted);
+      padding: 10px 4px;
+      font-size: 14px;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      color: white;
+      border: 1px solid var(--surface-border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      font-size: 13px;
+      font-weight: 600;
+      display: none;
+      z-index: 100;
+    }
+
+    .spinner {
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-content">
+      <div class="brand">
+        <div class="logo-badge">⚡</div>
+        <div>
+          <h1>Vagas Scraper • Painel de Controle</h1>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            Servidor Local Ativo (Porta 8080)
+          </div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-outline" onclick="salvarConfiguracoes()">💾 Salvar Preferências</button>
+        <button class="btn-primary" id="btnScrape" onclick="executarVarredura()">
+          <span>🔍 Buscar Vagas Agora</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Seção de Termos -->
+    <div class="card">
+      <div class="card-title">🎯 Critérios de Pesquisa & Exclusão</div>
+      <div class="card-subtitle">Personalize as palavras-chave que você procura e os termos que deseja descartar. Pressione Enter para adicionar.</div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div>
+          <label style="font-size: 13px; font-weight: 700; color: #60a5fa; margin-bottom: 6px; display: block;">
+            ✅ O que pesquisar (Termos Desejados):
+          </label>
+          <div class="tags-container" id="containerBusca">
+            <input type="text" class="tag-input" id="inputBusca" placeholder="+ Adicionar termo e tecle Enter (ex: golang, estagio, react)">
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 13px; font-weight: 700; color: #fb7185; margin-bottom: 6px; display: block;">
+            🚫 O que NÃO pesquisar (Termos Proibidos / Exclusão):
+          </label>
+          <div class="tags-container" id="containerExclusao">
+            <input type="text" class="tag-input" id="inputExclusao" placeholder="+ Adicionar exclusão e tecle Enter (ex: senior, pleno, lead)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção de Fontes / Sites -->
+    <div class="card">
+      <div class="card-title">🌐 Portais de Vagas Habilitados</div>
+      <div class="card-subtitle">O robô fará a varredura simultânea em todas as fontes selecionadas com <strong>Deduplicação Cruzada</strong> (se a mesma vaga estiver em 2 sites, ela é unificada).</div>
+
+      <div class="sources-grid" id="gridFontes">
+        <!-- Preenchido via JavaScript -->
+      </div>
+    </div>
+
+    <!-- Seção de E-mail -->
+    <div class="card">
+      <div class="card-title">📧 Configuração de Notificação por E-mail</div>
+      <div class="card-subtitle">Receba o resumo das vagas com botões de candidatura direto na sua caixa de entrada.</div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Seu E-mail (Gmail Remetente):</label>
+          <input type="email" id="emailRemetente" class="form-control" placeholder="seu.email@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>Senha de App do Gmail (16 letras):</label>
+          <input type="password" id="emailSenhaApp" class="form-control" placeholder="••••••••••••••••">
+        </div>
+        <div class="form-group">
+          <label>E-mail de Destino (Onde receber):</label>
+          <input type="email" id="emailDestinatario" class="form-control" placeholder="seu.email@gmail.com">
+        </div>
+      </div>
+    </div>
+
+    <!-- Resultados em Tempo Real -->
+    <div class="card" id="cardResultados" style="display: none;">
+      <div class="card-title" id="tituloResultados">📋 Oportunidades Encontradas Nesta Varredura</div>
+      <div class="card-subtitle" id="subtituloResultados"></div>
+      <div class="results-box" id="listaVagas"></div>
+    </div>
+
+    <!-- Seção de Automação: Agendador vs GitHub -->
+    <div class="card">
+      <div class="card-title">⏰ Como Você Deseja Rodar Automaticamente?</div>
+      <div class="card-subtitle">Escolha onde o robô deve rodar 3 vezes ao dia de forma 100% autônoma.</div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="trocarAba('windows', this)">🖥️ Opção 1: No seu Windows (Agendador de Tarefas)</button>
+        <button class="tab-btn" onclick="trocarAba('github', this)">☁️ Opção 2: No GitHub Actions (Nuvem Gratuita)</button>
+      </div>
+
+      <!-- Conteúdo Windows -->
+      <div id="abaWindows">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+          O Windows executará o robô 3 vezes ao dia (às 09:00, 14:00 e 19:00). Ele inicia em segundo plano, busca as vagas em 1 segundo, envia o e-mail se houver novidade e <strong>desliga imediatamente</strong> (0% de CPU no resto do dia).
+        </p>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <button class="btn-success" onclick="agendarNoWindows()">⚡ Registrar no Agendador do Windows (1 Clique)</button>
+          <span style="font-size: 12px; color: var(--text-muted);">Não requer que o painel continue aberto.</span>
+        </div>
+      </div>
+
+      <!-- Conteúdo GitHub -->
+      <div id="abaGithub" style="display: none;">
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">
+          Você pode subir este repositório para o GitHub e usar o <strong>GitHub Actions</strong> para rodar 3x ao dia na nuvem (sem precisar do seu computador estar ligado).
+        </p>
+        <div style="background: #0d131f; border: 1px solid var(--surface-border); border-radius: 8px; padding: 14px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: #93c5fd; margin-bottom: 12px;">
+          1. Vá em Settings -> Secrets and variables -> Actions no seu repositório.<br>
+          2. Adicione os segredos: EMAIL_REMETENTE, EMAIL_SENHA_APP, EMAIL_DESTINATARIO.<br>
+          3. O arquivo .github/workflows/scraper.yml já está pronto e agendado com o cron: '0 12,17,22 * * *'
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const TODAS_FONTES = [
+      { id: "linkedin", nome: "LinkedIn", desc: "API Pública de Visitantes • Vagas de empresas do Brasil e do mundo" },
+      { id: "gupy", nome: "Gupy", desc: "Portal Oficial • Nubank, Ambev, Stone, Itaú, Mercado Livre, etc." },
+      { id: "backend_br", nome: "Backend-BR (GitHub)", desc: "Maior mural de vagas de backend da comunidade brasileira" },
+      { id: "frontend_br", nome: "Frontend-BR (GitHub)", desc: "Feed focado em desenvolvimento web, front-end e mobile" },
+      { id: "react_brasil", nome: "React-Brasil (GitHub)", desc: "Vagas especializadas em React, React Native e ecossistema JS" },
+      { id: "qa_brasil", nome: "QA-Brasil (GitHub)", desc: "Oportunidades em testes de software, QA e automação" },
+      { id: "programathor", nome: "ProgramaThor", desc: "Portal tech brasileiro com vagas para startups e empresas de TI" },
+      { id: "remoteok", nome: "RemoteOK", desc: "Feed internacional com vagas 100% remotas globais" },
+      { id: "weworkremotely", nome: "WeWorkRemotely", desc: "Um dos maiores murais mundiais de vagas de programação" }
+    ];
+
+    let termosBusca = [];
+    let termosExclusao = [];
+    let fontesHabilitadas = [];
+
+    window.addEventListener("DOMContentLoaded", () => {
+      carregarConfiguracoes();
+      setupTagInputs();
+    });
+
+    async function carregarConfiguracoes() {
+      try {
+        const res = await fetch("/api/config");
+        const data = await res.json();
+        
+        termosBusca = data.termos_busca || [];
+        termosExclusao = data.termos_exclusao || [];
+        fontesHabilitadas = data.fontes_habilitadas || ["linkedin", "gupy", "backend_br", "remoteok"];
+
+        document.getElementById("emailRemetente").value = data.email_remetente || "";
+        document.getElementById("emailSenhaApp").value = data.email_senha_app || "";
+        document.getElementById("emailDestinatario").value = data.email_destinatario || "";
+
+        renderizarTags();
+        renderizarFontes();
+      } catch (err) {
+        showToast("Erro ao carregar configurações: " + err.message);
+      }
+    }
+
+    function renderizarFontes() {
+      const grid = document.getElementById("gridFontes");
+      grid.innerHTML = "";
+
+      TODAS_FONTES.forEach(f => {
+        const ativo = fontesHabilitadas.includes(f.id);
+        const card = document.createElement("div");
+        card.className = "source-card" + (ativo ? " selected" : "");
+        card.innerHTML = '<input type="checkbox" class="source-checkbox" ' + (ativo ? "checked" : "") + ' data-id="' + f.id + '"><div class="source-info"><h4>' + f.nome + '</h4><p>' + f.desc + '</p></div>';
+
+        card.addEventListener("click", (e) => {
+          if (e.target.tagName !== "INPUT") {
+            const chk = card.querySelector("input");
+            chk.checked = !chk.checked;
+            toggleFonte(f.id, chk.checked, card);
+          }
+        });
+
+        card.querySelector("input").addEventListener("change", (e) => {
+          toggleFonte(f.id, e.target.checked, card);
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleFonte(id, checked, card) {
+      if (checked) {
+        if (!fontesHabilitadas.includes(id)) fontesHabilitadas.push(id);
+        card.classList.add("selected");
+      } else {
+        fontesHabilitadas = fontesHabilitadas.filter(x => x !== id);
+        card.classList.remove("selected");
+      }
+    }
+
+    function renderizarTags() {
+      const cBusca = document.getElementById("containerBusca");
+      const cExcl = document.getElementById("containerExclusao");
+      const inBusca = document.getElementById("inputBusca");
+      const inExcl = document.getElementById("inputExclusao");
+
+      cBusca.querySelectorAll(".tag").forEach(el => el.remove());
+      cExcl.querySelectorAll(".tag").forEach(el => el.remove());
+
+      termosBusca.forEach((t, idx) => {
+        const tag = document.createElement("div");
+        tag.className = "tag tag-blue";
+        tag.innerHTML = '<span>' + t + '</span><span class="tag-remove" onclick="removerTagBusca(' + idx + ')">&times;</span>';
+        cBusca.insertBefore(tag, inBusca);
+      });
+
+      termosExclusao.forEach((t, idx) => {
+        const tag = document.createElement("div");
+        tag.className = "tag tag-red";
+        tag.innerHTML = '<span>' + t + '</span><span class="tag-remove" onclick="removerTagExclusao(' + idx + ')">&times;</span>';
+        cExcl.insertBefore(tag, inExcl);
+      });
+    }
+
+    function setupTagInputs() {
+      const inBusca = document.getElementById("inputBusca");
+      const inExcl = document.getElementById("inputExclusao");
+
+      inBusca.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && inBusca.value.trim()) {
+          e.preventDefault();
+          termosBusca.push(inBusca.value.trim().toLowerCase());
+          inBusca.value = "";
+          renderizarTags();
+        }
+      });
+
+      inExcl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && inExcl.value.trim()) {
+          e.preventDefault();
+          termosExclusao.push(inExcl.value.trim().toLowerCase());
+          inExcl.value = "";
+          renderizarTags();
+        }
+      });
+    }
+
+    function removerTagBusca(i) {
+      termosBusca.splice(i, 1);
+      renderizarTags();
+    }
+
+    function removerTagExclusao(i) {
+      termosExclusao.splice(i, 1);
+      renderizarTags();
+    }
+
+    async function salvarConfiguracoes() {
+      const payload = {
+        termos_busca: termosBusca,
+        termos_exclusao: termosExclusao,
+        fontes_habilitadas: fontesHabilitadas,
+        email_remetente: document.getElementById("emailRemetente").value.trim(),
+        email_senha_app: document.getElementById("emailSenhaApp").value.trim(),
+        email_destinatario: document.getElementById("emailDestinatario").value.trim(),
+        dry_run: false
+      };
+
+      try {
+        const res = await fetch("/api/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        showToast(data.mensagem || "Preferências salvas com sucesso!");
+      } catch (err) {
+        showToast("Erro ao salvar: " + err.message);
+      }
+    }
+
+    async function executarVarredura() {
+      const btn = document.getElementById("btnScrape");
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = '<div class="spinner"></div><span>Varrendo Portais...</span>';
+      btn.disabled = true;
+
+      const cardResultados = document.getElementById("cardResultados");
+      const lista = document.getElementById("listaVagas");
+      cardResultados.style.display = "block";
+      lista.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--text-muted);">Consultando fontes de vagas em paralelo com Goroutines...</div>';
+
+      try {
+        const res = await fetch("/api/scrape", { method: "POST" });
+        const data = await res.json();
+
+        document.getElementById("tituloResultados").innerHTML = '🎯 ' + data.total_filtradas + ' Vagas Encontradas e Deduplicadas!';
+        document.getElementById("subtituloResultados").innerHTML = 'Total bruto coletado: <strong>' + data.total_bruto + '</strong> | Vagas únicas após fusão cruzada: <strong>' + data.total_mescladas + '</strong>';
+
+        lista.innerHTML = "";
+        if (!data.vagas || data.vagas.length === 0) {
+          lista.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--text-muted);">Nenhuma nova vaga correspondente encontrada com os filtros atuais.</div>';
+          return;
+        }
+
+        data.vagas.forEach(v => {
+          const item = document.createElement("div");
+          item.className = "job-item";
+
+          let multiBadge = "";
+          if (v.fontes && v.fontes.length > 1) {
+            multiBadge = '<span class="badge-multi">⭐ Disponível em ' + v.fontes.length + ' portais (' + v.fontes.join(", ") + ')</span>';
+          }
+
+          let botoesLinks = "";
+          if (v.links && v.links.length > 0) {
+            v.links.forEach(l => {
+              botoesLinks += '<a href="' + l.url + '" target="_blank" class="btn-job-link">🔗 Ver no ' + l.fonte + ' &rarr;</a>';
+            });
+          } else if (v.link) {
+            botoesLinks += '<a href="' + v.link + '" target="_blank" class="btn-job-link">🔗 Acessar Vaga &rarr;</a>';
+          }
+
+          item.innerHTML = '<div class="job-header"><div>' + multiBadge + '<div class="job-title" style="margin-top: 4px;">' + v.titulo + '</div></div></div>' +
+            '<div class="job-meta">' +
+              '<span>🏢 <strong>' + (v.empresa || "Empresa Confidencial") + '</strong></span>' +
+              '<span>📍 ' + (v.localizacao || "Brasil / Remoto") + '</span>' +
+              '<span style="background: rgba(255,255,255,0.06); padding: 2px 8px; border-radius: 4px; font-size: 11px;">Fontes: ' + (v.fontes ? v.fontes.join(", ") : v.fonte) + '</span>' +
+            '</div>' +
+            '<div class="job-actions">' + botoesLinks + '</div>';
+          
+          lista.appendChild(item);
+        });
+
+      } catch (err) {
+        showToast("Erro durante a busca: " + err.message);
+      } finally {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+      }
+    }
+
+    async function agendarNoWindows() {
+      try {
+        const res = await fetch("/api/schedule-windows", { method: "POST" });
+        const data = await res.json();
+        showToast(data.mensagem);
+      } catch (err) {
+        showToast("Erro ao agendar: " + err.message);
+      }
+    }
+
+    function trocarAba(aba, btn) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      document.getElementById("abaWindows").style.display = aba === "windows" ? "block" : "none";
+      document.getElementById("abaGithub").style.display = aba === "github" ? "block" : "none";
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.style.display = "block";
+      setTimeout(() => { toast.style.display = "none"; }, 4000);
+    }
+  </script>
+</body>
+</html>

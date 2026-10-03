@@ -1,167 +1,70 @@
-# ⚡ Vagas Scraper (Go)
+# ⚡ Vagas Scraper (Go) • Painel Web & Automação Híbrida
 
-> Rastreador de vagas ultraleve e automatizado desenvolvido em **Go**, projetado para rodar até várias vezes ao dia e notificar você por **e-mail com layout moderno em HTML**.
-
----
-
-## 🎯 Por que em Go?
-
-- **Ultraleve:** Consome apenas **~8MB de memória RAM** durante a execução.
-- **Veloz:** Faz varredura concorrente de dezenas de vagas em **menos de 1 segundo**.
-- **Zero Interpretadores:** Diferente do Python ou Node.js, compila para um único binário estático independente.
-- **Anti-Duplicatas Confiável:** Mantém um registro inteligente (`vagas_vistas.json`) para nunca enviar a mesma vaga duas vezes.
-- **Multi-Fonte Concorrente:** Consulta repositórios nacionais e plataformas remotas globais em paralelo usando *Goroutines*.
+> Rastreador de vagas multicanal ultraleve com **Painel Visual Web Local (Porta 8080)**, **Deduplicação Cruzada Inteligente** (unifica a mesma vaga encontrada em portais diferentes) e suporte a execução automática no **Agendador de Tarefas do Windows** ou no **GitHub Actions**.
 
 ---
 
-## 📂 Fontes de Vagas Integradas
+## 🎯 Destaques do Projeto
 
-1. **Backend-BR (`backend-br/vagas`):** O maior feed de vagas tech no GitHub do Brasil (Junior, Estágio, Pleno, Remoto).
-2. **Frontend-BR (`frontendbr/vagas`):** Feed de oportunidades front-end e mobile da comunidade brasileira.
-3. **RemoteOK:** Feed internacional de oportunidades 100% remotas globais.
-4. **Módulo HTML Genérico (`goquery`):** Estrutura pronta para raspar qualquer portal com seletores CSS.
-
----
-
-## 📁 Estrutura do Repositório
-
-```text
-vagas-scraper/
-├── .github/
-│   └── workflows/
-│       └── scraper.yml            # Workflow para execução automatizada no GitHub
-├── internal/
-│   ├── config/
-│   │   └── config.go              # Leitor de config.json e variáveis de ambiente
-│   ├── models/
-│   │   └── vaga.go                # Estrutura de dados da Vaga
-│   ├── notifier/
-│   │   ├── email.go               # Envio via SMTP seguro (STARTTLS)
-│   │   └── template.go            # Template HTML responsivo moderno
-│   ├── scrapers/
-│   │   ├── scraper.go             # Interface padrão e filtros de palavras
-│   │   ├── github_vagas.go        # Scraper dos repositórios GitHub BR
-│   │   ├── remoteok.go            # Scraper do RemoteOK
-│   │   └── html_scraper.go        # Scraper genérico com goquery (CSS selectors)
-│   └── storage/
-│       └── storage.go             # Gerenciador de histórico e deduplicação
-├── docs/
-│   ├── CONFIGURACAO_EMAIL.md      # Passo a passo da Senha de App do Gmail
-│   └── AGENDAMENTO_CRON.md        # Tabela de horários e frequências do cron
-├── config.json                    # Palavras-chave, exclusões e fontes ativas
-├── vagas_vistas.json              # Registro de vagas já enviadas
-├── .env.example                   # Exemplo de configuração de credenciais
-├── .gitignore
-├── go.mod
-├── go.sum
-├── main.go                        # Ponto de entrada da aplicação
-└── README.md
-```
+- **Painel Visual no Navegador:** Basta rodar `go run main.go` ou clicar duas vezes no `scraper.exe` para abrir a interface gráfica em `http://localhost:8080`.
+- **Deduplicação Cruzada Inteligente:** Se a mesma vaga for anunciada no **LinkedIn**, na **Gupy** e no **GitHub**, o robô gera **um único card** com botões para todos os portais onde ela foi encontrada!
+- **9 Portais de Vagas Concorrentes:**
+  1. 💼 **LinkedIn** (API Pública de Visitantes - sem necessidade de login)
+  2. 🏢 **Gupy** (Portal Oficial de RH)
+  3. 🐙 **Backend-BR** (Mural do GitHub)
+  4. 💻 **Frontend-BR** (Mural do GitHub)
+  5. ⚛️ **React-Brasil** (Mural do GitHub)
+  6. 🧪 **QA-Brasil** (Mural do GitHub)
+  7. 🚀 **ProgramaThor** (Startups e Tech BR)
+  8. 🌐 **RemoteOK** (Vagas Remotas Globais)
+  9. ☕ **WeWorkRemotely** (Feed RSS de Programação)
+- **Ultraleve:** O executável completo (`scraper.exe`) tem apenas ~11 MB e roda em menos de 1.5 segundo.
+- **Dois Modos de Automação:**
+  - **Agendador do Windows (Local):** Registre com 1 clique no painel para rodar 3x ao dia (09h, 14h, 19h) silenciosamente em segundo plano.
+  - **GitHub Actions (Nuvem):** Agendado no `.github/workflows/scraper.yml` para rodar na nuvem do GitHub sem precisar do computador ligado.
 
 ---
 
-## ⚙️ Configuração dos Filtros (`config.json`)
+## 🚀 Como Iniciar o Painel Visual
 
-Você pode personalizar os termos que procura e o que quer ignorar diretamente no arquivo `config.json`:
-
-```json
-{
-  "filtros": {
-    "termos_busca": [
-      "estagio", "estágio", "junior", "júnior", "trainee",
-      "backend", "golang", "go", "java", "node", "fullstack", "react"
-    ],
-    "termos_exclusao": [
-      "senior", "sênior", "sr.", "pleno", "tech lead", "especialista"
-    ]
-  },
-  "fontes_habilitadas": [
-    "backend_br",
-    "frontend_br",
-    "remoteok"
-  ],
-  "max_vagas_por_execucao": 25,
-  "salvar_preview_html": true
-}
-```
-
-> **Dica:** Os `termos_exclusao` evitam que vagas que você não quer (como *Sênior* ou *Tech Lead*) cheguem na sua caixa de entrada, mesmo que citem tecnologias como Go ou Java no texto.
-
----
-
-## 🚀 Como Executar Localmente
-
-### 1. Teste Rápido (Modo Simulação / Sem Enviar E-mails)
-Você pode testar a busca e conferir o resultado no terminal sem precisar de credenciais de e-mail:
+No terminal dentro da pasta `vagas-scraper`:
 
 ```powershell
-go run main.go --dry-run
+go run main.go
 ```
+*(Ou dê 2 cliques no `scraper.exe`).*
 
-* Quando você roda em modo simulação, o script gera automaticamente um arquivo **`preview_email.html`** na raiz. Basta dar um duplo clique nele para abrir no navegador e ver como o e-mail fica bonito!
+O navegador abrirá automaticamente em:
+👉 **`http://localhost:8080`**
+
+Na interface você pode:
+1. **Adicionar/remover termos desejados** (ex: `golang`, `estágio`, `junior`, `react`).
+2. **Adicionar/remover termos proibidos** (ex: `senior`, `pleno`, `lead`).
+3. **Marcar quais portais de vagas consultar**.
+4. **Configurar seu e-mail do Gmail** para alertas.
+5. **Clicar em "Buscar Vagas Agora"** para ver os resultados ao vivo na tela com os links diretos de cada plataforma.
+6. **Clicar em "Registrar no Agendador do Windows"** para ativar o ciclo diário automático.
 
 ---
 
-### 2. Configurando o Envio de E-mails Reais
+## 🛠️ Comandos Rápidos
 
-1. Copie o arquivo de exemplo de ambiente:
-   ```powershell
-   Copy-Item .env.example .env
-   ```
-2. Abra o `.env` e preencha suas informações:
-   ```env
-   EMAIL_REMETENTE=seu.email@gmail.com
-   EMAIL_SENHA_APP=xxxx xxxx xxxx xxxx
-   EMAIL_DESTINATARIO=seu.email@gmail.com
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   DRY_RUN=false
-   ```
-   *(Caso não saiba como gerar a Senha de App do Gmail, consulte o [docs/CONFIGURACAO_EMAIL.md](docs/CONFIGURACAO_EMAIL.md)).*
-
-3. Execute para valer:
-   ```powershell
-   go run main.go
-   ```
+| Comando | O que faz |
+| :--- | :--- |
+| `go run main.go` | Inicia o servidor web na porta 8080 e abre o painel no navegador. |
+| `go run main.go --port 3000` | Inicia o servidor web em uma porta personalizada. |
+| `go run main.go --scrape` | Executa a varredura silenciosa e encerra imediatamente (modo usado pelo agendador). |
+| `go run main.go --scrape --dry-run` | Varre as vagas sem disparar e-mails reais e gera `preview_email.html`. |
+| `go run main.go --limpar-historico` | Reseta a lista de vagas já vistas em `vagas_vistas.json`. |
 
 ---
 
-### 3. Compilando para um Executável Único (Opcional)
+## ☁️ Ativação no GitHub Actions
 
-Se quiser gerar um `.exe` que roda sozinho sem precisar do comando `go`:
-
-```powershell
-go build -ldflags="-s -w" -o scraper.exe
-```
-
-Para rodar:
-```powershell
-.\scraper.exe --dry-run
-```
-
----
-
-## ☁️ Como Ativar no GitHub Actions (3x ao Dia)
-
-Quando você decidir colocar o repositório no GitHub para rodar na nuvem sem precisar do computador ligado:
-
-1. **Crie um repositório** no seu GitHub.
-2. Adicione os **Secrets** em `Settings -> Secrets and variables -> Actions`:
+Se preferir rodar 100% na nuvem sem deixar a máquina ligada:
+1. Suba este repositório para o seu GitHub quando quiser.
+2. Em **Settings -> Secrets and variables -> Actions**, adicione:
    - `EMAIL_REMETENTE`
    - `EMAIL_SENHA_APP`
    - `EMAIL_DESTINATARIO`
-3. Habilite a permissão de escrita em `Settings -> Actions -> General -> Workflow permissions`:
-   - Selecione **"Read and write permissions"** e salve.
-4. O GitHub Actions já está configurado no arquivo [`.github/workflows/scraper.yml`](.github/workflows/scraper.yml) para rodar automaticamente **3 vezes ao dia** (às 09:00, 14:00 e 19:00 no Horário de Brasília).
-5. Para mudar a frequência, consulte o [docs/AGENDAMENTO_CRON.md](docs/AGENDAMENTO_CRON.md).
-
----
-
-## 🛠️ Comandos Úteis
-
-| Comando | Descrição |
-| :--- | :--- |
-| `go run main.go --dry-run` | Executa busca sem disparar e-mails e gera o preview HTML. |
-| `go run main.go --limpar-historico` | Limpa o histórico de vagas salvas em `vagas_vistas.json`. |
-| `go run main.go --config outro.json` | Roda utilizando um arquivo de configuração alternativo. |
-| `go run main.go --version` | Exibe a versão instalada do scraper. |
+3. O workflow [`.github/workflows/scraper.yml`](.github/workflows/scraper.yml) já está pronto e programado para rodar às 09:00, 14:00 e 19:00 (BRT).
