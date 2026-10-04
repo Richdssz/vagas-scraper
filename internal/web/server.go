@@ -124,7 +124,7 @@ func (s *ServidorWeb) handleConfig(w http.ResponseWriter, r *http.Request) {
 		}
 		_ = os.WriteFile(s.caminhoConfig, configData, 0644)
 
-		senhaParaSalvar := payload.EmailSenhaApp
+		senhaParaSalvar := strings.ReplaceAll(strings.TrimSpace(payload.EmailSenhaApp), " ", "")
 		if strings.Contains(senhaParaSalvar, "•••") {
 			cfgAtual, _ := config.Carregar(s.caminhoConfig)
 			senhaParaSalvar = cfgAtual.EmailSenhaApp

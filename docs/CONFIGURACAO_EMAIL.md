@@ -17,7 +17,7 @@ Para que o robô em Go consiga enviar e-mails automatizados através da sua cont
 2. Dê um nome para identificar a aplicação (exemplo: `VagasScraper`).
 3. Clique em **Criar** (*Create*).
 4. O Google exibirá um código amarelo de 16 letras (exemplo: `abcd efgh ijkl mnop`).
-5. **Copie esse código** (você pode usá-lo com ou sem os espaços).
+5. **Copie esse código** de 16 caracteres (exemplo: `abcdefghijklmnop` — sem espaços).
 
 ---
 
@@ -36,13 +36,19 @@ DRY_RUN=false
 ```
 
 #### B) No GitHub Actions (Nuvem):
-Quando você for subir para o GitHub:
-1. No seu repositório, vá em **Settings** -> **Secrets and variables** -> **Actions**.
-2. Clique em **New repository secret**.
-3. Adicione:
-   * **`EMAIL_REMETENTE`**: seu endereço Gmail.
-   * **`EMAIL_SENHA_APP`**: o código de 16 caracteres gerado pelo Google.
-   * **`EMAIL_DESTINATARIO`**: o endereço onde você quer receber o e-mail de alerta.
+Quando você for rodar no GitHub Actions:
+
+1. **Permissão de gravação para o histórico**:
+   * No seu repositório no GitHub, vá em **Settings** -> **Actions** -> **General**.
+   * Role até a seção **Workflow permissions**.
+   * Marque a opção **Read and write permissions** e clique em **Save**. *(Isso permite ao robô salvar o `vagas_vistas.json` para não reenviar vagas repetidas).*
+
+2. **Segredos do Repositório (Secrets)**:
+   * Vá em **Settings** -> **Secrets and variables** -> **Actions**.
+   * Clique em **New repository secret** e cadastre:
+     * **`EMAIL_REMETENTE`**: seu endereço Gmail completo (ex: `seu.email@gmail.com`).
+     * **`EMAIL_SENHA_APP`**: a senha de app de 16 letras gerada no Google (o código agora remove espaços automaticamente, mas prefira salvar sem espaços: `abcdefghijklmnop`).
+     * **`EMAIL_DESTINATARIO`**: o endereço onde você quer receber o e-mail de alerta.
 
 ---
 

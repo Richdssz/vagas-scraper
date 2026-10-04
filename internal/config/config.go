@@ -49,7 +49,7 @@ func Carregar(caminhoConfig string) (*AppConfig, error) {
 
 	// 3. Aplica variáveis de ambiente
 	cfg.EmailRemetente = strings.TrimSpace(os.Getenv("EMAIL_REMETENTE"))
-	cfg.EmailSenhaApp = strings.TrimSpace(os.Getenv("EMAIL_SENHA_APP"))
+	cfg.EmailSenhaApp = strings.ReplaceAll(strings.TrimSpace(os.Getenv("EMAIL_SENHA_APP")), " ", "")
 	cfg.EmailDestinatario = strings.TrimSpace(os.Getenv("EMAIL_DESTINATARIO"))
 
 	// Destinatário padrão pode ser o próprio remetente se não informado

@@ -8,6 +8,7 @@ import (
 	"net/smtp"
 	"os"
 	"strings"
+	"time"
 	"vagas-scraper/internal/config"
 	"vagas-scraper/internal/models"
 )
@@ -73,44 +74,40 @@ func (n *Notificador) Enviar(vagas []models.Vaga) error {
 }
 
 func (n *Notificador) enviarSMTP(mensagem string) error {
-	addr := fmt.Sprintf("%s:%s", n.cfg.SMTPHost, n.cfg.SMTPPort)
-	auth := smtp.PlainAuth("", n.cfg.EmailRemetente, n.cfg.EmailSenhaApp, n.cfg.SMTPHost)
+	host := n.cfg.SMTPHost
+	port := n.cfg.SMTPPort
+	if port == "" {
+		port = "587"
+	}
+	addr := fmt.Sprintf("%s:%s", host, port)
+	auth := smtp.PlainAuth("", n.cfg.EmailRemetente, n.cfg.EmailSenhaApp, host)
 
-	// Conecta ao servidor SMTP
-	conn, err := net.Dial("tcp", addr)
+	client, err := conectarSMTP(host, port)
+	if err != nil && port == "587" {
+		// Tentativa de fallback automático na porta 465 (SSL direto) caso a 587 esteja bloqueada
+		log.Printf("⚠️ Falha na porta 587 (%v). Tentando porta 465 (SSL direto)...", err)
+		if clientFallback, errFallback := conectarSMTP(host, "465"); errFallback == nil {
+			client = clientFallback
+			err = nil
+		}
+	}
 	if err != nil {
 		return fmt.Errorf("falha ao conectar ao servidor SMTP %s: %w", addr, err)
 	}
-
-	client, err := smtp.NewClient(conn, n.cfg.SMTPHost)
-	if err != nil {
-		conn.Close()
-		return fmt.Errorf("falha ao criar cliente SMTP: %w", err)
-	}
 	defer client.Quit()
-
-	// Se o servidor suportar STARTTLS, ativa TLS
-	if ok, _ := client.Extension("STARTTLS"); ok {
-		tlsConfig := &tls.Config{
-			ServerName: n.cfg.SMTPHost,
-		}
-		if err = client.StartTLS(tlsConfig); err != nil {
-			return fmt.Errorf("falha ao iniciar STARTTLS: %w", err)
-		}
-	}
 
 	// Autentica
 	if err = client.Auth(auth); err != nil {
-		return fmt.Errorf("erro de autenticação SMTP (verifique sua senha de app): %w", err)
+		return fmt.Errorf("erro de autenticação SMTP: %w (Verifique se a Senha de App de 16 caracteres sem espaços foi gerada em https://myaccount.google.com/apppasswords na conta Google %s)", err, n.cfg.EmailRemetente)
 	}
 
 	// Remetente e Destinatário
 	if err = client.Mail(n.cfg.EmailRemetente); err != nil {
-		return fmt.Errorf("erro ao definir remetente: %w", err)
+		return fmt.Errorf("erro ao definir remetente (%s): %w", n.cfg.EmailRemetente, err)
 	}
 
 	if err = client.Rcpt(n.cfg.EmailDestinatario); err != nil {
-		return fmt.Errorf("erro ao definir destinatário: %w", err)
+		return fmt.Errorf("erro ao definir destinatário (%s): %w", n.cfg.EmailDestinatario, err)
 	}
 
 	// Envia corpo da mensagem
@@ -129,4 +126,39 @@ func (n *Notificador) enviarSMTP(mensagem string) error {
 
 	log.Println("✅ E-mail enviado com sucesso!")
 	return nil
+}
+
+func conectarSMTP(host, port string) (*smtp.Client, error) {
+	addr := fmt.Sprintf("%s:%s", host, port)
+	dialer := &net.Dialer{Timeout: 15 * time.Second}
+
+	if port == "465" {
+		tlsConfig := &tls.Config{ServerName: host}
+		conn, err := tls.DialWithDialer(dialer, "tcp", addr, tlsConfig)
+		if err != nil {
+			return nil, err
+		}
+		return smtp.NewClient(conn, host)
+	}
+
+	conn, err := dialer.Dial("tcp", addr)
+	if err != nil {
+		return nil, err
+	}
+
+	client, err := smtp.NewClient(conn, host)
+	if err != nil {
+		conn.Close()
+		return nil, err
+	}
+
+	if ok, _ := client.Extension("STARTTLS"); ok {
+		tlsConfig := &tls.Config{ServerName: host}
+		if err = client.StartTLS(tlsConfig); err != nil {
+			client.Close()
+			return nil, fmt.Errorf("falha ao iniciar STARTTLS: %w", err)
+		}
+	}
+
+	return client, nil
 }
