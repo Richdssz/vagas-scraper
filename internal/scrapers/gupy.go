@@ -102,36 +102,87 @@ func (g *GupyScraper) Buscar() ([]models.Vaga, error) {
 	return vagas, nil
 }
 
+type GupyNextData struct {
+	Props struct {
+		PageProps struct {
+			InitialJobList struct {
+				Data []struct {
+					ID             int    `json:"id"`
+					Name           string `json:"name"`
+					CareerPageName string `json:"careerPageName"`
+					WorkplaceType  string `json:"workplaceType"`
+					City           string `json:"city"`
+					State          string `json:"state"`
+					JobURL         string `json:"jobUrl"`
+					PublishedDate  string `json:"publishedDate"`
+				} `json:"data"`
+			} `json:"initialJobList"`
+		} `json:"pageProps"`
+	} `json:"props"`
+}
+
 func extrairVagasNextData(rawJSON string) []models.Vaga {
-	var root map[string]any
-	if err := json.Unmarshal([]byte(rawJSON), &root); err != nil {
-		return nil
+	var gupyData GupyNextData
+	if err := json.Unmarshal([]byte(rawJSON), &gupyData); err == nil && len(gupyData.Props.PageProps.InitialJobList.Data) > 0 {
+		var vagas []models.Vaga
+		for _, item := range gupyData.Props.PageProps.InitialJobList.Data {
+			if item.Name == "" {
+				continue
+			}
+
+			link := item.JobURL
+			if link == "" {
+				link = fmt.Sprintf("https://portal.gupy.io/jobs/%d", item.ID)
+			}
+
+			local := "Brasil"
+			if item.City != "" || item.State != "" {
+				local = strings.TrimSpace(fmt.Sprintf("%s - %s", item.City, item.State))
+			}
+			if item.WorkplaceType != "" {
+				if local != "Brasil" {
+					local = fmt.Sprintf("%s (%s)", local, item.WorkplaceType)
+				} else {
+					local = item.WorkplaceType
+				}
+			}
+
+			empresa := item.CareerPageName
+			if empresa == "" {
+				empresa = "Empresa via Gupy"
+			}
+
+			id := fmt.Sprintf("gupy-%d", item.ID)
+			vagas = append(vagas, models.Vaga{
+				ID:          id,
+				Titulo:      strings.TrimSpace(item.Name),
+				Empresa:     strings.TrimSpace(empresa),
+				Localizacao: local,
+				Link:        link,
+				Fonte:       "Gupy",
+				Data:        time.Now(),
+			})
+		}
+		return vagas
 	}
 
-	// Localiza array de vagas dentro de pageProps
+	// Fallback por regex caso o schema mude
+	re := regexp.MustCompile(`"id":\s*(\d+)[^,}]*?,\s*"name":\s*"([^"]+)"`)
+	matches := re.FindAllStringSubmatch(rawJSON, 30)
+
 	var vagas []models.Vaga
-	dataBytes, _ := json.Marshal(root)
-	dataStr := string(dataBytes)
-
-	// Regex para capturar objetos com "careerPageName", "name" e links de vagas
-	re := regexp.MustCompile(`"id":\s*(\d+)[^}]*?"name":\s*"([^"]+)"[^}]*?"careerPageName":\s*"([^"]+)"`)
-	matches := re.FindAllStringSubmatch(dataStr, 25)
-
 	for _, m := range matches {
-		if len(m) >= 4 {
+		if len(m) >= 3 {
 			jobID := m[1]
 			nome := m[2]
-			empresa := m[3]
-
-			// Link direto de candidatura na Gupy
 			link := fmt.Sprintf("https://portal.gupy.io/jobs/%s", jobID)
 			id := fmt.Sprintf("gupy-%s", jobID)
 
 			vagas = append(vagas, models.Vaga{
 				ID:          id,
-				Titulo:      nome,
-				Empresa:     empresa,
-				Localizacao: "Brasil / Remoto",
+				Titulo:      strings.TrimSpace(nome),
+				Empresa:     "Empresa via Gupy",
+				Localizacao: "Brasil / Gupy",
 				Link:        link,
 				Fonte:       "Gupy",
 				Data:        time.Now(),
