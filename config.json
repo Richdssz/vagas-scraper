@@ -15,7 +15,8 @@
       "flutter",
       "dart",
       "sql",
-      "dados"
+      "dados",
+      "redes"
     ],
     "termos_exclusao": [
       "senior",
