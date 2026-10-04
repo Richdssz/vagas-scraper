@@ -53,8 +53,32 @@ func (n *Notificador) Enviar(vagas []models.Vaga) error {
 	log.Printf("📧 Disparando e-mail com %d vagas para %s...", len(vagas), n.cfg.EmailDestinatario)
 
 	assunto := fmt.Sprintf("🎯 %d Novas Vagas Encontradas!", len(vagas))
+	return n.dispararMensagem(assunto, htmlBody)
+}
 
-	// Montagem dos cabeçalhos MIME
+// EnviarAvisoSemVagas envia um e-mail informando que a rotina executou com sucesso
+// porém nenhuma oportunidade nova inédita foi identificada.
+func (n *Notificador) EnviarAvisoSemVagas(totalEncontradas int, portais []string) error {
+	htmlBody := GerarHTMLEmailSemVagas(totalEncontradas, portais)
+
+	if n.cfg.SalvarPreviewHTML {
+		_ = os.WriteFile("preview_email.html", []byte(htmlBody), 0644)
+	}
+
+	if n.cfg.DryRun || n.cfg.EmailRemetente == "" || n.cfg.EmailSenhaApp == "" {
+		log.Printf("🧪 [MODO SIMULAÇÃO / DRY RUN] Nenhuma vaga nova não vista. Notificação de aviso simulada com sucesso.")
+		if n.cfg.EmailRemetente == "" || n.cfg.EmailSenhaApp == "" {
+			log.Println("⚠️ Credenciais de e-mail não configuradas no .env.")
+		}
+		return nil
+	}
+
+	log.Printf("📧 Disparando e-mail de aviso (sem novas vagas) para %s...", n.cfg.EmailDestinatario)
+	assunto := "Radar de Vagas: Nenhuma nova vaga nesta rodada"
+	return n.dispararMensagem(assunto, htmlBody)
+}
+
+func (n *Notificador) dispararMensagem(assunto, htmlBody string) error {
 	headers := make(map[string]string)
 	headers["From"] = fmt.Sprintf("Vagas Scraper <%s>", n.cfg.EmailRemetente)
 	headers["To"] = n.cfg.EmailDestinatario
@@ -69,7 +93,6 @@ func (n *Notificador) Enviar(vagas []models.Vaga) error {
 	message.WriteString("\r\n")
 	message.WriteString(htmlBody)
 
-	// Envio seguro via SMTP com suporte a STARTTLS e SSL direto
 	return n.enviarSMTP(message.String())
 }
 

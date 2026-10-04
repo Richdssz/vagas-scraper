@@ -208,6 +208,101 @@ func GerarHTMLEmail(vagas []models.Vaga) string {
 </html>`, len(vagas), dataExtenso, resumoPortais, cardsHTML.String())
 }
 
+// GerarHTMLEmailSemVagas gera o e-mail informativo avisando que o robô executou com sucesso
+// mas todas as vagas encontradas já haviam sido visualizadas anteriormente.
+func GerarHTMLEmailSemVagas(totalEncontradas int, portaisConsultados []string) string {
+	now := time.Now()
+	dataExtenso := fmt.Sprintf("%02d de %s de %d às %02d:%02d",
+		now.Day(),
+		traduzirMes(now.Month().String()),
+		now.Year(),
+		now.Hour(),
+		now.Minute(),
+	)
+
+	resumoPortais := "LinkedIn, Gupy, GitHub e outros"
+	if len(portaisConsultados) > 0 {
+		resumoPortais = strings.Join(portaisConsultados, ", ")
+	}
+
+	return fmt.Sprintf(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="color-scheme" content="dark">
+	<meta name="supported-color-schemes" content="dark">
+	<title>Radar de Vagas • Sem Novidades</title>
+	<style>
+		:root { color-scheme: dark; supported-color-schemes: dark; }
+		body { background-color: #09090b !important; color: #fafafa !important; }
+		a { color: #93c5fd; }
+	</style>
+</head>
+<body style="margin: 0; padding: 32px 12px; background-color: #09090b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #fafafa; -webkit-font-smoothing: antialiased;">
+	<table role="presentation" width="100%%" cellspacing="0" cellpadding="0" border="0" style="background-color: #09090b;">
+		<tr>
+			<td align="center" style="background-color: #09090b;">
+				<table role="presentation" width="100%%" style="max-width: 620px; background-color: #09090b;" cellspacing="0" cellpadding="0" border="0">
+					<!-- Cabeçalho Dark -->
+					<tr>
+						<td style="padding: 0 0 20px 0; text-align: left;">
+							<div style="background-color: #121215; border: 1px solid #27272a; border-radius: 8px; padding: 22px 24px;">
+								<div style="margin-bottom: 10px;">
+									<span style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; color: #a1a1aa; background-color: rgba(161, 161, 170, 0.1); border: 1px solid rgba(161, 161, 170, 0.25); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px;">
+										RADAR DE VAGAS • ATUALIZADO
+									</span>
+								</div>
+								<h1 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #fafafa; letter-spacing: -0.4px;">
+									Nenhuma Nova Vaga Nesta Rodada
+								</h1>
+								<p style="margin: 0 0 8px 0; font-size: 13px; color: #a1a1aa; line-height: 1.5;">
+									O robô consultou os portais com sucesso em %s, mas todas as oportunidades encontradas já constam no seu histórico de enviadas.
+								</p>
+								<div style="font-size: 12px; color: #71717a;">
+									Portais verificados: <strong style="color: #93c5fd; font-weight: 500;">%s</strong>
+								</div>
+							</div>
+						</td>
+					</tr>
+
+					<!-- Card Explicativo -->
+					<tr>
+						<td style="padding: 0 0 20px 0;">
+							<div style="background-color: #121215; border: 1px solid #27272a; border-radius: 8px; padding: 20px 24px;">
+								<div style="font-size: 14px; font-weight: 600; color: #e4e4e7; margin-bottom: 8px;">
+									🔍 Status da Varredura
+								</div>
+								<p style="margin: 0 0 10px 0; font-size: 13px; color: #a1a1aa; line-height: 1.5;">
+									Foram analisadas <strong>%d vagas brutas</strong> nos portais. Como o filtro anti-duplicação está ativo, nenhuma vaga repetida foi encaminhada.
+								</p>
+								<p style="margin: 0; font-size: 12px; color: #71717a; line-height: 1.5;">
+									Você receberá as novas oportunidades assim que forem publicadas pelas empresas na próxima checagem agendada!
+								</p>
+							</div>
+						</td>
+					</tr>
+
+					<!-- Rodapé -->
+					<tr>
+						<td style="padding: 24px 0 16px 0; border-top: 1px solid #27272a; text-align: center;">
+							<p style="margin: 0 0 6px 0; font-size: 12px; color: #71717a;">
+								Radar de Oportunidades · Notificação automatizada
+							</p>
+							<p style="margin: 0; font-size: 11px; color: #52525b;">
+								Filtros calibrados e deduplicação ativa
+							</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>`, dataExtenso, resumoPortais, totalEncontradas)
+}
+
+
 func traduzirMes(s string) string {
 	m := map[string]string{
 		"January": "Janeiro", "February": "Fevereiro", "March": "Março",

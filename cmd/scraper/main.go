@@ -150,15 +150,20 @@ func main() {
 		}
 	}
 
+	notif := notifier.NovoNotificador(cfg)
+
 	if len(novasVagas) == 0 {
-		log.Println("✨ Nenhuma nova vaga não vista encontrada nesta rodada. Histórico intacto.")
+		log.Println("✨ Nenhuma nova vaga não vista encontrada nesta rodada. Enviando e-mail de aviso...")
+		if err := notif.EnviarAvisoSemVagas(len(vagasMescladas), cfg.FontesHabilitadas); err != nil {
+			log.Printf("⚠️ Erro ao enviar notificação de aviso: %v", err)
+		}
+		log.Println("🏁 Execução concluída. Histórico mantido intacto.")
 		return
 	}
 
 	log.Printf("🎯 %d novas vagas selecionadas e prontas para notificação!", len(novasVagas))
 
 	// 6. Notificação por e-mail
-	notif := notifier.NovoNotificador(cfg)
 	if err := notif.Enviar(novasVagas); err != nil {
 		log.Fatalf("❌ Erro ao enviar notificação: %v", err)
 	}
