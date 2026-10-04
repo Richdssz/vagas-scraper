@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
 	"os/exec"
@@ -70,12 +71,20 @@ func (s *ServidorWeb) Iniciar() error {
 	mux.HandleFunc("/api/workflow-frequency", s.handleWorkflowFrequency)
 
 	urlAcesso := fmt.Sprintf("http://localhost:%s", s.porta)
+
+	l, err := net.Listen("tcp", ":"+s.porta)
+	if err != nil {
+		log.Printf("ℹ️ O Painel de Controle já está ativo na porta %s! Abrindo seu navegador...", s.porta)
+		abrirNavegador(urlAcesso)
+		time.Sleep(1 * time.Second)
+		return nil
+	}
+
 	log.Printf("🌐 Servidor Web ativo em: %s", urlAcesso)
 	log.Println("💡 Abrindo painel de controle no seu navegador padrão...")
-
 	go abrirNavegador(urlAcesso)
 
-	return http.ListenAndServe(":"+s.porta, mux)
+	return http.Serve(l, mux)
 }
 
 func (s *ServidorWeb) handleIndex(w http.ResponseWriter, r *http.Request) {
