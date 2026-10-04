@@ -446,6 +446,20 @@
       color: #93c5fd;
       font-weight: 600;
     }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      margin-right: 6px;
+      vertical-align: 1px;
+    }
+    .status-dot.active {
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+    }
   </style>
 </head>
 <body>
@@ -560,7 +574,7 @@
         <!-- Status Box Windows -->
         <div id="statusWindowsBox" style="display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
           <div>
-            <div style="font-size: 13px; font-weight: 600;" id="statusWindowsTitulo">⚪ Verificando status do agendador...</div>
+            <div style="font-size: 13px; font-weight: 600;" id="statusWindowsTitulo"><span class="status-dot"></span>Verificando status do agendador...</div>
             <div style="font-size: 12px; color: var(--text-dim); margin-top: 3px;" id="statusWindowsDesc">Consultando tarefas ativas no Windows...</div>
           </div>
           <button class="btn-outline" id="btnCancelarWindows" style="display: none; color: #f43f5e; border-color: rgba(244, 63, 94, 0.4);" onclick="cancelarAgendamentoWindows()">
@@ -888,7 +902,7 @@
         const btnCancel = document.getElementById("btnCancelarWindows");
 
         if (data.agendado) {
-          titulo.innerHTML = '<span style="color: #34d399;">🟢 Agendamento Ativo no Windows</span> (' + data.frequencia + ')';
+          titulo.innerHTML = '<span class="status-dot active"></span>Agendamento Ativo no Windows (' + data.frequencia + ')';
           desc.innerText = 'Horários programados: ' + (data.tarefas ? data.tarefas.join(", ") : "09:00, 14:00, 19:00");
           box.style.borderColor = "rgba(16, 185, 129, 0.4)";
           btnCancel.style.display = "inline-flex";
@@ -896,7 +910,7 @@
             selecionarFreqWindows(data.tarefas.length + "x");
           }
         } else {
-          titulo.innerHTML = '⚪ Agendamento Inativo';
+          titulo.innerHTML = '<span class="status-dot"></span>Agendamento Inativo';
           desc.innerText = 'Nenhuma tarefa do Vagas Scraper agendada no Windows no momento.';
           box.style.borderColor = "var(--border)";
           btnCancel.style.display = "none";
