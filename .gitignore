@@ -1,13 +1,13 @@
 # Binários compilados
-*.exe
-*.exe~
-*.dll
-*.so
-*.dylib
-scraper
-scraper_linux
-scraper-android
-painel
+/*.exe
+/*.exe~
+/*.dll
+/*.so
+/*.dylib
+/scraper
+/scraper_linux
+/scraper-android
+/painel
 
 # Arquivos de ambiente e credenciais
 .env
