@@ -74,6 +74,13 @@ func (r *RemoteOKScraper) Buscar() ([]models.Vaga, error) {
 			local = "100% Remoto (Global)"
 		}
 
+		dataVaga := time.Now()
+		if it.Date != "" {
+			if parsed, err := time.Parse(time.RFC3339, it.Date); err == nil {
+				dataVaga = parsed
+			}
+		}
+
 		vagas = append(vagas, models.Vaga{
 			ID:          idStr,
 			Titulo:      it.Position,
@@ -82,7 +89,7 @@ func (r *RemoteOKScraper) Buscar() ([]models.Vaga, error) {
 			Link:        link,
 			Fonte:       "RemoteOK",
 			Tags:        it.Tags,
-			Data:        time.Now(),
+			Data:        dataVaga,
 		})
 	}
 

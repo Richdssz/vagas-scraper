@@ -122,8 +122,20 @@ func main() {
 	novasVagas := make([]models.Vaga, 0)
 	idsParaRegistrar := make(map[string]string)
 
+	filtrosAv := scrapers.FiltrosAvancados{
+		HorasMaximas:        cfg.Filtros.HorasMaximas,
+		DiasMaximos:         cfg.Filtros.DiasMaximos,
+		Localizacoes:        cfg.Filtros.Localizacoes,
+		Modalidades:         cfg.Filtros.Modalidades,
+		Jornadas:            cfg.Filtros.Jornadas,
+		AceitarRemotoSempre: cfg.Filtros.AceitarRemotoSempre,
+	}
+
 	for _, vaga := range vagasMescladas {
 		if repoStorage.JaVista(vaga.ID) || repoStorage.JaVista(vaga.ChaveCanonica) {
+			continue
+		}
+		if !scrapers.FiltroAvancadoAceita(vaga, filtrosAv) {
 			continue
 		}
 

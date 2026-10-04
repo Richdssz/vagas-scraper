@@ -20,11 +20,11 @@ func main() {
 		return
 	}
 
-	log.Printf("🚀 Iniciando Painel Visual de Configurações (v%s)...", versao)
-	log.Printf("🌐 Servidor abrindo na porta %s...", *porta)
+	log.Printf("Iniciando Painel Visual de Configurações (v%s)...", versao)
+	log.Printf("Servidor abrindo na porta %s...", *porta)
 
 	servidor := web.NovoServidorWeb(*porta, *caminhoConfig)
 	if err := servidor.Iniciar(); err != nil {
-		log.Fatalf("❌ Erro ao iniciar servidor do painel: %v", err)
+		log.Fatalf("Erro ao iniciar servidor do painel: %v", err)
 	}
 }

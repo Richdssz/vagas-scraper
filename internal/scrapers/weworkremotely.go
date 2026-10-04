@@ -80,6 +80,15 @@ func (w *WeWorkRemotelyScraper) Buscar() ([]models.Vaga, error) {
 
 		id := fmt.Sprintf("wwr-%x", sha256.Sum256([]byte(item.Link)))[:16]
 
+		dataVaga := time.Now()
+		if item.PubDate != "" {
+			if parsed, err := time.Parse(time.RFC1123Z, item.PubDate); err == nil {
+				dataVaga = parsed
+			} else if parsed, err := time.Parse(time.RFC1123, item.PubDate); err == nil {
+				dataVaga = parsed
+			}
+		}
+
 		vagas = append(vagas, models.Vaga{
 			ID:          id,
 			Titulo:      titulo,
@@ -87,7 +96,7 @@ func (w *WeWorkRemotelyScraper) Buscar() ([]models.Vaga, error) {
 			Localizacao: local,
 			Link:        item.Link,
 			Fonte:       "WeWorkRemotely",
-			Data:        time.Now(),
+			Data:        dataVaga,
 		})
 	}
 

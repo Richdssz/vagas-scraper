@@ -2,6 +2,8 @@
 
 Sistema autônomo e inteligente para busca, filtragem e deduplicação cruzada de oportunidades de trabalho em múltiplos portais, com painel visual local e notificações estruturadas por e-mail.
 
+`vagas` · `web-scraping` · `automacao` · `vibecoding` · `golang` · `linkedin` · `gupy`
+
 ![Painel de Controle](docs/assets/dashboard.png)
 
 ---
@@ -200,7 +202,7 @@ O motor foi desenhado para iniciar, executar em cerca de 1 segundo e encerrar o 
 
 ---
 
-## 🔐 Como Obter as Chaves do Google e Configurar no GitHub Actions
+## Como Obter as Chaves do Google e Configurar no GitHub Actions
 
 Para que o robô funcione automaticamente na nuvem sem expor suas senhas, você utiliza uma **Senha de App do Google** e a cadastra nos **Secrets do GitHub**.
 
@@ -224,7 +226,7 @@ O Google não permite usar sua senha pessoal de login em scripts. Em vez disso, 
 
 ### 2. Como colocar as Chaves no GitHub Actions
 
-> ⚠️ **Atenção:** Cadastre em **Secrets and variables > Actions**, e **não** em *Environments*.
+> **Atenção:** Cadastre em **Secrets and variables > Actions**, e **não** em *Environments*.
 
 1. Abra o seu repositório no GitHub: `https://github.com/SEU_USUARIO/vagas-scraper`
 2. Clique na aba **Settings** (Configurações) no topo.

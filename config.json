@@ -27,7 +27,13 @@
       "tech lead",
       "especialista",
       "coordenador"
-    ]
+    ],
+    "horas_maximas": 0,
+    "dias_maximos": 0,
+    "localizacoes": [],
+    "modalidades": [],
+    "jornadas": [],
+    "aceitar_remoto_sempre": true
   },
   "fontes_habilitadas": [
     "linkedin",

@@ -80,6 +80,15 @@ func (l *LinkedInScraper) Buscar() ([]models.Vaga, error) {
 			empresa = "Empresa no LinkedIn"
 		}
 
+		dataVaga := time.Now()
+		if timeEl := s.Find("time"); timeEl.Length() > 0 {
+			if dt, ok := timeEl.Attr("datetime"); ok && dt != "" {
+				if t, err := time.Parse("2006-01-02", dt); err == nil {
+					dataVaga = t
+				}
+			}
+		}
+
 		id := fmt.Sprintf("in-%x", sha256.Sum256([]byte(link)))[:16]
 
 		vagas = append(vagas, models.Vaga{
@@ -89,7 +98,7 @@ func (l *LinkedInScraper) Buscar() ([]models.Vaga, error) {
 			Localizacao: local,
 			Link:        link,
 			Fonte:       "LinkedIn",
-			Data:        time.Now(),
+			Data:        dataVaga,
 		})
 	})
 

@@ -77,6 +77,15 @@
       border: 1px solid rgba(16, 185, 129, 0.2);
       padding: 3px 8px;
       border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .status-badge.offline {
+      color: #fb7185;
+      background: rgba(225, 29, 72, 0.12);
+      border-color: rgba(225, 29, 72, 0.35);
     }
 
     .actions {
@@ -460,15 +469,48 @@
       background: #10b981;
       box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
     }
+    .status-dot.offline {
+      background: #e11d48;
+      box-shadow: 0 0 8px rgba(225, 29, 72, 0.6);
+      animation: pulse-offline 1.5s infinite;
+    }
+    @keyframes pulse-offline {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.9); }
+    }
+    .btn-sugestao {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-sugestao:hover {
+      border-color: #3b82f6;
+      color: #93c5fd;
+      background: rgba(37, 99, 235, 0.1);
+    }
+
+    .meta-time {
+      color: #34d399 !important;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
+
+  <div id="bannerOffline" style="display: none; background: #e11d48; color: #ffffff; font-size: 13px; font-weight: 600; text-align: center; padding: 10px 18px; border-bottom: 1px solid rgba(0,0,0,0.25); letter-spacing: 0.2px;">
+    Aviso: Conexão perdida com o servidor local (Porta 8080). Verifique se o painel está aberto no seu computador.
+  </div>
 
   <header>
     <div class="container header-inner">
       <div class="brand-title">
         <span>Radar de Vagas</span>
-        <span class="status-badge">Porta 8080 · Ativo</span>
+        <span class="status-badge" id="statusBadge"><span class="status-dot active"></span>Porta 8080 · Ativo</span>
       </div>
       <div class="actions">
         <button class="btn-outline" id="btnSyncGit" onclick="sincronizarGitHub()" title="Sobe as preferências e filtros locais para o GitHub">
@@ -507,6 +549,73 @@
         <label class="filter-label label-exclude">Termos proibidos (exclusão)</label>
         <div class="tags-box" id="boxExclusao">
           <input type="text" class="tag-input-field" id="inputExclusao" placeholder="Adicione uma exclusão e pressione Enter">
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtros Avancados -->
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Filtros da Vaga</h2>
+        <p class="section-desc">Defina o período de publicação, endereço/região, modalidade e regime de trabalho.</p>
+      </div>
+
+      <!-- Endereço / Região em largura total sem espaço sobrando -->
+      <div class="filter-group">
+        <label class="filter-label">Endereço e Cidades Desejadas</label>
+        <input type="text" id="localizacoes" class="field-input" placeholder="Ex: Recife, PE, São Paulo, Brasil (deixe vazio para qualquer localidade)">
+        
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; align-items: center;">
+          <span style="font-size: 11px; color: var(--text-dim);">Sugestões rápidas:</span>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('Recife, PE')">+ Recife, PE</button>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('São Paulo, SP')">+ São Paulo, SP</button>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('Rio de Janeiro, RJ')">+ Rio de Janeiro, RJ</button>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('Belo Horizonte, MG')">+ BH, MG</button>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('Curitiba, PR')">+ Curitiba, PR</button>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('Brasília, DF')">+ Brasília, DF</button>
+          <button type="button" class="btn-sugestao" onclick="adicionarLocalizacao('Brasil')">+ Brasil todo</button>
+        </div>
+
+        <label style="display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; font-size: 12px; color: var(--text-muted);">
+          <input type="checkbox" id="aceitarRemotoSempre" checked style="accent-color: var(--accent);">
+          <span>Aceitar vagas 100% remotas mesmo se o endereço for de outra cidade</span>
+        </label>
+      </div>
+
+      <!-- Linha perfeitamente balanceada em 3 colunas equivalentes -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border);">
+        <div class="filter-group" style="margin-bottom: 0;">
+          <label class="filter-label">Período da Vaga</label>
+          <select id="filtroTempo" class="field-input">
+            <option value="0">Qualquer data (sem limite)</option>
+            <option value="h6">Últimas 6 horas (hoje)</option>
+            <option value="h12">Últimas 12 horas</option>
+            <option value="h24">Últimas 24 horas (Hoje)</option>
+            <option value="d2">Até 2 dias atrás (48h)</option>
+            <option value="d3">Até 3 dias atrás</option>
+            <option value="d7">Até 7 dias atrás (1 sem)</option>
+            <option value="d15">Até 15 dias atrás</option>
+            <option value="d30">Até 30 dias atrás (1 mês)</option>
+          </select>
+        </div>
+
+        <div class="filter-group" style="margin-bottom: 0;">
+          <label class="filter-label">Modalidade de Trabalho</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="grupoModalidade">
+            <button type="button" class="freq-btn chip-mod" data-val="remoto">Remoto</button>
+            <button type="button" class="freq-btn chip-mod" data-val="hibrido">Híbrido</button>
+            <button type="button" class="freq-btn chip-mod" data-val="presencial">Presencial</button>
+          </div>
+        </div>
+
+        <div class="filter-group" style="margin-bottom: 0;">
+          <label class="filter-label">Jornada / Contrato</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;" id="grupoJornada">
+            <button type="button" class="freq-btn chip-jor" data-val="integral">Integral (40h)</button>
+            <button type="button" class="freq-btn chip-jor" data-val="meio_periodo">Meio período</button>
+            <button type="button" class="freq-btn chip-jor" data-val="estagio">Estágio</button>
+            <button type="button" class="freq-btn chip-jor" data-val="trainee">Trainee</button>
+          </div>
         </div>
       </div>
     </div>
@@ -642,15 +751,73 @@
 
     let termosBusca = [];
     let termosExclusao = [];
-    let fontesHabilitadas = [];
+    let fontesHabilitadas = ["linkedin", "gupy", "backend_br", "frontend_br", "programathor", "react_brasil", "qa_brasil", "remoteok", "weworkremotely"];
     let freqWindows = "3x";
     let freqGithub = "3x";
+    let servidorOnline = true;
+    let tentativasFalhas = 0;
 
     window.addEventListener("DOMContentLoaded", () => {
+      renderizarFontes();
       carregarConfiguracoes();
       setupTagInputs();
       carregarStatusWindows();
+      iniciarMonitoramentoServidor();
     });
+
+    async function verificarConexaoServidor() {
+      const badge = document.getElementById("statusBadge");
+      const banner = document.getElementById("bannerOffline");
+
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+        const res = await fetch("/api/health?t=" + Date.now(), { signal: controller.signal });
+        clearTimeout(timeoutId);
+
+        if (res.ok) {
+          tentativasFalhas = 0;
+          if (!servidorOnline) {
+            servidorOnline = true;
+            if (badge) {
+              badge.className = "status-badge";
+              badge.innerHTML = '<span class="status-dot active"></span>Porta 8080 · Ativo';
+            }
+            if (banner) banner.style.display = "none";
+            showToast("Conexão restabelecida com o servidor local.");
+          }
+        } else {
+          registrarFalhaConexao();
+        }
+      } catch (err) {
+        registrarFalhaConexao();
+      }
+    }
+
+    function registrarFalhaConexao() {
+      tentativasFalhas++;
+      if (tentativasFalhas >= 1) {
+        const badge = document.getElementById("statusBadge");
+        const banner = document.getElementById("bannerOffline");
+
+        if (servidorOnline) {
+          servidorOnline = false;
+          showToast("Aviso: Servidor local desconectado!");
+        }
+        if (badge) {
+          badge.className = "status-badge offline";
+          badge.innerHTML = '<span class="status-dot offline"></span>Porta 8080 · Desconectado';
+        }
+        if (banner) banner.style.display = "block";
+      }
+    }
+
+    function iniciarMonitoramentoServidor() {
+      verificarConexaoServidor();
+      setInterval(verificarConexaoServidor, 3500);
+      window.addEventListener("offline", () => registrarFalhaConexao());
+      window.addEventListener("online", () => verificarConexaoServidor());
+    }
 
     async function carregarConfiguracoes() {
       try {
@@ -669,6 +836,7 @@
           selecionarFreqWindows(data.frequencia_execucao);
           selecionarFreqGithub(data.frequencia_execucao);
         }
+        aplicarFiltrosAvancados(data);
 
         renderizarTags();
         renderizarFontes();
@@ -679,6 +847,7 @@
 
     function renderizarFontes() {
       const grid = document.getElementById("gridFontes");
+      if (!grid) return;
       grid.innerHTML = "";
 
       FONTES.forEach(f => {
@@ -770,29 +939,97 @@
       renderizarTags();
     }
 
-    async function salvarConfiguracoes() {
-      const payload = {
-        termos_busca: termosBusca,
-        termos_exclusao: termosExclusao,
-        fontes_habilitadas: fontesHabilitadas,
-        email_remetente: document.getElementById("emailRemetente").value.trim(),
-        email_senha_app: document.getElementById("emailSenhaApp").value.trim(),
-        email_destinatario: document.getElementById("emailDestinatario").value.trim(),
-        dry_run: false
-      };
-
-      try {
-        const res = await fetch("/api/config", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        showToast(data.mensagem || "Preferências salvas.");
-      } catch (err) {
-        showToast("Erro ao salvar: " + err.message);
+    function adicionarLocalizacao(loc) {
+      const input = document.getElementById("localizacoes");
+      const atuais = input.value.split(",").map(s => s.trim()).filter(Boolean);
+      if (!atuais.includes(loc)) {
+        atuais.push(loc);
+        input.value = atuais.join(", ");
+        showToast("Adicionado: " + loc);
       }
     }
+
+    function converterFiltroTempo(val) {
+      if (val.startsWith("h")) {
+        const h = parseInt(val.slice(1), 10);
+        return { horas_maximas: h, dias_maximos: Math.ceil(h / 24) };
+      }
+      if (val.startsWith("d")) {
+        const d = parseInt(val.slice(1), 10);
+        return { horas_maximas: d * 24, dias_maximos: d };
+      }
+      const n = parseInt(val, 10) || 0;
+      return { horas_maximas: 0, dias_maximos: n };
+    }
+
+    function carregarFiltroTempo(horas, dias) {
+      if (horas === 6) return "h6";
+      if (horas === 12) return "h12";
+      if (horas === 24 || (horas === 0 && dias === 1)) return "h24";
+      if (horas === 48 || (horas === 0 && dias === 2)) return "d2";
+      if (horas === 72 || (horas === 0 && dias === 3)) return "d3";
+      if (horas === 168 || (horas === 0 && dias === 7)) return "d7";
+      if (dias === 15) return "d15";
+      if (dias === 30) return "d30";
+      if (dias > 0) return "d" + dias;
+      return "0";
+    }
+
+    function filtrosAvancadosPayload() {
+      const sel = (cls) => Array.from(document.querySelectorAll(cls + ".active")).map(b => b.dataset.val);
+      const valTempo = document.getElementById("filtroTempo").value;
+      const tempoObj = converterFiltroTempo(valTempo);
+      return {
+        horas_maximas: tempoObj.horas_maximas,
+        dias_maximos: tempoObj.dias_maximos,
+        localizacoes: document.getElementById("localizacoes").value.split(",").map(s => s.trim()).filter(Boolean),
+        modalidades: sel(".chip-mod"),
+        jornadas: sel(".chip-jor"),
+        aceitar_remoto_sempre: document.getElementById("aceitarRemotoSempre").checked
+      };
+    }
+
+    function aplicarFiltrosAvancados(data) {
+      const chaveTempo = carregarFiltroTempo(data.horas_maximas || 0, data.dias_maximos || 0);
+      document.getElementById("filtroTempo").value = chaveTempo;
+      document.getElementById("localizacoes").value = (data.localizacoes || []).join(", ");
+      document.getElementById("aceitarRemotoSempre").checked = data.aceitar_remoto_sempre !== false;
+      document.querySelectorAll(".chip-mod").forEach(b => b.classList.toggle("active", (data.modalidades || []).includes(b.dataset.val)));
+      document.querySelectorAll(".chip-jor").forEach(b => b.classList.toggle("active", (data.jornadas || []).includes(b.dataset.val)));
+    }
+
+    function formatarTempoRelativo(dataStr) {
+      if (!dataStr) return "";
+      const d = new Date(dataStr);
+      if (isNaN(d.getTime())) return "";
+      const diffMs = Date.now() - d.getTime();
+      if (diffMs < 0) return "Hoje";
+      const diffMin = Math.floor(diffMs / 60000);
+      if (diffMin < 1) return "Agora há pouco";
+      if (diffMin < 60) return "Há " + diffMin + " min";
+      const diffHoras = Math.floor(diffMin / 60);
+      if (diffHoras === 1) return "Há 1 hora";
+      if (diffHoras < 24) return "Há " + diffHoras + " horas";
+      const diffDias = Math.floor(diffHoras / 24);
+      if (diffDias === 1) return "Ontem";
+      if (diffDias < 7) return "Há " + diffDias + " dias";
+      return d.toLocaleDateString("pt-BR");
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    document.addEventListener("click", (e) => {
+      const chip = e.target.closest(".chip-mod, .chip-jor");
+      if (chip) chip.classList.toggle("active");
+    });
 
     async function executarVarredura() {
       const btn = document.getElementById("btnScrape");
@@ -806,6 +1043,7 @@
       lista.innerHTML = '<div style="text-align: center; padding: 24px; color: var(--text-dim);">Consultando fontes e unificando duplicatas...</div>';
 
       try {
+        await salvarConfiguracoes(true);
         const res = await fetch("/api/scrape", { method: "POST" });
         const data = await res.json();
 
@@ -827,24 +1065,36 @@
             multiTag = '<span class="multi-tag">Presente em ' + v.fontes.length + ' plataformas</span>';
           }
 
+          let tempoFormatado = formatarTempoRelativo(v.data);
+          let tempoHTML = tempoFormatado ? '<span class="meta-time">' + tempoFormatado + '</span>' : '';
+
+          let tagsHTML = "";
+          if (v.tags && v.tags.length > 0) {
+            tagsHTML = '<div style="margin: 8px 0 12px 0; display: flex; flex-wrap: wrap; gap: 4px;">' +
+              v.tags.slice(0, 6).map(t => '<span class="tag-chip chip-include" style="font-size: 11px;">' + escapeHtml(t) + '</span>').join('') +
+            '</div>';
+          }
+
           let linksHTML = "";
           if (v.links && v.links.length > 0) {
             v.links.forEach(l => {
-              linksHTML += '<a href="' + l.url + '" target="_blank" class="job-link-btn">Ver no ' + l.fonte + ' &rarr;</a>';
+              linksHTML += '<a href="' + l.url + '" target="_blank" class="job-link-btn">Ver no ' + escapeHtml(l.fonte) + ' &rarr;</a>';
             });
           } else if (v.link) {
             linksHTML += '<a href="' + v.link + '" target="_blank" class="job-link-btn">Acessar vaga &rarr;</a>';
           }
 
           item.innerHTML = '<div class="job-card-header">' +
-              '<div class="job-card-title">' + v.titulo + '</div>' +
+              '<div class="job-card-title">' + escapeHtml(v.titulo) + '</div>' +
               multiTag +
             '</div>' +
             '<div class="job-card-meta">' +
-              '<span><strong>' + (v.empresa || "Empresa Confidencial") + '</strong></span>' +
-              '<span>' + (v.localizacao || "Remoto") + '</span>' +
-              '<span>' + (v.fontes ? v.fontes.join(" · ") : v.fonte) + '</span>' +
+              '<span><strong style="color: #fafafa;">' + escapeHtml(v.empresa || "Empresa Confidencial") + '</strong></span>' +
+              '<span>' + escapeHtml(v.localizacao || "Remoto / Brasil") + '</span>' +
+              '<span>' + escapeHtml(v.fontes ? v.fontes.join(" · ") : v.fonte) + '</span>' +
+              tempoHTML +
             '</div>' +
+            tagsHTML +
             '<div class="job-card-links">' + linksHTML + '</div>';
           
           lista.appendChild(item);
@@ -969,7 +1219,7 @@
       }
     }
 
-    async function salvarConfiguracoes() {
+    async function salvarConfiguracoes(silencioso) {
       try {
         const payload = {
           termos_busca: termosBusca,
@@ -977,6 +1227,7 @@
           fontes_habilitadas: fontesHabilitadas,
           max_vagas_por_execucao: 30,
           frequencia_execucao: freqWindows,
+          ...filtrosAvancadosPayload(),
           email_remetente: document.getElementById("emailRemetente").value.trim(),
           email_senha_app: document.getElementById("emailSenhaApp").value.trim(),
           email_destinatario: document.getElementById("emailDestinatario").value.trim(),
@@ -990,7 +1241,7 @@
         });
 
         const data = await res.json();
-        showToast(data.mensagem || "Preferências salvas com sucesso!");
+        if (!silencioso) showToast(data.mensagem || "Preferências salvas com sucesso!");
       } catch (err) {
         showToast("Erro ao salvar: " + err.message);
       }
@@ -1011,6 +1262,7 @@
             termos_exclusao: termosExclusao,
             fontes_habilitadas: fontesHabilitadas,
             frequencia_execucao: freqGithub,
+            ...filtrosAvancadosPayload(),
             email_remetente: document.getElementById("emailRemetente").value.trim(),
             email_senha_app: document.getElementById("emailSenhaApp").value.trim(),
             email_destinatario: document.getElementById("emailDestinatario").value.trim(),

@@ -7,13 +7,13 @@ import (
 	"vagas-scraper/internal/models"
 )
 
-// GerarHTMLEmail produz um email com estética editorial minimalista, tipografia apurada
-// e sem ruído visual ou menção a linguagens/tecnologias de backend.
+// GerarHTMLEmail produz um email com estética dark moderna (fundo preto e superfícies escuras),
+// idêntica ao design do painel localhost, com tipografia apurada e legibilidade máxima.
 func GerarHTMLEmail(vagas []models.Vaga) string {
 	var cardsHTML strings.Builder
 
 	for _, v := range vagas {
-		// Tags discretas e estruturadas
+		// Tags estruturadas no estilo do localhost (.chip-include)
 		var tagsHTML strings.Builder
 		for _, tag := range v.Tags {
 			t := strings.TrimSpace(tag)
@@ -21,120 +21,182 @@ func GerarHTMLEmail(vagas []models.Vaga) string {
 				continue
 			}
 			tagsHTML.WriteString(fmt.Sprintf(`
-				<span style="display: inline-block; font-size: 11px; font-weight: 500; color: #52525b; background-color: #f4f4f5; border: 1px solid #e4e4e7; padding: 2px 7px; border-radius: 4px; margin-right: 4px; margin-bottom: 4px;">
+				<span style="display: inline-block; font-size: 11px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-weight: 500; color: #93c5fd; background-color: rgba(37, 99, 235, 0.12); border: 1px solid rgba(37, 99, 235, 0.3); padding: 2px 7px; border-radius: 4px; margin-right: 5px; margin-bottom: 5px;">
 					%s
 				</span>`, escapeHTML(t)))
 		}
 
-		// Botões de link limpos
+		// Botões de link no padrão do localhost (.job-link-btn)
 		var botoesHTML strings.Builder
 		if len(v.Links) > 0 {
 			for _, lf := range v.Links {
 				botoesHTML.WriteString(fmt.Sprintf(`
-					<a href="%s" target="_blank" style="display: inline-block; background-color: #18181b; color: #fafafa; font-size: 12px; font-weight: 600; text-decoration: none; padding: 7px 14px; border-radius: 5px; margin-right: 8px; margin-bottom: 6px;">
+					<a href="%s" target="_blank" style="display: inline-block; background-color: #18181b; border: 1px solid #3f3f46; color: #fafafa; font-size: 12px; font-weight: 600; text-decoration: none; padding: 7px 14px; border-radius: 6px; margin-right: 8px; margin-bottom: 6px;">
 						Ver no %s &rarr;
 					</a>`, escapeHTML(lf.URL), escapeHTML(lf.Fonte)))
 			}
 		} else if v.Link != "" {
+			nomeFonte := v.Fonte
+			if nomeFonte == "" {
+				nomeFonte = "Portal"
+			}
 			botoesHTML.WriteString(fmt.Sprintf(`
-				<a href="%s" target="_blank" style="display: inline-block; background-color: #18181b; color: #fafafa; font-size: 12px; font-weight: 600; text-decoration: none; padding: 7px 14px; border-radius: 5px;">
-					Acessar vaga &rarr;
-				</a>`, escapeHTML(v.Link)))
-		}
-
-		// Indicador de múltiplas fontes
-		indicadorMulti := ""
-		if len(v.Fontes) > 1 {
-			indicadorMulti = fmt.Sprintf(`
-				<div style="font-size: 11px; font-weight: 600; color: #0284c7; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
-					Disponível em %d plataformas (%s)
-				</div>`, len(v.Fontes), escapeHTML(strings.Join(v.Fontes, ", ")))
+				<a href="%s" target="_blank" style="display: inline-block; background-color: #18181b; border: 1px solid #3f3f46; color: #fafafa; font-size: 12px; font-weight: 600; text-decoration: none; padding: 7px 14px; border-radius: 6px; margin-right: 8px; margin-bottom: 6px;">
+					Ver no %s &rarr;
+				</a>`, escapeHTML(v.Link), escapeHTML(nomeFonte)))
 		}
 
 		fonteTexto := v.Fonte
 		if len(v.Fontes) > 0 {
 			fonteTexto = strings.Join(v.Fontes, " · ")
 		}
+		if fonteTexto == "" {
+			fonteTexto = "Portal de Vagas"
+		}
+
+		// Indicador de múltiplas fontes (.multi-tag no estilo do localhost)
+		indicadorMulti := ""
+		if len(v.Fontes) > 1 {
+			indicadorMulti = fmt.Sprintf(`
+				<span style="display: inline-block; font-size: 11px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-weight: 600; color: #fbbf24; background-color: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px;">
+					Presente em %d portais (%s)
+				</span>`, len(v.Fontes), escapeHTML(strings.Join(v.Fontes, ", ")))
+		}
+
+		// Badge de data / horário
+		tempo := v.TempoRelativo()
+		tempoHTML := ""
+		if tempo != "" {
+			tempoHTML = fmt.Sprintf(`<span style="color: #27272a; margin: 0 6px;">·</span><span style="color: #34d399; font-weight: 500;">%s</span>`, escapeHTML(tempo))
+		}
+
+		localTexto := v.Localizacao
+		if localTexto == "" {
+			localTexto = "Remoto / Brasil"
+		}
 
 		cardsHTML.WriteString(fmt.Sprintf(`
-			<div style="background-color: #ffffff; border: 1px solid #e4e4e7; border-radius: 8px; padding: 20px; margin-bottom: 14px;">
-				%s
-				<h3 style="margin: 0 0 6px 0; font-size: 16px; font-weight: 600; color: #09090b; line-height: 1.35;">
+			<div style="background-color: #121215; border: 1px solid #27272a; border-radius: 8px; padding: 20px; margin-bottom: 14px; text-align: left;">
+				<div style="margin-bottom: 8px;">
+					<span style="display: inline-block; font-size: 11px; font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-weight: 600; color: #60a5fa; background-color: rgba(37, 99, 235, 0.12); border: 1px solid rgba(37, 99, 235, 0.3); padding: 2px 8px; border-radius: 4px; letter-spacing: 0.3px;">
+						Portal: %s
+					</span>
+					%s
+				</div>
+
+				<h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #93c5fd; line-height: 1.35;">
 					%s
 				</h3>
 				
-				<div style="font-size: 13px; color: #71717a; margin-bottom: 12px;">
-					<strong style="color: #27272a;">%s</strong>
-					<span style="color: #d4d4d8; margin: 0 6px;">·</span>
-					<span>%s</span>
-					<span style="color: #d4d4d8; margin: 0 6px;">·</span>
-					<span>%s</span>
-				</div>
-
-				<div style="margin-bottom: 14px;">
+				<div style="font-size: 13px; color: #71717a; margin-bottom: 12px; line-height: 1.6;">
+					<strong style="color: #fafafa; font-weight: 600;">%s</strong>
+					<span style="color: #27272a; margin: 0 6px;">·</span>
+					<span style="color: #a1a1aa;">%s</span>
 					%s
 				</div>
 
-				<div>
+				%s
+
+				<div style="margin-top: 12px;">
 					%s
 				</div>
 			</div>
 		`,
+			escapeHTML(fonteTexto),
 			indicadorMulti,
 			escapeHTML(v.Titulo),
 			escapeHTML(v.Empresa),
-			escapeHTML(v.Localizacao),
-			escapeHTML(fonteTexto),
-			tagsHTML.String(),
+			escapeHTML(localTexto),
+			tempoHTML,
+			func() string {
+				if tagsHTML.Len() > 0 {
+					return fmt.Sprintf(`<div style="margin-bottom: 12px;">%s</div>`, tagsHTML.String())
+				}
+				return ""
+			}(),
 			botoesHTML.String(),
 		))
+	}
+
+	// Resumo dos portais consultados
+	var portaisUnicos []string
+	portaisVistos := make(map[string]bool)
+	for _, v := range vagas {
+		if v.Fonte != "" && !portaisVistos[v.Fonte] {
+			portaisVistos[v.Fonte] = true
+			portaisUnicos = append(portaisUnicos, v.Fonte)
+		}
+		for _, pf := range v.Fontes {
+			if pf != "" && !portaisVistos[pf] {
+				portaisVistos[pf] = true
+				portaisUnicos = append(portaisUnicos, pf)
+			}
+		}
+	}
+	resumoPortais := strings.Join(portaisUnicos, " · ")
+	if resumoPortais == "" {
+		resumoPortais = "LinkedIn · Gupy · GitHub · ProgramaThor · RemoteOK"
 	}
 
 	dataExtenso := time.Now().Format("02 de January de 2006 às 15:04")
 	dataExtenso = traduzirMes(dataExtenso)
 
 	return fmt.Sprintf(`<!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Digest de Vagas</title>
+	<meta name="color-scheme" content="dark">
+	<meta name="supported-color-schemes" content="dark">
+	<title>Digest de Vagas • Radar</title>
+	<style>
+		:root { color-scheme: dark; supported-color-schemes: dark; }
+		body { background-color: #09090b !important; color: #fafafa !important; }
+		a { color: #93c5fd; }
+	</style>
 </head>
-<body style="margin: 0; padding: 32px 12px; background-color: #fafafa; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #18181b;">
-	<table role="presentation" width="100%%" cellspacing="0" cellpadding="0" border="0">
+<body style="margin: 0; padding: 32px 12px; background-color: #09090b; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #fafafa; -webkit-font-smoothing: antialiased;">
+	<table role="presentation" width="100%%" cellspacing="0" cellpadding="0" border="0" style="background-color: #09090b;">
 		<tr>
-			<td align="center">
-				<table role="presentation" width="100%%" style="max-width: 600px;" cellspacing="0" cellpadding="0" border="0">
-					<!-- Cabeçalho Editorial -->
+			<td align="center" style="background-color: #09090b;">
+				<table role="presentation" width="100%%" style="max-width: 620px; background-color: #09090b;" cellspacing="0" cellpadding="0" border="0">
+					<!-- Cabeçalho idêntico ao localhost -->
 					<tr>
-						<td style="padding: 24px 0 20px 0; border-bottom: 2px solid #18181b; text-align: left;">
-							<div style="font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #71717a; margin-bottom: 6px;">
-								Relatório Periódico de Oportunidades
+						<td style="padding: 0 0 20px 0; text-align: left;">
+							<div style="background-color: #121215; border: 1px solid #27272a; border-radius: 8px; padding: 22px 24px;">
+								<div style="margin-bottom: 10px;">
+									<span style="font-family: 'JetBrains Mono', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; color: #34d399; background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); padding: 3px 8px; border-radius: 4px; letter-spacing: 0.5px;">
+										RADAR DE VAGAS • ATIVO
+									</span>
+								</div>
+								<h1 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #fafafa; letter-spacing: -0.4px;">
+									%d Novas Vagas Selecionadas
+								</h1>
+								<p style="margin: 0 0 8px 0; font-size: 13px; color: #a1a1aa; line-height: 1.5;">
+									Varredura concluída em %s com deduplicação unificada entre plataformas.
+								</p>
+								<div style="font-size: 12px; color: #71717a;">
+									Portais: <strong style="color: #93c5fd; font-weight: 500;">%s</strong>
+								</div>
 							</div>
-							<h1 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 700; color: #09090b; letter-spacing: -0.5px;">
-								%d Novas Vagas Selecionadas
-							</h1>
-							<p style="margin: 0; font-size: 13px; color: #71717a;">
-								Varredura concluída em %s com deduplicação cruzada
-							</p>
 						</td>
 					</tr>
 
 					<!-- Lista de Vagas -->
 					<tr>
-						<td style="padding-top: 20px;">
+						<td>
 							%s
 						</td>
 					</tr>
 
-					<!-- Rodapé Neutro -->
+					<!-- Rodapé Neutro Dark -->
 					<tr>
-						<td style="padding: 24px 0; border-top: 1px solid #e4e4e7; text-align: center;">
-							<p style="margin: 0 0 4px 0; font-size: 12px; color: #71717a;">
+						<td style="padding: 24px 0 16px 0; border-top: 1px solid #27272a; text-align: center;">
+							<p style="margin: 0 0 6px 0; font-size: 12px; color: #71717a;">
 								Radar de Oportunidades · Notificação automatizada
 							</p>
-							<p style="margin: 0; font-size: 11px; color: #a1a1aa;">
-								Filtros calibrados e deduplicação unificada entre plataformas
+							<p style="margin: 0; font-size: 11px; color: #52525b;">
+								Filtros calibrados e deduplicação ativa · <a href="http://localhost:8080" style="color: #60a5fa; text-decoration: none;">Abrir Painel de Controle Local</a>
 							</p>
 						</td>
 					</tr>
@@ -143,7 +205,7 @@ func GerarHTMLEmail(vagas []models.Vaga) string {
 		</tr>
 	</table>
 </body>
-</html>`, len(vagas), dataExtenso, cardsHTML.String())
+</html>`, len(vagas), dataExtenso, resumoPortais, cardsHTML.String())
 }
 
 func traduzirMes(s string) string {

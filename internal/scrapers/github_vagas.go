@@ -84,6 +84,17 @@ func (g *GitHubVagasScraper) Buscar() ([]models.Vaga, error) {
 		}
 
 		// Tenta extrair empresa ou localização do formato comum de título: [Localização/Remoto] Cargo na Empresa
+		if localizacao == "Não especificada" {
+			if ini := strings.Index(issue.Title, "["); ini != -1 {
+				if fim := strings.Index(issue.Title, "]"); fim > ini {
+					conteudo := strings.TrimSpace(issue.Title[ini+1 : fim])
+					if conteudo != "" && len(conteudo) <= 40 {
+						localizacao = conteudo
+					}
+				}
+			}
+		}
+
 		empresa := extrairEmpresa(issue.Title)
 
 		vagas = append(vagas, models.Vaga{

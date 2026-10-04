@@ -11,8 +11,14 @@ import (
 
 // FiltrosConfig define palavras-chave aceitas e proibidas.
 type FiltrosConfig struct {
-	TermosBusca    []string `json:"termos_busca"`
-	TermosExclusao []string `json:"termos_exclusao"`
+	TermosBusca         []string `json:"termos_busca"`
+	TermosExclusao      []string `json:"termos_exclusao"`
+	HorasMaximas        int      `json:"horas_maximas,omitempty"`
+	DiasMaximos         int      `json:"dias_maximos"`
+	Localizacoes        []string `json:"localizacoes"`
+	Modalidades         []string `json:"modalidades"`
+	Jornadas            []string `json:"jornadas"`
+	AceitarRemotoSempre bool     `json:"aceitar_remoto_sempre"`
 }
 
 // AppConfig armazena as configurações do sistema.

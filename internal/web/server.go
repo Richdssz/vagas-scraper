@@ -32,6 +32,12 @@ type ConfigPayload struct {
 	FontesHabilitadas   []string `json:"fontes_habilitadas"`
 	MaxVagasPorExecucao int      `json:"max_vagas_por_execucao"`
 	FrequenciaExecucao  string   `json:"frequencia_execucao"`
+	HorasMaximas        int      `json:"horas_maximas"`
+	DiasMaximos         int      `json:"dias_maximos"`
+	Localizacoes        []string `json:"localizacoes"`
+	Modalidades         []string `json:"modalidades"`
+	Jornadas            []string `json:"jornadas"`
+	AceitarRemotoSempre bool     `json:"aceitar_remoto_sempre"`
 	EmailRemetente      string   `json:"email_remetente"`
 	EmailSenhaApp       string   `json:"email_senha_app"`
 	EmailDestinatario   string   `json:"email_destinatario"`
@@ -69,19 +75,20 @@ func (s *ServidorWeb) Iniciar() error {
 	mux.HandleFunc("/api/schedule-windows/cancel", s.handleScheduleWindowsCancel)
 	mux.HandleFunc("/api/sync-github", s.handleSyncGitHub)
 	mux.HandleFunc("/api/workflow-frequency", s.handleWorkflowFrequency)
+	mux.HandleFunc("/api/health", s.handleHealth)
 
 	urlAcesso := fmt.Sprintf("http://localhost:%s", s.porta)
 
 	l, err := net.Listen("tcp", ":"+s.porta)
 	if err != nil {
-		log.Printf("ℹ️ O Painel de Controle já está ativo na porta %s! Abrindo seu navegador...", s.porta)
+		log.Printf("O Painel de Controle já está ativo na porta %s! Abrindo seu navegador...", s.porta)
 		abrirNavegador(urlAcesso)
 		time.Sleep(1 * time.Second)
 		return nil
 	}
 
-	log.Printf("🌐 Servidor Web ativo em: %s", urlAcesso)
-	log.Println("💡 Abrindo painel de controle no seu navegador padrão...")
+	log.Printf("Servidor Web ativo em: %s", urlAcesso)
+	log.Println("Abrindo painel de controle no seu navegador padrão...")
 	go abrirNavegador(urlAcesso)
 
 	return http.Serve(l, mux)
@@ -111,6 +118,12 @@ func (s *ServidorWeb) handleConfig(w http.ResponseWriter, r *http.Request) {
 			FontesHabilitadas:   cfg.FontesHabilitadas,
 			MaxVagasPorExecucao: cfg.MaxVagasPorExecucao,
 			FrequenciaExecucao:  cfg.FrequenciaExecucao,
+			HorasMaximas:        cfg.Filtros.HorasMaximas,
+			DiasMaximos:         cfg.Filtros.DiasMaximos,
+			Localizacoes:        cfg.Filtros.Localizacoes,
+			Modalidades:         cfg.Filtros.Modalidades,
+			Jornadas:            cfg.Filtros.Jornadas,
+			AceitarRemotoSempre: cfg.Filtros.AceitarRemotoSempre,
 			EmailRemetente:      cfg.EmailRemetente,
 			EmailSenhaApp:       mascararSenha(cfg.EmailSenhaApp),
 			EmailDestinatario:   cfg.EmailDestinatario,
@@ -134,6 +147,12 @@ func (s *ServidorWeb) handleConfig(w http.ResponseWriter, r *http.Request) {
 		cfg.Filtros.TermosBusca = payload.TermosBusca
 		cfg.Filtros.TermosExclusao = payload.TermosExclusao
 		cfg.FontesHabilitadas = payload.FontesHabilitadas
+		cfg.Filtros.HorasMaximas = payload.HorasMaximas
+		cfg.Filtros.DiasMaximos = payload.DiasMaximos
+		cfg.Filtros.Localizacoes = payload.Localizacoes
+		cfg.Filtros.Modalidades = payload.Modalidades
+		cfg.Filtros.Jornadas = payload.Jornadas
+		cfg.Filtros.AceitarRemotoSempre = payload.AceitarRemotoSempre
 		if payload.MaxVagasPorExecucao > 0 {
 			cfg.MaxVagasPorExecucao = payload.MaxVagasPorExecucao
 		}
@@ -242,8 +261,20 @@ func (s *ServidorWeb) handleScrape(w http.ResponseWriter, r *http.Request) {
 	repoStorage, _ := storage.NovoStorage("vagas_vistas.json")
 	var selecionadas []models.Vaga
 
+	filtrosAv := scrapers.FiltrosAvancados{
+		HorasMaximas:        cfg.Filtros.HorasMaximas,
+		DiasMaximos:         cfg.Filtros.DiasMaximos,
+		Localizacoes:        cfg.Filtros.Localizacoes,
+		Modalidades:         cfg.Filtros.Modalidades,
+		Jornadas:            cfg.Filtros.Jornadas,
+		AceitarRemotoSempre: cfg.Filtros.AceitarRemotoSempre,
+	}
+
 	for _, v := range vagasMescladas {
 		if repoStorage.JaVista(v.ID) || repoStorage.JaVista(v.ChaveCanonica) {
+			continue
+		}
+		if !scrapers.FiltroAvancadoAceita(v, filtrosAv) {
 			continue
 		}
 		if scrapers.FiltroAceitaVaga(v, cfg.Filtros.TermosBusca, cfg.Filtros.TermosExclusao) {
@@ -317,6 +348,12 @@ func (s *ServidorWeb) handlePreviewEmail(w http.ResponseWriter, r *http.Request)
 	}
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.Write(data)
+}
+
+func (s *ServidorWeb) handleHealth(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+	w.Write([]byte(fmt.Sprintf(`{"status":"online","porta":"%s","timestamp":%d}`, s.porta, time.Now().Unix())))
 }
 
 func (s *ServidorWeb) handleScheduleWindowsStatus(w http.ResponseWriter, r *http.Request) {
