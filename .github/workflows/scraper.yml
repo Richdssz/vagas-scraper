@@ -12,8 +12,12 @@ on:
     # - 3x ao dia (09:00, 14:00, 19:00): '0 12,17,22 * * *'  <-- ATUAL
     # - A cada 4 horas:               '0 */4 * * *'
     # =========================================================================
+    # Executa todos os dias às 10:20 (UTC)
+    - cron: '25 10 * * *'
+    # O seu agendamento de 4x ao dia (ex: 11:00, 15:00, 19:00, 23:00 UTC)
     - cron: '0 11,15,19,23 * * *'
 
+   # =========================================================================
   # Permite disparar manualmente a qualquer momento pelo botão "Run workflow" no GitHub
   workflow_dispatch:
 
