@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"sync"
@@ -29,10 +30,15 @@ type ConfigPayload struct {
 	TermosExclusao      []string `json:"termos_exclusao"`
 	FontesHabilitadas   []string `json:"fontes_habilitadas"`
 	MaxVagasPorExecucao int      `json:"max_vagas_por_execucao"`
+	FrequenciaExecucao  string   `json:"frequencia_execucao"`
 	EmailRemetente      string   `json:"email_remetente"`
 	EmailSenhaApp       string   `json:"email_senha_app"`
 	EmailDestinatario   string   `json:"email_destinatario"`
 	DryRun              bool     `json:"dry_run"`
+}
+
+type SchedulePayload struct {
+	Frequencia string `json:"frequencia"`
 }
 
 type ServidorWeb struct {
@@ -54,10 +60,14 @@ func (s *ServidorWeb) Iniciar() error {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", s.handleIndex)
+	mux.HandleFunc("/preview-email", s.handlePreviewEmail)
 	mux.HandleFunc("/api/config", s.handleConfig)
 	mux.HandleFunc("/api/scrape", s.handleScrape)
 	mux.HandleFunc("/api/schedule-windows", s.handleScheduleWindows)
+	mux.HandleFunc("/api/schedule-windows/status", s.handleScheduleWindowsStatus)
+	mux.HandleFunc("/api/schedule-windows/cancel", s.handleScheduleWindowsCancel)
 	mux.HandleFunc("/api/sync-github", s.handleSyncGitHub)
+	mux.HandleFunc("/api/workflow-frequency", s.handleWorkflowFrequency)
 
 	urlAcesso := fmt.Sprintf("http://localhost:%s", s.porta)
 	log.Printf("🌐 Servidor Web ativo em: %s", urlAcesso)
@@ -91,6 +101,7 @@ func (s *ServidorWeb) handleConfig(w http.ResponseWriter, r *http.Request) {
 			TermosExclusao:      cfg.Filtros.TermosExclusao,
 			FontesHabilitadas:   cfg.FontesHabilitadas,
 			MaxVagasPorExecucao: cfg.MaxVagasPorExecucao,
+			FrequenciaExecucao:  cfg.FrequenciaExecucao,
 			EmailRemetente:      cfg.EmailRemetente,
 			EmailSenhaApp:       mascararSenha(cfg.EmailSenhaApp),
 			EmailDestinatario:   cfg.EmailDestinatario,
@@ -116,6 +127,10 @@ func (s *ServidorWeb) handleConfig(w http.ResponseWriter, r *http.Request) {
 		cfg.FontesHabilitadas = payload.FontesHabilitadas
 		if payload.MaxVagasPorExecucao > 0 {
 			cfg.MaxVagasPorExecucao = payload.MaxVagasPorExecucao
+		}
+		if payload.FrequenciaExecucao != "" {
+			cfg.FrequenciaExecucao = payload.FrequenciaExecucao
+			_ = atualizarCronWorkflow(payload.FrequenciaExecucao)
 		}
 
 		configData, err := json.MarshalIndent(cfg, "", "  ")
@@ -219,6 +234,9 @@ func (s *ServidorWeb) handleScrape(w http.ResponseWriter, r *http.Request) {
 	var selecionadas []models.Vaga
 
 	for _, v := range vagasMescladas {
+		if repoStorage.JaVista(v.ID) || repoStorage.JaVista(v.ChaveCanonica) {
+			continue
+		}
 		if scrapers.FiltroAceitaVaga(v, cfg.Filtros.TermosBusca, cfg.Filtros.TermosExclusao) {
 			selecionadas = append(selecionadas, v)
 			if len(selecionadas) >= cfg.MaxVagasPorExecucao {
@@ -226,6 +244,10 @@ func (s *ServidorWeb) handleScrape(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+
+	// Sempre atualiza o preview_email.html com o padrão idêntico de envio
+	htmlBody := notifier.GerarHTMLEmail(selecionadas)
+	_ = os.WriteFile("preview_email.html", []byte(htmlBody), 0644)
 
 	if enviarEmailReal && len(selecionadas) > 0 {
 		notif := notifier.NovoNotificador(cfg)
@@ -277,6 +299,117 @@ func (s *ServidorWeb) handleSyncGitHub(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"sucesso":true,"mensagem":"Configurações e filtros enviados com sucesso para o GitHub!"}`))
 }
 
+func (s *ServidorWeb) handlePreviewEmail(w http.ResponseWriter, r *http.Request) {
+	data, err := os.ReadFile("preview_email.html")
+	if err != nil {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Write([]byte("<html><body style='font-family:sans-serif;padding:30px;text-align:center;'><h2>Nenhum preview gerado ainda</h2><p>Clique em 'Buscar vagas' no painel para gerar a pré-visualização mais recente.</p></body></html>"))
+		return
+	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Write(data)
+}
+
+func (s *ServidorWeb) handleScheduleWindowsStatus(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	if runtime.GOOS != "windows" {
+		w.Write([]byte(`{"agendado":false,"mensagem":"Apenas Windows"}`))
+		return
+	}
+
+	out, err := exec.Command("schtasks", "/Query", "/FO", "LIST").CombinedOutput()
+	if err != nil {
+		w.Write([]byte(`{"agendado":false}`))
+		return
+	}
+
+	texto := string(out)
+	var horarios []string
+	if strings.Contains(texto, "VagasScraper_08h") {
+		horarios = append(horarios, "08:00")
+	}
+	if strings.Contains(texto, "VagasScraper_09h") {
+		horarios = append(horarios, "09:00")
+	}
+	if strings.Contains(texto, "VagasScraper_12h") {
+		horarios = append(horarios, "12:00")
+	}
+	if strings.Contains(texto, "VagasScraper_14h") {
+		horarios = append(horarios, "14:00")
+	}
+	if strings.Contains(texto, "VagasScraper_16h") {
+		horarios = append(horarios, "16:00")
+	}
+	if strings.Contains(texto, "VagasScraper_18h") {
+		horarios = append(horarios, "18:00")
+	}
+	if strings.Contains(texto, "VagasScraper_19h") {
+		horarios = append(horarios, "19:00")
+	}
+	if strings.Contains(texto, "VagasScraper_20h") {
+		horarios = append(horarios, "20:00")
+	}
+
+	if len(horarios) > 0 {
+		freq := fmt.Sprintf("%dx ao dia", len(horarios))
+		json.NewEncoder(w).Encode(map[string]any{
+			"agendado":   true,
+			"frequencia": freq,
+			"tarefas":    horarios,
+		})
+		return
+	}
+
+	w.Write([]byte(`{"agendado":false}`))
+}
+
+func (s *ServidorWeb) handleScheduleWindowsCancel(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, `{"erro":"metodo nao permitido"}`, http.StatusMethodNotAllowed)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+
+	tarefas := []string{
+		"VagasScraper_08h", "VagasScraper_09h", "VagasScraper_12h", "VagasScraper_14h",
+		"VagasScraper_16h", "VagasScraper_18h", "VagasScraper_19h", "VagasScraper_20h",
+		"VagasScraperDiario", "VagasScraperTeste",
+	}
+
+	for _, t := range tarefas {
+		_ = exec.Command("schtasks", "/Delete", "/TN", t, "/F").Run()
+	}
+
+	w.Write([]byte(`{"sucesso":true,"mensagem":"Agendamento cancelado com sucesso no Windows! Todas as tarefas foram removidas."}`))
+}
+
+func (s *ServidorWeb) handleWorkflowFrequency(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, `{"erro":"metodo nao permitido"}`, http.StatusMethodNotAllowed)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+
+	var payload SchedulePayload
+	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil || payload.Frequencia == "" {
+		payload.Frequencia = "3x"
+	}
+
+	if err := atualizarCronWorkflow(payload.Frequencia); err != nil {
+		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Falha ao atualizar workflow: %v"}`, err)))
+		return
+	}
+
+	cfg, _ := config.Carregar(s.caminhoConfig)
+	if cfg != nil {
+		cfg.FrequenciaExecucao = payload.Frequencia
+		configData, _ := json.MarshalIndent(cfg, "", "  ")
+		_ = os.WriteFile(s.caminhoConfig, configData, 0644)
+	}
+
+	w.Write([]byte(fmt.Sprintf(`{"sucesso":true,"mensagem":"Frequência do GitHub Actions atualizada para %s! Clique em 'Subir pro GitHub' para aplicar no repositório."}`, payload.Frequencia)))
+}
+
 func (s *ServidorWeb) handleScheduleWindows(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, `{"erro":"metodo nao permitido"}`, http.StatusMethodNotAllowed)
@@ -287,6 +420,13 @@ func (s *ServidorWeb) handleScheduleWindows(w http.ResponseWriter, r *http.Reque
 	if runtime.GOOS != "windows" {
 		w.Write([]byte(`{"sucesso":false,"mensagem":"O agendamento automático é exclusivo para sistemas Windows."}`))
 		return
+	}
+
+	var payload SchedulePayload
+	_ = json.NewDecoder(r.Body).Decode(&payload)
+	frequencia := payload.Frequencia
+	if frequencia == "" {
+		frequencia = "3x"
 	}
 
 	dir, err := os.Getwd()
@@ -300,17 +440,49 @@ func (s *ServidorWeb) handleScheduleWindows(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	// Execução silenciosa em segundo plano via powershell -WindowStyle Hidden
-	targetCmd := fmt.Sprintf(`powershell.exe -WindowStyle Hidden -Command "Start-Process -FilePath '%s' -WorkingDirectory '%s'"`, scraperPath, dir)
+	// 1. Remove tarefas antigas primeiro
+	tarefasAntigas := []string{
+		"VagasScraper_08h", "VagasScraper_09h", "VagasScraper_12h", "VagasScraper_14h",
+		"VagasScraper_16h", "VagasScraper_18h", "VagasScraper_19h", "VagasScraper_20h",
+		"VagasScraperDiario", "VagasScraperTeste",
+	}
+	for _, t := range tarefasAntigas {
+		_ = exec.Command("schtasks", "/Delete", "/TN", t, "/F").Run()
+	}
 
-	horarios := []struct {
+	// 2. Define os horários de acordo com a frequência escolhida
+	type Horario struct {
 		nome string
 		hora string
-	}{
-		{"VagasScraper_09h", "09:00"},
-		{"VagasScraper_14h", "14:00"},
-		{"VagasScraper_19h", "19:00"},
 	}
+	var horarios []Horario
+
+	switch frequencia {
+	case "1x":
+		horarios = []Horario{
+			{"VagasScraper_09h", "09:00"},
+		}
+	case "2x":
+		horarios = []Horario{
+			{"VagasScraper_09h", "09:00"},
+			{"VagasScraper_18h", "18:00"},
+		}
+	case "4x":
+		horarios = []Horario{
+			{"VagasScraper_08h", "08:00"},
+			{"VagasScraper_12h", "12:00"},
+			{"VagasScraper_16h", "16:00"},
+			{"VagasScraper_20h", "20:00"},
+		}
+	default: // "3x"
+		horarios = []Horario{
+			{"VagasScraper_09h", "09:00"},
+			{"VagasScraper_14h", "14:00"},
+			{"VagasScraper_19h", "19:00"},
+		}
+	}
+
+	targetCmd := fmt.Sprintf(`powershell.exe -WindowStyle Hidden -Command "Start-Process -FilePath '%s' -WorkingDirectory '%s'"`, scraperPath, dir)
 
 	var erros []string
 	for _, h := range horarios {
@@ -327,7 +499,41 @@ func (s *ServidorWeb) handleScheduleWindows(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	w.Write([]byte(`{"sucesso":true,"mensagem":"Tarefas agendadas com sucesso no Windows! O robô rodará automaticamente às 09:00, 14:00 e 19:00 sem abrir janelas."}`))
+	// Atualiza config.json com a frequência
+	cfg, _ := config.Carregar(s.caminhoConfig)
+	if cfg != nil {
+		cfg.FrequenciaExecucao = frequencia
+		configData, _ := json.MarshalIndent(cfg, "", "  ")
+		_ = os.WriteFile(s.caminhoConfig, configData, 0644)
+	}
+
+	var horasList []string
+	for _, h := range horarios {
+		horasList = append(horasList, h.hora)
+	}
+
+	w.Write([]byte(fmt.Sprintf(`{"sucesso":true,"mensagem":"Tarefas agendadas com sucesso no Windows (%s: %s)! O robô rodará automaticamente sem abrir janelas."}`, frequencia, strings.Join(horasList, ", "))))
+}
+
+func atualizarCronWorkflow(frequencia string) error {
+	caminho := filepath.Join(".github", "workflows", "scraper.yml")
+	data, err := os.ReadFile(caminho)
+	if err != nil {
+		return err
+	}
+	cronMap := map[string]string{
+		"1x": "'0 12 * * *'",
+		"2x": "'0 12,21 * * *'",
+		"3x": "'0 12,17,22 * * *'",
+		"4x": "'0 11,15,19,23 * * *'",
+	}
+	cronVal, ok := cronMap[frequencia]
+	if !ok {
+		cronVal = "'0 12,17,22 * * *'"
+	}
+	re := regexp.MustCompile(`(?m)^\s*-\s*cron:\s*['"][^'"]+['"]`)
+	novo := re.ReplaceAllString(string(data), fmt.Sprintf("    - cron: %s", cronVal))
+	return os.WriteFile(caminho, []byte(novo), 0644)
 }
 
 func mascararSenha(senha string) string {

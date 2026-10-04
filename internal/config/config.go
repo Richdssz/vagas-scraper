@@ -21,6 +21,7 @@ type AppConfig struct {
 	FontesHabilitadas   []string      `json:"fontes_habilitadas"`
 	MaxVagasPorExecucao int           `json:"max_vagas_por_execucao"`
 	SalvarPreviewHTML   bool          `json:"salvar_preview_html"`
+	FrequenciaExecucao  string        `json:"frequencia_execucao"`
 
 	// Dados carregados de variáveis de ambiente / .env
 	EmailRemetente    string `json:"-"`
@@ -74,6 +75,10 @@ func Carregar(caminhoConfig string) (*AppConfig, error) {
 
 	if cfg.MaxVagasPorExecucao <= 0 {
 		cfg.MaxVagasPorExecucao = 25
+	}
+
+	if cfg.FrequenciaExecucao == "" {
+		cfg.FrequenciaExecucao = "3x"
 	}
 
 	return &cfg, nil

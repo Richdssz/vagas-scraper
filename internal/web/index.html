@@ -425,6 +425,27 @@
       animation: spin 0.7s linear infinite;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .freq-btn, .freq-btn-gh {
+      font-size: 12px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-muted);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .freq-btn:hover, .freq-btn-gh:hover {
+      border-color: var(--border-focus);
+      color: var(--text);
+    }
+    .freq-btn.active, .freq-btn-gh.active {
+      border-color: #3b82f6;
+      background: rgba(37, 99, 235, 0.15);
+      color: #93c5fd;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -439,6 +460,10 @@
         <button class="btn-outline" id="btnSyncGit" onclick="sincronizarGitHub()" title="Sobe as preferências e filtros locais para o GitHub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 3px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           <span>Subir pro GitHub</span>
+        </button>
+        <button class="btn-outline" onclick="window.open('/preview-email', '_blank')" title="Abre a pré-visualização do e-mail com o template editorial oficial">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 3px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>Prévia do E-mail</span>
         </button>
         <button class="btn-outline" onclick="salvarConfiguracoes()">Salvar preferências</button>
         <button class="btn-solid" id="btnScrape" onclick="executarVarredura()">
@@ -507,9 +532,14 @@
 
     <!-- Resultados em Tempo Real -->
     <div class="section" id="sectionResultados" style="display: none;">
-      <div class="section-header">
-        <h2 class="section-title" id="tituloResultados">Oportunidades Localizadas</h2>
-        <p class="section-desc" id="subtituloResultados"></p>
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 class="section-title" id="tituloResultados">Oportunidades Localizadas</h2>
+          <p class="section-desc" id="subtituloResultados"></p>
+        </div>
+        <button class="btn-outline" onclick="window.open('/preview-email', '_blank')" style="font-size: 12px;">
+          Abrir Modelo de E-mail &rarr;
+        </button>
       </div>
       <div class="results-area" id="listaVagas"></div>
     </div>
@@ -518,7 +548,7 @@
     <div class="section">
       <div class="section-header">
         <h2 class="section-title">Automação de Execução</h2>
-        <p class="section-desc">Defina o ambiente para executar a varredura autônoma 3 vezes ao dia.</p>
+        <p class="section-desc">Escolha a frequência diária e configure a execução automática no seu Windows ou na nuvem pelo GitHub Actions.</p>
       </div>
 
       <div class="tabs-nav">
@@ -527,21 +557,55 @@
       </div>
 
       <div id="abaWindows">
-        <p class="section-desc" style="margin-bottom: 16px;">
-          O sistema executa 3 vezes ao dia (09:00, 14:00 e 19:00). A varredura dura cerca de 1 segundo e o processo se encerra automaticamente sem manter janelas abertas.
+        <!-- Status Box Windows -->
+        <div id="statusWindowsBox" style="display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px 18px; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="font-size: 13px; font-weight: 600;" id="statusWindowsTitulo">⚪ Verificando status do agendador...</div>
+            <div style="font-size: 12px; color: var(--text-dim); margin-top: 3px;" id="statusWindowsDesc">Consultando tarefas ativas no Windows...</div>
+          </div>
+          <button class="btn-outline" id="btnCancelarWindows" style="display: none; color: #f43f5e; border-color: rgba(244, 63, 94, 0.4);" onclick="cancelarAgendamentoWindows()">
+            Cancelar Agendamento
+          </button>
+        </div>
+
+        <div style="margin-bottom: 18px;">
+          <label style="font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; display: block;">Quantas vezes executar por dia no Windows:</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="grupoFreqWindows">
+            <button type="button" class="freq-btn" data-freq="1x" onclick="selecionarFreqWindows('1x')">1x ao dia (09:00)</button>
+            <button type="button" class="freq-btn" data-freq="2x" onclick="selecionarFreqWindows('2x')">2x ao dia (09:00, 18:00)</button>
+            <button type="button" class="freq-btn active" data-freq="3x" onclick="selecionarFreqWindows('3x')">3x ao dia (09:00, 14:00, 19:00)</button>
+            <button type="button" class="freq-btn" data-freq="4x" onclick="selecionarFreqWindows('4x')">4x ao dia (08h, 12h, 16h, 20h)</button>
+          </div>
+        </div>
+
+        <p class="section-desc" style="margin-bottom: 14px;">
+          A varredura dura cerca de 1 segundo e o processo se encerra automaticamente sem manter janelas abertas.
         </p>
-        <button class="btn-accent" onclick="agendarNoWindows()">Registrar no Agendador do Windows</button>
+
+        <button class="btn-accent" id="btnSalvarWindows" onclick="agendarNoWindows()">Ativar / Atualizar Agendamento no Windows</button>
       </div>
 
       <div id="abaGithub" style="display: none;">
-        <p class="section-desc" style="margin-bottom: 12px;">
-          Configurado no arquivo de workflow para execução nos servidores do GitHub sem necessidade do computador ligado.
+        <p class="section-desc" style="margin-bottom: 14px;">
+          Execução em nuvem nos servidores do GitHub sem necessidade do computador ligado.
         </p>
-        <div class="code-snippet">
-          1. Configure os secrets: EMAIL_REMETENTE, EMAIL_SENHA_APP, EMAIL_DESTINATARIO<br>
-          2. Workflow ativo: .github/workflows/scraper.yml<br>
-          3. Horários configurados no cron (UTC): 12:00, 17:00, 22:00
+
+        <div style="margin-bottom: 18px;">
+          <label style="font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; display: block;">Quantas vezes executar por dia no GitHub Actions:</label>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;" id="grupoFreqGithub">
+            <button type="button" class="freq-btn-gh" data-freq="1x" onclick="selecionarFreqGithub('1x')">1x ao dia (09:00 BRT)</button>
+            <button type="button" class="freq-btn-gh" data-freq="2x" onclick="selecionarFreqGithub('2x')">2x ao dia (09:00, 18:00 BRT)</button>
+            <button type="button" class="freq-btn-gh active" data-freq="3x" onclick="selecionarFreqGithub('3x')">3x ao dia (09:00, 14:00, 19:00 BRT)</button>
+            <button type="button" class="freq-btn-gh" data-freq="4x" onclick="selecionarFreqGithub('4x')">4x ao dia (08h, 12h, 16h, 20h BRT)</button>
+          </div>
         </div>
+
+        <div class="code-snippet" id="snippetCron" style="margin-bottom: 16px;">
+          Workflow ativo: .github/workflows/scraper.yml<br>
+          Cron em UTC: <strong id="textoCron">0 12,17,22 * * * (3x ao dia no Horário de Brasília)</strong>
+        </div>
+
+        <button class="btn-accent" onclick="salvarFrequenciaGithub()">Salvar Frequência e Subir pro GitHub</button>
       </div>
     </div>
 
@@ -565,10 +629,13 @@
     let termosBusca = [];
     let termosExclusao = [];
     let fontesHabilitadas = [];
+    let freqWindows = "3x";
+    let freqGithub = "3x";
 
     window.addEventListener("DOMContentLoaded", () => {
       carregarConfiguracoes();
       setupTagInputs();
+      carregarStatusWindows();
     });
 
     async function carregarConfiguracoes() {
@@ -583,6 +650,11 @@
         document.getElementById("emailRemetente").value = data.email_remetente || "";
         document.getElementById("emailSenhaApp").value = data.email_senha_app || "";
         document.getElementById("emailDestinatario").value = data.email_destinatario || "";
+
+        if (data.frequencia_execucao) {
+          selecionarFreqWindows(data.frequencia_execucao);
+          selecionarFreqGithub(data.frequencia_execucao);
+        }
 
         renderizarTags();
         renderizarFontes();
@@ -782,6 +854,134 @@
       }
     }
 
+    function selecionarFreqWindows(f) {
+      freqWindows = f;
+      document.querySelectorAll(".freq-btn").forEach(b => {
+        b.classList.toggle("active", b.dataset.freq === f);
+      });
+    }
+
+    function selecionarFreqGithub(f) {
+      freqGithub = f;
+      document.querySelectorAll(".freq-btn-gh").forEach(b => {
+        b.classList.toggle("active", b.dataset.freq === f);
+      });
+      const cronTextos = {
+        "1x": "0 12 * * * (1x ao dia às 09:00 BRT)",
+        "2x": "0 12,21 * * * (2x ao dia às 09:00 e 18:00 BRT)",
+        "3x": "0 12,17,22 * * * (3x ao dia às 09:00, 14:00 e 19:00 BRT)",
+        "4x": "0 11,15,19,23 * * * (4x ao dia às 08h, 12h, 16h e 20h BRT)"
+      };
+      const snippet = document.getElementById("textoCron");
+      if (snippet) {
+        snippet.innerText = cronTextos[f] || f;
+      }
+    }
+
+    async function carregarStatusWindows() {
+      try {
+        const res = await fetch("/api/schedule-windows/status");
+        const data = await res.json();
+        const box = document.getElementById("statusWindowsBox");
+        const titulo = document.getElementById("statusWindowsTitulo");
+        const desc = document.getElementById("statusWindowsDesc");
+        const btnCancel = document.getElementById("btnCancelarWindows");
+
+        if (data.agendado) {
+          titulo.innerHTML = '<span style="color: #34d399;">🟢 Agendamento Ativo no Windows</span> (' + data.frequencia + ')';
+          desc.innerText = 'Horários programados: ' + (data.tarefas ? data.tarefas.join(", ") : "09:00, 14:00, 19:00");
+          box.style.borderColor = "rgba(16, 185, 129, 0.4)";
+          btnCancel.style.display = "inline-flex";
+          if (data.tarefas && data.tarefas.length) {
+            selecionarFreqWindows(data.tarefas.length + "x");
+          }
+        } else {
+          titulo.innerHTML = '⚪ Agendamento Inativo';
+          desc.innerText = 'Nenhuma tarefa do Vagas Scraper agendada no Windows no momento.';
+          box.style.borderColor = "var(--border)";
+          btnCancel.style.display = "none";
+        }
+      } catch (err) {
+        console.error("Falha ao checar status do Windows:", err);
+      }
+    }
+
+    async function agendarNoWindows() {
+      const btn = document.getElementById("btnSalvarWindows");
+      const orig = btn.innerText;
+      btn.innerText = "Agendando...";
+      btn.disabled = true;
+      try {
+        const res = await fetch("/api/schedule-windows", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ frequencia: freqWindows })
+        });
+        const data = await res.json();
+        showToast(data.mensagem);
+        await carregarStatusWindows();
+      } catch (err) {
+        showToast("Falha no agendamento: " + err.message);
+      } finally {
+        btn.innerText = orig;
+        btn.disabled = false;
+      }
+    }
+
+    async function cancelarAgendamentoWindows() {
+      if (!confirm("Deseja realmente cancelar e remover as tarefas do Agendador do Windows?")) return;
+      try {
+        const res = await fetch("/api/schedule-windows/cancel", { method: "POST" });
+        const data = await res.json();
+        showToast(data.mensagem);
+        await carregarStatusWindows();
+      } catch (err) {
+        showToast("Erro ao cancelar: " + err.message);
+      }
+    }
+
+    async function salvarFrequenciaGithub() {
+      try {
+        const res = await fetch("/api/workflow-frequency", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ frequencia: freqGithub })
+        });
+        const data = await res.json();
+        showToast(data.mensagem);
+        await sincronizarGitHub();
+      } catch (err) {
+        showToast("Erro ao atualizar GitHub Actions: " + err.message);
+      }
+    }
+
+    async function salvarConfiguracoes() {
+      try {
+        const payload = {
+          termos_busca: termosBusca,
+          termos_exclusao: termosExclusao,
+          fontes_habilitadas: fontesHabilitadas,
+          max_vagas_por_execucao: 30,
+          frequencia_execucao: freqWindows,
+          email_remetente: document.getElementById("emailRemetente").value.trim(),
+          email_senha_app: document.getElementById("emailSenhaApp").value.trim(),
+          email_destinatario: document.getElementById("emailDestinatario").value.trim(),
+          dry_run: false
+        };
+
+        const res = await fetch("/api/config", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        showToast(data.mensagem || "Preferências salvas com sucesso!");
+      } catch (err) {
+        showToast("Erro ao salvar: " + err.message);
+      }
+    }
+
     async function sincronizarGitHub() {
       const btn = document.getElementById("btnSyncGit");
       const originalHTML = btn.innerHTML;
@@ -796,6 +996,7 @@
             termos_busca: termosBusca,
             termos_exclusao: termosExclusao,
             fontes_habilitadas: fontesHabilitadas,
+            frequencia_execucao: freqGithub,
             email_remetente: document.getElementById("emailRemetente").value.trim(),
             email_senha_app: document.getElementById("emailSenhaApp").value.trim(),
             email_destinatario: document.getElementById("emailDestinatario").value.trim(),
