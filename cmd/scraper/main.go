@@ -1,6 +1,7 @@
-package main
+﻿package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -119,6 +120,7 @@ func main() {
 	log.Printf("🧬 Após unificação de vagas em múltiplos portais: %d vagas únicas.", len(vagasMescladas))
 
 	// 5. Filtro de termos e histórico
+	marcadas := carregarMarcadas("vagas_marcadas.json")
 	novasVagas := make([]models.Vaga, 0)
 	idsParaRegistrar := make(map[string]string)
 
@@ -133,6 +135,9 @@ func main() {
 
 	for _, vaga := range vagasMescladas {
 		if repoStorage.JaVista(vaga.ID) || repoStorage.JaVista(vaga.ChaveCanonica) {
+			continue
+		}
+		if marcadas[vaga.ID] || (vaga.ChaveCanonica != "" && marcadas[vaga.ChaveCanonica]) {
 			continue
 		}
 		if !scrapers.FiltroAvancadoAceita(vaga, filtrosAv) {
@@ -172,4 +177,23 @@ func main() {
 	_ = repoStorage.Adicionar(idsParaRegistrar)
 	log.Printf("💾 Histórico atualizado com %d novas vagas.", len(idsParaRegistrar))
 	log.Println("🏁 Execução concluída com sucesso.")
+}
+
+// carregarMarcadas l� vagas_marcadas.json (gravado pelo Cloudflare Worker) e devolve o conjunto de IDs.
+func carregarMarcadas(caminho string) map[string]bool {
+	set := make(map[string]bool)
+	data, err := os.ReadFile(caminho)
+	if err != nil {
+		return set
+	}
+	var itens []struct {
+		ID string `json:"id"`
+	}
+	if err := json.Unmarshal(data, &itens); err != nil {
+		return set
+	}
+	for _, it := range itens {
+		set[it.ID] = true
+	}
+	return set
 }

@@ -1,0 +1,11 @@
+name = "vagas-marcar"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+GITHUB_REPO = "Richdssz/vagas-scraper"
+GITHUB_BRANCH = "main"
+
+# Secrets (não ficam no arquivo):
+#   npx wrangler secret put GITHUB_TOKEN    (fine-grained PAT: Contents read/write só neste repo)
+#   npx wrangler secret put MARCAR_SECRET   (mesma string do secret MARCAR_SECRET no GitHub Actions)

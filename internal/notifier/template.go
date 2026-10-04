@@ -45,6 +45,7 @@ func GerarHTMLEmail(vagas []models.Vaga) string {
 					Ver no %s &rarr;
 				</a>`, escapeHTML(v.Link), escapeHTML(nomeFonte)))
 		}
+		botoesHTML.WriteString(botaoMarcarVista(v))
 
 		fonteTexto := v.Fonte
 		if len(v.Fontes) > 0 {
