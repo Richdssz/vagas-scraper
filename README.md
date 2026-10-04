@@ -200,6 +200,65 @@ O motor foi desenhado para iniciar, executar em cerca de 1 segundo e encerrar o 
 
 ---
 
+## 🔐 Como Obter as Chaves do Google e Configurar no GitHub Actions
+
+Para que o robô funcione automaticamente na nuvem sem expor suas senhas, você utiliza uma **Senha de App do Google** e a cadastra nos **Secrets do GitHub**.
+
+### 1. Como gerar a Senha de App no Google
+
+O Google não permite usar sua senha pessoal de login em scripts. Em vez disso, você gera uma chave exclusiva de 16 caracteres:
+
+1. **Ative a Verificação em Duas Etapas** (se ainda não tiver):
+   * Acesse: [myaccount.google.com/signinoptions/two-step-verification](https://myaccount.google.com/signinoptions/two-step-verification) e certifique-se de que está **Ativada**.
+2. **Acesse a página de Senhas de App**:
+   * Link direto: [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+   * *(O Google solicitará a confirmação da senha da sua conta).*
+3. **Gerar a Chave**:
+   * No campo **"Nome do app"** (App name), digite `VagasScraper`.
+   * Clique em **Criar** (*Create*).
+4. **Copiar a Chave**:
+   * O Google exibirá um código de 16 letras em uma caixa amarela (exemplo: `abcd efgh ijkl mnop`).
+   * **Copie esse código** (ele será o seu `EMAIL_SENHA_APP`).
+
+---
+
+### 2. Como colocar as Chaves no GitHub Actions
+
+> ⚠️ **Atenção:** Cadastre em **Secrets and variables > Actions**, e **não** em *Environments*.
+
+1. Abra o seu repositório no GitHub: `https://github.com/SEU_USUARIO/vagas-scraper`
+2. Clique na aba **Settings** (Configurações) no topo.
+3. No menu lateral esquerdo, role até a seção **Security** e clique em **Secrets and variables** > **Actions**.
+4. Clique no botão verde **New repository secret** e adicione os 3 itens abaixo:
+
+| Nome do Segredo (Name) | Valor (Secret) | Exemplo |
+| :--- | :--- | :--- |
+| **`EMAIL_REMETENTE`** | Seu e-mail do Gmail que gerou a senha de app | `seu.email@gmail.com` |
+| **`EMAIL_SENHA_APP`** | O código de 16 letras gerado no Google | `abcdefghijklmnop` |
+| **`EMAIL_DESTINATARIO`** | E-mail onde você deseja receber o digest de vagas | `seu.email@gmail.com` |
+
+---
+
+### 3. Liberar Permissão de Escrita do Histórico (Obrigatório)
+
+O robô atualiza o arquivo `vagas_vistas.json` a cada rodada para nunca repetir vagas já enviadas. Para que o GitHub Actions consiga salvar esse arquivo no repositório:
+
+1. No repositório, vá em **Settings** > **Actions** > **General**.
+2. Role a página até a seção **Workflow permissions** (Permissões de workflow).
+3. Selecione a opção **Read and write permissions** (Permissões de leitura e escrita).
+4. Clique no botão **Save**.
+
+---
+
+### 4. Como Testar Manualmente
+
+1. Vá na aba **Actions** do seu repositório.
+2. Na coluna lateral esquerda, clique em **Vagas Scraper Automático**.
+3. À direita, clique no botão **Run workflow** e confirme clicando no botão verde **Run workflow**.
+4. O robô será iniciado imediatamente, buscará as vagas e disparará o e-mail de teste.
+
+---
+
 ## Compilação
 
 Para compilar os binários a partir do código fonte:
