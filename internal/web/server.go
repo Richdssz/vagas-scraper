@@ -318,10 +318,17 @@ func (s *ServidorWeb) handleSyncGitHub(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 
+	responder := func(sucesso bool, mensagem string) {
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"sucesso":  sucesso,
+			"mensagem": mensagem,
+		})
+	}
+
 	// 1. git add .
 	addCmd := exec.Command("git", "add", ".")
 	if out, err := addCmd.CombinedOutput(); err != nil {
-		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Falha no git add: %s"}`, strings.TrimSpace(string(out)))))
+		responder(false, fmt.Sprintf("Falha no git add: %s", strings.TrimSpace(string(out))))
 		return
 	}
 
@@ -329,14 +336,31 @@ func (s *ServidorWeb) handleSyncGitHub(w http.ResponseWriter, r *http.Request) {
 	commitCmd := exec.Command("git", "commit", "-m", "chore: atualizar filtros e preferencias via painel web")
 	_ = commitCmd.Run()
 
-	// 3. git push origin main
-	pushCmd := exec.Command("git", "push", "origin", "main")
-	if out, err := pushCmd.CombinedOutput(); err != nil {
-		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Falha no git push: %s"}`, strings.TrimSpace(string(out)))))
+	// 3. Obter branch atual
+	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
+	branchOut, err := branchCmd.Output()
+	branch := "main"
+	if err == nil && len(strings.TrimSpace(string(branchOut))) > 0 {
+		branch = strings.TrimSpace(string(branchOut))
+	}
+
+	// 4. git pull --rebase (para puxar commits do GitHub Actions como histórico de vagas enviadas)
+	pullCmd := exec.Command("git", "pull", "--rebase", "origin", branch)
+	if out, err := pullCmd.CombinedOutput(); err != nil {
+		// Se falhar o rebase, aborta o rebase para não deixar o repositório em estado inconsistente
+		_ = exec.Command("git", "rebase", "--abort").Run()
+		responder(false, fmt.Sprintf("Falha ao sincronizar com GitHub (pull): %s", strings.TrimSpace(string(out))))
 		return
 	}
 
-	w.Write([]byte(`{"sucesso":true,"mensagem":"Configurações e filtros enviados com sucesso para o GitHub!"}`))
+	// 5. git push origin <branch>
+	pushCmd := exec.Command("git", "push", "origin", branch)
+	if out, err := pushCmd.CombinedOutput(); err != nil {
+		responder(false, fmt.Sprintf("Falha no git push: %s", strings.TrimSpace(string(out))))
+		return
+	}
+
+	responder(true, "Configurações e filtros enviados com sucesso para o GitHub!")
 }
 
 func (s *ServidorWeb) handlePreviewEmail(w http.ResponseWriter, r *http.Request) {
