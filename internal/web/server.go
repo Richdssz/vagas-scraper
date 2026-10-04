@@ -57,6 +57,7 @@ func (s *ServidorWeb) Iniciar() error {
 	mux.HandleFunc("/api/config", s.handleConfig)
 	mux.HandleFunc("/api/scrape", s.handleScrape)
 	mux.HandleFunc("/api/schedule-windows", s.handleScheduleWindows)
+	mux.HandleFunc("/api/sync-github", s.handleSyncGitHub)
 
 	urlAcesso := fmt.Sprintf("http://localhost:%s", s.porta)
 	log.Printf("🌐 Servidor Web ativo em: %s", urlAcesso)
@@ -248,6 +249,34 @@ func (s *ServidorWeb) handleScrape(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(resposta)
 }
 
+func (s *ServidorWeb) handleSyncGitHub(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, `{"erro":"metodo nao permitido"}`, http.StatusMethodNotAllowed)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+
+	// 1. git add .
+	addCmd := exec.Command("git", "add", ".")
+	if out, err := addCmd.CombinedOutput(); err != nil {
+		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Falha no git add: %s"}`, strings.TrimSpace(string(out)))))
+		return
+	}
+
+	// 2. git commit (ignora erro caso não haja nada novo para commit)
+	commitCmd := exec.Command("git", "commit", "-m", "chore: atualizar filtros e preferencias via painel web")
+	_ = commitCmd.Run()
+
+	// 3. git push origin main
+	pushCmd := exec.Command("git", "push", "origin", "main")
+	if out, err := pushCmd.CombinedOutput(); err != nil {
+		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Falha no git push: %s"}`, strings.TrimSpace(string(out)))))
+		return
+	}
+
+	w.Write([]byte(`{"sucesso":true,"mensagem":"Configurações e filtros enviados com sucesso para o GitHub!"}`))
+}
+
 func (s *ServidorWeb) handleScheduleWindows(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, `{"erro":"metodo nao permitido"}`, http.StatusMethodNotAllowed)
@@ -260,23 +289,45 @@ func (s *ServidorWeb) handleScheduleWindows(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	exePath, err := os.Executable()
+	dir, err := os.Getwd()
 	if err != nil {
-		exePath = filepath.Join(".", "scraper.exe")
+		exePath, _ := os.Executable()
+		dir = filepath.Dir(exePath)
 	}
-
-	nomeTarefa := "VagasScraperDiario"
-	cmdStr := fmt.Sprintf(`$action = New-ScheduledTaskAction -Execute '%s' -Argument '--scrape'; $trigger1 = New-ScheduledTaskTrigger -Daily -At 9am; $trigger2 = New-ScheduledTaskTrigger -Daily -At 2pm; $trigger3 = New-ScheduledTaskTrigger -Daily -At 7pm; Register-ScheduledTask -TaskName '%s' -Action $action -Trigger $trigger1,$trigger2,$trigger3 -Description 'Executa o Vagas Scraper 3 vezes ao dia em segundo plano' -Force`, exePath, nomeTarefa)
-
-	cmd := exec.Command("powershell", "-NoProfile", "-Command", cmdStr)
-	out, err := cmd.CombinedOutput()
-	if err != nil {
-		log.Printf("⚠️ Erro ao registrar tarefa no Windows: %v (%s)", err, string(out))
-		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Não foi possível registrar com privilégios normais. Execute o comando manualmente no PowerShell como Administrador:\n\n%s"}`, cmdStr)))
+	scraperPath := filepath.Join(dir, "scraper.exe")
+	if _, err := os.Stat(scraperPath); os.IsNotExist(err) {
+		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"Arquivo scraper.exe não encontrado em '%s'. Certifique-se de que o scraper.exe está na pasta do projeto."}`, dir)))
 		return
 	}
 
-	w.Write([]byte(`{"sucesso":true,"mensagem":"Tarefa agendada com sucesso no Windows! O robô rodará automaticamente às 09:00, 14:00 e 19:00 sem precisar de janelas abertas."}`))
+	// Execução silenciosa em segundo plano via powershell -WindowStyle Hidden
+	targetCmd := fmt.Sprintf(`powershell.exe -WindowStyle Hidden -Command "Start-Process -FilePath '%s' -WorkingDirectory '%s'"`, scraperPath, dir)
+
+	horarios := []struct {
+		nome string
+		hora string
+	}{
+		{"VagasScraper_09h", "09:00"},
+		{"VagasScraper_14h", "14:00"},
+		{"VagasScraper_19h", "19:00"},
+	}
+
+	var erros []string
+	for _, h := range horarios {
+		cmd := exec.Command("schtasks", "/Create", "/SC", "DAILY", "/TN", h.nome, "/TR", targetCmd, "/ST", h.hora, "/F")
+		if out, err := cmd.CombinedOutput(); err != nil {
+			erros = append(erros, fmt.Sprintf("%s (%s): %s", h.nome, h.hora, strings.TrimSpace(string(out))))
+		}
+	}
+
+	if len(erros) > 0 {
+		msg := fmt.Sprintf("Erro ao registrar tarefas no Windows: %s", strings.Join(erros, "; "))
+		log.Printf("⚠️ %s", msg)
+		w.Write([]byte(fmt.Sprintf(`{"sucesso":false,"mensagem":"%s"}`, msg)))
+		return
+	}
+
+	w.Write([]byte(`{"sucesso":true,"mensagem":"Tarefas agendadas com sucesso no Windows! O robô rodará automaticamente às 09:00, 14:00 e 19:00 sem abrir janelas."}`))
 }
 
 func mascararSenha(senha string) string {

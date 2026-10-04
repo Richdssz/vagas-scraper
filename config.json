@@ -7,11 +7,15 @@
       "júnior",
       "trainee",
       "backend",
-      "golang",
       "java",
       "node",
       "fullstack",
-      "react"
+      "react",
+      "spring",
+      "flutter",
+      "dart",
+      "sql",
+      "dados"
     ],
     "termos_exclusao": [
       "senior",
@@ -30,8 +34,8 @@
     "backend_br",
     "frontend_br",
     "programathor",
-    "remoteok",
-    "weworkremotely"
+    "react_brasil",
+    "qa_brasil"
   ],
   "max_vagas_por_execucao": 30,
   "salvar_preview_html": true
