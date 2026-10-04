@@ -189,6 +189,34 @@ Para rodar em modo simulação (sem disparo de e-mails reais):
 
 ---
 
+## Como Gerar Novos Binários (.exe) se Alterar o Código
+
+Se você alterar qualquer arquivo Go dentro de `cmd/` ou `internal/`, é necessário recompilar os executáveis para que as mudanças façam efeito:
+
+### 1. Compilar tudo de uma vez (PowerShell / Prompt de Comando)
+No terminal da raiz do projeto, execute:
+
+```powershell
+go build -o scraper.exe ./cmd/scraper
+go build -o painel.exe ./cmd/painel
+```
+
+> **Dica (Build sem abrir janela preta de terminal):**  
+> Se quiser compilar o `painel.exe` ou `scraper.exe` para rodar de forma 100% invisível em segundo plano no Windows (sem abrir console CMD):
+> ```powershell
+> go build -ldflags "-H=windowsgui" -o painel.exe ./cmd/painel
+> go build -ldflags "-H=windowsgui" -o scraper.exe ./cmd/scraper
+> ```
+
+### 2. Testar se o binário foi atualizado
+Para verificar a versão e funcionamento imediato:
+```powershell
+./scraper.exe --version
+./scraper.exe --dry-run
+```
+
+---
+
 ## Automação Periódica
 
 O motor foi desenhado para iniciar, executar em cerca de 1 segundo e encerrar o processo.
