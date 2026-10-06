@@ -1,33 +1,13 @@
 [
   {
-    "id": "viadeacesso:estagioemadministracaodeempresascremesp",
-    "titulo": "Estágio em Administração de Empresas - CREMESP",
-    "capturado": "2026-10-05T06:02:23.706724436Z"
-  },
-  {
-    "id": "aweber:operationsengineerii",
-    "titulo": "Operations Engineer II",
+    "id": "sem_empresa:df17",
+    "titulo": "[Remoto] Full-stack Engineer (Net+React)",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "mirantis:dev",
-    "titulo": "Software Engineer",
+    "id": "stone:deviigolang",
+    "titulo": "Software Engineer II Golang",
     "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "jesuitas:estagioeminformaticaeducacional",
-    "titulo": "Estágio em Informática Educacional",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "rocontecrochaconstrucaoe:estagioemengenhariacivilobrahinesplaengematice",
-    "titulo": "Estágio em Engenharia Civil - Obra: Hines Plaenge - Matice",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "michelinconnectedfleetprogramasdedesenvolvimento:estagioemqualidadeoperacional",
-    "titulo": "Estágio em Qualidade Operacional",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
     "id": "gupy-12678850",
@@ -35,139 +15,9 @@
     "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
-    "id": "rocontecrochaconstrucaoe:estagioemengenhariacivilobrateca",
-    "titulo": "Estágio em Engenharia Civil - Obra Teça",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "bateriasmoura:estagiobelempa",
-    "titulo": "Estágio - Belém/PA",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "gupy-12678569",
-    "titulo": "Estágio Financeiro - Matriz",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "gupy-12661330",
-    "titulo": "Estágio Universitário",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "rok-1137417",
-    "titulo": "Software Developer Security Analytics",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "sem_empresa:f6ec",
-    "titulo": "[Remoto] Back-end Java  developer - USD",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "reddit:backendengineeriam",
-    "titulo": "Backend Engineer, IAM",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12672125",
-    "titulo": "Estágio em Qualidade Operacional",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "libertymutualinsurance:licensedcustomerservicerepresentative",
-    "titulo": "Licensed Customer Service Representative",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1137460",
-    "titulo": "Junior Crypto Analyst \u0026 Trader",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1137420",
-    "titulo": "Frontend Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "harbor:consultantimplementationengineer",
-    "titulo": "Consultant Implementation Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "sem_empresa:a73e",
-    "titulo": "[Remoto] Back-end developer Net- (Strider)",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "gh-backend-br-vagas-4518401903",
-    "titulo": "[Remoto] Full-stack Engineer (Net+React)",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "thatcherscider:qualitydispensetechniciannorth",
-    "titulo": "Quality Dispense Technician North",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12584536",
-    "titulo": "Estágio em Engenharia Civil/Arquitetura - Fortaleza | CE",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "wwr-dc8f75f5473c",
-    "titulo": "AI agent engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "venhatrabalharnocte:estagioarquiteturaeurbanismo",
-    "titulo": "Estágio - Arquitetura e Urbanismo",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "rok-1137427",
-    "titulo": "Software Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
     "id": "gupy-12674216",
     "titulo": "Estágio em Administração de Empresas - CREMESP",
     "capturado": "2026-10-05T06:02:23.706724436Z"
-  },
-  {
-    "id": "gupy-12678001",
-    "titulo": "Estágio Comercial",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "programadeestagiomrvco:estagioemengenhariacivilarquiteturafortalezace",
-    "titulo": "Estágio em Engenharia Civil/Arquitetura - Fortaleza | CE",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "rok-1137162",
-    "titulo": "Principal Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "sem_empresa:8a93",
-    "titulo": "[Remoto] Lead Database \u0026 Data Platform Engineer (Strider)",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "cresoloficial:estagioaprogramadeestagiocresolconfederacaocsc",
-    "titulo": "Estagiário (a) | Programa de Estágio - Cresol Confederação CSC",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gupy-12677628",
-    "titulo": "ELA Specialist Trainee (Estágio em Letras) - Perdizes (2027)",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "bateriasmoura:estagioadministrativofinanceirorecifepe",
-    "titulo": "Estágio Administrativo Financeiro | Recife - PE",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
     "id": "gh-backend-br-vagas-5316344098",
@@ -175,89 +25,9 @@
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "gupy-12625620",
-    "titulo": "Estágio em Engenharia Civil - Obra Teça",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "rok-1137224",
-    "titulo": "AI Engineer Data APIs",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12675499",
-    "titulo": "Estágio em Informática Educacional",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "omegaenterprises:jrdigitalassetsoperationsanalyst",
-    "titulo": "Junior Digital Assets Operations Analyst",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12676843",
-    "titulo": "Estágio em Design",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "gh-backend-br-vagas-5303971679",
-    "titulo": "[Remoto] PL Software Engineer - GitTalent",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12671675",
-    "titulo": "Estágio Comercial",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gh-backend-br-vagas-5330541757",
-    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12513214",
-    "titulo": "Estágio Administrativo Financeiro | Recife - PE",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "rok-1136796",
-    "titulo": "Staff Software Development Engineer SDM",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rocontecrochaconstrucaoe:estagioemengenhariacivilobrajeronimo177",
-    "titulo": "Estágio em Engenharia Civil - Obra: Jerônimo 177",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "prenosis:dev",
-    "titulo": "Software Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "stickermule:aiagentengineer",
-    "titulo": "AI agent engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "wwr-24899f43953c",
-    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gdsulconstrucaointeligente:estagioemcomprascuritiba",
-    "titulo": "Estágio em Compras | Curitiba",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "redmimicry:softwaredevelopersecurityanalytics",
-    "titulo": "Software Developer Security Analytics",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1137408",
-    "titulo": "Software Deployment Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "gupy-12678054",
+    "titulo": "3000 - Estágio Comercial - Agência Empresarial Mafra/SC",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
     "id": "gupy-12518445",
@@ -265,29 +35,59 @@
     "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
-    "id": "in-58ce60b266dea",
-    "titulo": "Summer 2027 Management Trainee Sales Internship - Anchorage",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "gupy-12672125",
+    "titulo": "Estágio em Qualidade Operacional",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
-    "id": "programadeestagiomrvco:estagioemengenhariacivilproducaoearquiteturareservadamataba",
-    "titulo": "Estágio em engenharia Civil, Produção e Arquitetura - Reserva da Mata | BA",
+    "id": "gupy-12678001",
+    "titulo": "Estágio Comercial",
     "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
-    "id": "sem_empresa:df17",
-    "titulo": "[Remoto] Full-stack Engineer (Net+React)",
+    "id": "gupy-12676843",
+    "titulo": "Estágio em Design",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "unicred:3000estagiocomercialagenciaempresarialmafrasc",
+    "titulo": "3000 - Estágio Comercial - Agência Empresarial Mafra/SC",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "mirantis:dev",
+    "titulo": "Software Engineer",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "copenhagenoptimization:marketingstudentassistant",
-    "titulo": "Marketing Student Assistant",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12671348",
+    "id": "cresoloficial:estagioaprogramadeestagiocresolconfederacaocsc",
     "titulo": "Estagiário (a) | Programa de Estágio - Cresol Confederação CSC",
     "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "trabalhenamills:estagiouniversitario",
+    "titulo": "Estágio Universitário",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "gh-backend-br-vagas-5556670583",
+    "titulo": "[Remoto] Lead Database \u0026 Data Platform Engineer (Strider)",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "rok-1136796",
+    "titulo": "Staff Software Development Engineer SDM",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-11849825",
+    "titulo": "ESTÁGIO EM DESENVOLVIMENTO DE PESSOAS",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "rok-1137420",
+    "titulo": "Frontend Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
     "id": "hospitaldeolhosleiriadeandrade:estagioemsocialmediacomunicacao",
@@ -300,12 +100,437 @@
     "capturado": "2026-10-06T00:27:35.715858387Z"
   },
   {
+    "id": "sem_empresa:4718",
+    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "sicredi:estagiomarketingsicredimedicredcuritiba",
+    "titulo": "Estágio - Marketing | Sicredi Medicred - Curitiba",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "rocontecrochaconstrucaoe:estagioemengenhariacivilobrahinesplaengematice",
+    "titulo": "Estágio em Engenharia Civil - Obra: Hines Plaenge - Matice",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "thatcherscider:qualitydispensetechniciannorth",
+    "titulo": "Quality Dispense Technician North",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12513214",
+    "titulo": "Estágio Administrativo Financeiro | Recife - PE",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "sem_empresa:bd97",
+    "titulo": "[Remoto] PL Software Engineer - GitTalent",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "yooli:fulltimedevpositionreactandrest",
+    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12678700",
+    "titulo": "Estágio - Arquitetura e Urbanismo",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "rok-1137417",
+    "titulo": "Software Developer Security Analytics",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1136188",
+    "titulo": "Java Developer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137400",
+    "titulo": "Golang Kubernetes Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "venhatrabalharnocte:estagioarquiteturaeurbanismo",
+    "titulo": "Estágio - Arquitetura e Urbanismo",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "rok-1137418",
+    "titulo": "Junior Digital Assets Operations Analyst",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12669792",
+    "titulo": "Estágio - Belém/PA",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "gupy-12666266",
+    "titulo": "Estágio em Engenharia Civil - Obra: Hines Plaenge - Matice",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gupy-12671822",
+    "titulo": "Estágio em Direito | Securitário",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "riostays:estagioemdesigndeinterioresparaimoveisdetemporada",
+    "titulo": "Estágio em Design de Interiores para Imóveis de Temporada",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gupy-12683841",
+    "titulo": "Monitor(a) - Estágio | Colégio Estadual Linda S. Bacila",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "rok-1135788",
+    "titulo": "Licensed Customer Service Representative",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12683356",
+    "titulo": "Estágio em Supply Chain",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "rok-1137162",
+    "titulo": "Principal Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12677628",
+    "titulo": "ELA Specialist Trainee (Estágio em Letras) - Perdizes (2027)",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "eletronetsa:estagioemoperacaoemanutencaologisticaadministracao",
+    "titulo": "Estágio em Operação e Manutenção - Logística/Administração",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "gh-backend-br-vagas-5350326916",
+    "titulo": "[Remoto] Back-end Engineer developer (Strider)",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12680078",
+    "titulo": "Programa de Estágio - Bocaina-SP",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "ushunger:spring2027graphicdesignprintproductionestagio",
+    "titulo": "Spring 2027 Graphic Design \u0026 Print Production Intern",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "gupy-12684381",
+    "titulo": "Estágio em Obra( Eng.Civil) - Porto Alegre/RS",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "aweber:operationsengineerii",
+    "titulo": "Operations Engineer II",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "libertymutualinsurance:licensedcustomerservicerepresentative",
+    "titulo": "Licensed Customer Service Representative",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137460",
+    "titulo": "Junior Crypto Analyst \u0026 Trader",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rededecisao:programadeestagioempedagogia2027vemparaarede",
+    "titulo": "Programa de Estágio em Pedagogia 2027 | Vem para a Rede!✨🚀",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "messergases:estagionaareacomercialprevendasativojundiaisp",
+    "titulo": "Estágio na área Comercial (Pré-vendas ativo) - Jundiaí/SP",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "gupy-12683445",
+    "titulo": "0710| PR - ESTÁGIO Agência Medianeira Centro - Medianeira/PR.",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "gupy-12675499",
+    "titulo": "Estágio em Informática Educacional",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "enterprise:summer2027managementtraineesalesestagioshipanchorage",
+    "titulo": "Summer 2027 Management Trainee Sales Internship - Anchorage",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gh-backend-br-vagas-5556737253",
+    "titulo": "[Remoto] Back-end developer Net- (Strider)",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "bjak:frontendengineer",
+    "titulo": "Frontend Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "benzinga:aiengineerdataapis",
+    "titulo": "AI Engineer Data APIs",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "sleek:jrpayrollassistant",
+    "titulo": "Junior Payroll Assistant",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gh-backend-br-vagas-5303971679",
+    "titulo": "[Remoto] PL Software Engineer - GitTalent",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12678457",
+    "titulo": "Programa de Estágio em Pedagogia 2027 | Vem para a Rede!✨🚀",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "gupy-12671636",
+    "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - São Paulo",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "tomeducacao:monitoraestagiocolegioestaduallindasbacila",
+    "titulo": "Monitor(a) - Estágio | Colégio Estadual Linda S. Bacila",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "sicredi:0710prestagioagenciamedianeiracentromedianeirapr",
+    "titulo": "0710| PR - ESTÁGIO Agência Medianeira Centro - Medianeira/PR.",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "stickermule:aiagentengineer",
+    "titulo": "AI agent engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "kpisolutions:softwaredeploymentengineer",
+    "titulo": "Software Deployment Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1136987",
+    "titulo": "Consultant Implementation Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12679873",
+    "titulo": "Estágio em Social Media | Comunicação",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "empireassets:jrcryptoanalysttrader",
+    "titulo": "Junior Crypto Analyst \u0026 Trader",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "harbor:consultantimplementationengineer",
+    "titulo": "Consultant Implementation Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12671348",
+    "titulo": "Estagiário (a) | Programa de Estágio - Cresol Confederação CSC",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gupy-12639975",
+    "titulo": "Estágio em Engenharia Civil - Obra: Jerônimo 177",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "clera:javadeveloper",
+    "titulo": "Java Developer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
     "id": "theaiwhistleblowerinitiative:principalengineer",
     "titulo": "Principal Engineer",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "rok-1137418",
+    "id": "krugernearshorellcrekluti:desarrolladorfullstack",
+    "titulo": "DESARROLLADOR FULL STACK",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "pgt-035a92e8595a",
+    "titulo": "Junior Fullstack Developer",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "grupojca:estagioemrhcomfocoemgestaoestrategicadepessoassaopaulo",
+    "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - São Paulo",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "rok-1137374",
+    "titulo": "Quality Dispense Technician North",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rocontecrochaconstrucaoe:estagioemengenhariacivilobrateca",
+    "titulo": "Estágio em Engenharia Civil - Obra Teça",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gupy-12584536",
+    "titulo": "Estágio em Engenharia Civil/Arquitetura - Fortaleza | CE",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "redmimicry:softwaredevelopersecurityanalytics",
+    "titulo": "Software Developer Security Analytics",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137391",
+    "titulo": "Junior Payroll Assistant",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137387",
+    "titulo": "Software Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "querosermercantil:estagioadministracaofinanceira",
+    "titulo": "Estágio | Administração Financeira",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "sem_empresa:a73e",
+    "titulo": "[Remoto] Back-end developer Net- (Strider)",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "rok-1136778",
+    "titulo": "Operations Engineer II",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137062",
+    "titulo": "DESARROLLADOR FULL STACK",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12679859",
+    "titulo": "Estágio Superior Não Obrigatório",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "gupy-12661330",
+    "titulo": "Estágio Universitário",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "rok-1137427",
+    "titulo": "Software Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12673494",
+    "titulo": "Estágio em Compras | Curitiba",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gupy-12678379",
+    "titulo": "Estágio em Operação e Manutenção - Logística/Administração",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "estagioaurora:estagiosuperiornaoobrigatorio",
+    "titulo": "Estágio Superior Não Obrigatório",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "wwr-dc8f75f5473c",
+    "titulo": "AI agent engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12678569",
+    "titulo": "Estágio Financeiro - Matriz",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "rocontecrochaconstrucaoe:estagioemengenhariacivilobrajeronimo177",
+    "titulo": "Estágio em Engenharia Civil - Obra: Jerônimo 177",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gdsulconstrucaointeligente:estagioemcomprascuritiba",
+    "titulo": "Estágio em Compras | Curitiba",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "cyrela:estagioemobraengcivilportoalegrers",
+    "titulo": "Estágio em Obra( Eng.Civil) - Porto Alegre/RS",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "reddit:backendengineeriam",
+    "titulo": "Backend Engineer, IAM",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gh-backend-br-vagas-4518401903",
+    "titulo": "[Remoto] Full-stack Engineer (Net+React)",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137224",
+    "titulo": "AI Engineer Data APIs",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "prenosis:dev",
+    "titulo": "Software Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1136569",
+    "titulo": "Software Engineer II Golang",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "programadeestagiomrvco:estagioemengenhariacivilarquiteturafortalezace",
+    "titulo": "Estágio em Engenharia Civil/Arquitetura - Fortaleza | CE",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "tradetechnology:estagiocomercial",
+    "titulo": "Estágio Comercial",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
+  },
+  {
+    "id": "qca:estagioemdireitosecuritario",
+    "titulo": "Estágio em Direito | Securitário",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "omegaenterprises:jrdigitalassetsoperationsanalyst",
     "titulo": "Junior Digital Assets Operations Analyst",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
@@ -315,239 +540,9 @@
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "enterprise:summer2027managementtraineesalesestagioshipanchorage",
-    "titulo": "Summer 2027 Management Trainee Sales Internship - Anchorage",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "redhouseinternationalschool:elaspecialisttraineeestagioemletrasperdizes2027",
-    "titulo": "ELA Specialist Trainee (Estágio em Letras) - Perdizes (2027)",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "gupy-12680554",
-    "titulo": "Estágio | Administração Financeira",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "autoforce:estagioemdesign",
-    "titulo": "Estágio em Design",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "tradetechnology:estagiocomercial",
-    "titulo": "Estágio Comercial",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "rok-1136188",
-    "titulo": "Java Developer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "unicred:3000estagiocomercialagenciaempresarialmafrasc",
-    "titulo": "3000 - Estágio Comercial - Agência Empresarial Mafra/SC",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "raizen:programadeestagiobocainasp",
-    "titulo": "Programa de Estágio - Bocaina-SP",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "gupy-12639975",
-    "titulo": "Estágio em Engenharia Civil - Obra: Jerônimo 177",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gupy-12669792",
-    "titulo": "Estágio - Belém/PA",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "gupy-12668123",
-    "titulo": "ESTÁGIO EM MATEMÁTICA",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "krugernearshorellcrekluti:desarrolladorfullstack",
-    "titulo": "DESARROLLADOR FULL STACK",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "stone:deviigolang",
-    "titulo": "Software Engineer II Golang",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "trabalhenamills:estagiouniversitario",
-    "titulo": "Estágio Universitário",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "rok-1137391",
-    "titulo": "Junior Payroll Assistant",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1136778",
-    "titulo": "Operations Engineer II",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "empresanoprogramathor:jrfullstackdeveloper",
-    "titulo": "Junior Fullstack Developer",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "rok-1137387",
-    "titulo": "Software Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "construmarket:estagiocomercial",
-    "titulo": "Estágio Comercial",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gh-backend-br-vagas-5556737253",
-    "titulo": "[Remoto] Back-end developer Net- (Strider)",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "kpisolutions:softwaredeploymentengineer",
-    "titulo": "Software Deployment Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "pgt-035a92e8595a",
-    "titulo": "Junior Fullstack Developer",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "eletronetsa:estagioemoperacaoemanutencaologisticaadministracao",
-    "titulo": "Estágio em Operação e Manutenção - Logística/Administração",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "qca:estagioemdireitosecuritario",
-    "titulo": "Estágio em Direito | Securitário",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "rededecisao:programadeestagioempedagogia2027vemparaarede",
-    "titulo": "Programa de Estágio em Pedagogia 2027 | Vem para a Rede!✨🚀",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "rok-1136569",
-    "titulo": "Software Engineer II Golang",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "redeverbitadeeducacao:estagiofinanceiromatriz",
-    "titulo": "Estágio Financeiro - Matriz",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "bjak:frontendengineer",
-    "titulo": "Frontend Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "grupojca:estagioemrhcomfocoemgestaoestrategicadepessoasniteroi",
-    "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - Niterói",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "in-4ff886e756543",
-    "titulo": "Spring 2027 Graphic Design \u0026 Print Production Intern",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "gupy-12666266",
-    "titulo": "Estágio em Engenharia Civil - Obra: Hines Plaenge - Matice",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gh-backend-br-vagas-5350326916",
-    "titulo": "[Remoto] Back-end Engineer developer (Strider)",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-1000018993",
-    "titulo": "Estágio em Design de Interiores para Imóveis de Temporada",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gupy-12673494",
-    "titulo": "Estágio em Compras | Curitiba",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "rok-1137381",
-    "titulo": "Marketing Student Assistant",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12678379",
-    "titulo": "Estágio em Operação e Manutenção - Logística/Administração",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "messergases:estagionaareacomercialprevendasativojundiaisp",
-    "titulo": "Estágio na área Comercial (Pré-vendas ativo) - Jundiaí/SP",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
     "id": "delinea:staffsoftwaredevelopmentengineersdm",
     "titulo": "Staff Software Development Engineer SDM",
     "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1137062",
-    "titulo": "DESARROLLADOR FULL STACK",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1136987",
-    "titulo": "Consultant Implementation Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "grupojca:estagioemrhcomfocoemgestaoestrategicadepessoassaopaulo",
-    "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - São Paulo",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "gupy-12678457",
-    "titulo": "Programa de Estágio em Pedagogia 2027 | Vem para a Rede!✨🚀",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
-  },
-  {
-    "id": "sem_empresa:bd97",
-    "titulo": "[Remoto] PL Software Engineer - GitTalent",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "benzinga:aiengineerdataapis",
-    "titulo": "AI Engineer Data APIs",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "clera:javadeveloper",
-    "titulo": "Java Developer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12680078",
-    "titulo": "Programa de Estágio - Bocaina-SP",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
-  },
-  {
-    "id": "gupy-12679873",
-    "titulo": "Estágio em Social Media | Comunicação",
-    "capturado": "2026-10-06T00:27:35.715858387Z"
   },
   {
     "id": "in-7db9b1f82a00c",
@@ -555,68 +550,83 @@
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "gupy-12678054",
-    "titulo": "3000 - Estágio Comercial - Agência Empresarial Mafra/SC",
+    "id": "gupy-12679224",
+    "titulo": "ESTÁGIO - MARKETING - JPGA",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "gupy-12684885",
+    "titulo": "Estágio - Marketing | Sicredi Medicred - Curitiba",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "programadeestagiomrvco:estagioemengenhariacivilproducaoearquiteturareservadamataba",
+    "titulo": "Estágio em engenharia Civil, Produção e Arquitetura - Reserva da Mata | BA",
     "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
-    "id": "yooli:fulltimedevpositionreactandrest",
-    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "redhouseinternationalschool:elaspecialisttraineeestagioemletrasperdizes2027",
+    "titulo": "ELA Specialist Trainee (Estágio em Letras) - Perdizes (2027)",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
-    "id": "rok-1135788",
-    "titulo": "Licensed Customer Service Representative",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "autoforce:estagioemdesign",
+    "titulo": "Estágio em Design",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
   },
   {
-    "id": "gh-backend-br-vagas-5556670583",
+    "id": "sem_empresa:8a93",
     "titulo": "[Remoto] Lead Database \u0026 Data Platform Engineer (Strider)",
     "capturado": "2026-10-04T01:24:35.9579616-03:00"
   },
   {
-    "id": "estagioaurora:estagiosuperiornaoobrigatorio",
-    "titulo": "Estágio Superior Não Obrigatório",
+    "id": "gupy-12625620",
+    "titulo": "Estágio em Engenharia Civil - Obra Teça",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "gupy-12671675",
+    "titulo": "Estágio Comercial",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "raizen:programadeestagiobocainasp",
+    "titulo": "Programa de Estágio - Bocaina-SP",
     "capturado": "2026-10-06T00:27:35.715858387Z"
   },
   {
-    "id": "sem_empresa:4718",
-    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "construmarket:estagiocomercial",
+    "titulo": "Estágio Comercial",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
-    "id": "rok-1137374",
-    "titulo": "Quality Dispense Technician North",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "redeverbitadeeducacao:estagiofinanceiromatriz",
+    "titulo": "Estágio Financeiro - Matriz",
+    "capturado": "2026-10-05T18:55:36.639999177Z"
   },
   {
-    "id": "rok-1137400",
-    "titulo": "Golang Kubernetes Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "ushunger:spring2027graphicdesignprintproductionestagio",
+    "id": "in-4ff886e756543",
     "titulo": "Spring 2027 Graphic Design \u0026 Print Production Intern",
     "capturado": "2026-10-04T01:24:35.9579616-03:00"
   },
   {
-    "id": "enterprise:summer2027managementtraineesalesestagioshipspokane",
-    "titulo": "Summer 2027 Management Trainee Sales Internship - Spokane",
+    "id": "nidecglobalappliance:estagioemplanejamentoecontroledaproducaopcp",
+    "titulo": "Estágio em Planejamento e Controle da Produção PCP",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "in-58ce60b266dea",
+    "titulo": "Summer 2027 Management Trainee Sales Internship - Anchorage",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "sleek:jrpayrollassistant",
-    "titulo": "Junior Payroll Assistant",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "gupy-12680554",
+    "titulo": "Estágio | Administração Financeira",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
   },
   {
-    "id": "gupy-12671822",
-    "titulo": "Estágio em Direito | Securitário",
-    "capturado": "2026-10-04T22:03:42.858448718Z"
-  },
-  {
-    "id": "wwr-c69758c26215",
-    "titulo": "Backend Engineer, IAM",
+    "id": "rok-1137381",
+    "titulo": "Marketing Student Assistant",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
@@ -625,38 +635,108 @@
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "empireassets:jrcryptoanalysttrader",
-    "titulo": "Junior Crypto Analyst \u0026 Trader",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
     "id": "gupy-12671341",
     "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - Niterói",
     "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
-    "id": "querosermercantil:estagioadministracaofinanceira",
-    "titulo": "Estágio | Administração Financeira",
+    "id": "mideacarrier:estagioemsupplychain",
+    "titulo": "Estágio em Supply Chain",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "gupy-12684197",
+    "titulo": "Estágio em Planejamento e Controle da Produção PCP",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "bateriasmoura:estagiobelempa",
+    "titulo": "Estágio - Belém/PA",
     "capturado": "2026-10-06T00:27:35.715858387Z"
   },
   {
-    "id": "riostays:estagioemdesigndeinterioresparaimoveisdetemporada",
+    "id": "gh-backend-br-vagas-5330541757",
+    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1137408",
+    "titulo": "Software Deployment Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "wwr-c69758c26215",
+    "titulo": "Backend Engineer, IAM",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "michelinconnectedfleetprogramasdedesenvolvimento:estagioemqualidadeoperacional",
+    "titulo": "Estágio em Qualidade Operacional",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "sem_empresa:f6ec",
+    "titulo": "[Remoto] Back-end Java  developer - USD",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "bateriasmoura:estagioadministrativofinanceirorecifepe",
+    "titulo": "Estágio Administrativo Financeiro | Recife - PE",
+    "capturado": "2026-10-04T22:03:42.858448718Z"
+  },
+  {
+    "id": "wwr-24899f43953c",
+    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "copenhagenoptimization:marketingstudentassistant",
+    "titulo": "Marketing Student Assistant",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12668123",
+    "titulo": "ESTÁGIO EM MATEMÁTICA",
+    "capturado": "2026-10-06T00:27:35.715858387Z"
+  },
+  {
+    "id": "gupy-1000018993",
     "titulo": "Estágio em Design de Interiores para Imóveis de Temporada",
     "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
-    "id": "gupy-12671636",
-    "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - São Paulo",
+    "id": "programadeestagiococacolaandina:estagiomarketingjpga",
+    "titulo": "ESTÁGIO - MARKETING - JPGA",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "empresanoprogramathor:jrfullstackdeveloper",
+    "titulo": "Junior Fullstack Developer",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "programadeestagioteconsuape:estagioemdesenvolvimentodepessoas",
+    "titulo": "ESTÁGIO EM DESENVOLVIMENTO DE PESSOAS",
+    "capturado": "2026-10-06T16:20:54.450663797Z"
+  },
+  {
+    "id": "grupojca:estagioemrhcomfocoemgestaoestrategicadepessoasniteroi",
+    "titulo": "Estágio em RH com foco em Gestão Estratégica de Pessoas - Niterói",
     "capturado": "2026-10-04T22:03:42.858448718Z"
   },
   {
-    "id": "gupy-12678700",
-    "titulo": "Estágio - Arquitetura e Urbanismo",
-    "capturado": "2026-10-05T18:55:36.639999177Z"
+    "id": "enterprise:summer2027managementtraineesalesestagioshipspokane",
+    "titulo": "Summer 2027 Management Trainee Sales Internship - Spokane",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "gupy-12679859",
-    "titulo": "Estágio Superior Não Obrigatório",
+    "id": "viadeacesso:estagioemadministracaodeempresascremesp",
+    "titulo": "Estágio em Administração de Empresas - CREMESP",
+    "capturado": "2026-10-05T06:02:23.706724436Z"
+  },
+  {
+    "id": "jesuitas:estagioeminformaticaeducacional",
+    "titulo": "Estágio em Informática Educacional",
     "capturado": "2026-10-06T00:27:35.715858387Z"
   }
 ]
