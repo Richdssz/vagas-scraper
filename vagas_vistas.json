@@ -1,88 +1,23 @@
 [
   {
-    "id": "in-c8184d4901d9c",
-    "titulo": "Software Engineer I",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "gh-qa-brasil-vagas-4335924636",
-    "titulo": "[Brasília] QA Jr na Devvo Tecnologia",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "empresanoprogramathor:jrfullstackdeveloper",
-    "titulo": "Junior Fullstack Developer",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "rok-1137387",
-    "titulo": "Software Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gh-frontendbr-vagas-5746322825",
-    "titulo": "[Remoto] Full-stack Engineer React.js • UX Design • Node.js(Strider)",
-    "capturado": "2026-10-09T22:42:12.2376331-03:00"
-  },
-  {
-    "id": "in-ad076245e1eef",
-    "titulo": "IT Internship - Spring 2027",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "gupy-12567947",
-    "titulo": "Estágio em TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "confidencial430:estagioti",
-    "titulo": "Estágio TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "agronegocio:estagiotisistemas",
-    "titulo": "Estágio TI - (Sistemas)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12073887",
-    "titulo": "Grupo RPN | Estágio em TI (Suporte) - Americana/SP",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "altardstate:spring2027ithelpdeskestagio",
-    "titulo": "Spring 2027 IT Help Desk Intern",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "rok-1137420",
-    "titulo": "Frontend Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
     "id": "ushunger:spring2027graphicdesignprintproductionestagio",
     "titulo": "Spring 2027 Graphic Design \u0026 Print Production Intern",
     "capturado": "2026-10-04T01:24:35.9579616-03:00"
   },
   {
-    "id": "rok-1137427",
-    "titulo": "Software Engineer",
+    "id": "sem_empresa:4718",
+    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "gupy-12699284",
-    "titulo": "ESTÁGIO EM TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+    "id": "gh-backend-br-vagas-5556737253",
+    "titulo": "[Remoto] Back-end developer Net- (Strider)",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
   },
   {
-    "id": "gupy-12692056",
-    "titulo": "Desenvolvedor Full Stack java - Junior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-10070627",
-    "titulo": "Banco de Talentos - TI - Estágios e Efetivos",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+    "id": "sem_empresa:a73e",
+    "titulo": "[Remoto] Back-end developer Net- (Strider)",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
   },
   {
     "id": "administradorderedes:devadesoftwarejrnetpythonejavascriptbahia",
@@ -90,44 +25,29 @@
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "choicehotelsinternational:dev1guestloyaltydomain",
-    "titulo": "Software Engineer 1 - Guest \u0026 Loyalty Domain",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+    "id": "rok-1136569",
+    "titulo": "Software Engineer II Golang",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "in-faaa893b7f57e",
-    "titulo": "Associate Software Engineer- Java",
+    "id": "gruporpn:gruporpnestagioemtisuporteamericanasp",
+    "titulo": "Grupo RPN | Estágio em TI (Suporte) - Americana/SP",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gh-backend-br-vagas-5316344098",
+    "titulo": "[Remoto] Back-end Java  developer - USD",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "enerfab:itestagioshipspring2027",
+    "titulo": "IT Internship - Spring 2027",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
     "id": "generalmotors:devdatadevingandcloudplatformsearlycareers",
     "titulo": "Software Engineer, Data Software Engineering and Cloud Platforms, Early Careers",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "ecogen:estagioemtihelpdesk",
-    "titulo": "Estágio em TI (Help Desk)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "pgt-035a92e8595a",
-    "titulo": "Junior Fullstack Developer",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "skillconsultoriaempresarial:devwebjrbelohorizontemg",
-    "titulo": "Desenvolvedor Web Júnior - Belo Horizonte/MG",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "rok-1137417",
-    "titulo": "Software Developer Security Analytics",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12699603",
-    "titulo": "Desenvolvedor Web Júnior - Belo Horizonte/MG",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
     "id": "smarttravel:pessoadevamobilejr",
@@ -140,53 +60,48 @@
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
-    "id": "carreirassoftexpert:devafullstackjrphpreact",
-    "titulo": "Desenvolvedor(a) Full Stack Júnior (PHP/React)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "in-7c7be78deae13",
-    "titulo": "Spring 2027 IT Help Desk Intern",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "in-4ff886e756543",
-    "titulo": "Spring 2027 Graphic Design \u0026 Print Production Intern",
-    "capturado": "2026-10-04T01:24:35.9579616-03:00"
-  },
-  {
-    "id": "gupy-12601484",
-    "titulo": "Desenvolvedor(a) de Software Júnior | .NET, Python e JavaScript (Bahia)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12676663",
-    "titulo": "Pessoa Desenvolvedora Fullstack Júnior (Presencial/BH) (Vaga afirmativa para Mulheres)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "venhasersanguelaranja:devfullstackjavajr",
-    "titulo": "Desenvolvedor Full Stack java - Junior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
     "id": "estagioaurora:estagiosuperiornaoobrigatorioti",
     "titulo": "Estágio Superior Não Obrigatório - TI",
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "netjets:devassociatenjus",
+    "id": "sem_empresa:8a93",
+    "titulo": "[Remoto] Lead Database \u0026 Data Platform Engineer (Strider)",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
+  },
+  {
+    "id": "in-faaa893b7f57e",
+    "titulo": "Associate Software Engineer- Java",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "in-de7de6afa9209",
     "titulo": "Software Engineer, Associate (NJUS)",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
-    "id": "sem_empresa:4718",
-    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
+    "id": "pgt-035a92e8595a",
+    "titulo": "Junior Fullstack Developer",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
   },
   {
-    "id": "reisystems:associatedevjava",
-    "titulo": "Associate Software Engineer- Java",
+    "id": "gupy-12693024",
+    "titulo": "Estágio Superior Não Obrigatório - TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "pgt-55d2214cea49",
+    "titulo": "Desenvolvedor(a) Full Stack Júnior — React e TypeScriptNOVA",
+    "capturado": "2026-10-09T22:42:12.2376331-03:00"
+  },
+  {
+    "id": "gh-backend-br-vagas-5780296046",
+    "titulo": "[Remoto ou Híbrido - São Paulo/SP] Full Stack Developer - Cogfy",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
+  },
+  {
+    "id": "in-cf40f472dd3db",
+    "titulo": "Software Engineer, Data Software Engineering and Cloud Platforms, Early Careers",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
@@ -195,78 +110,123 @@
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
+    "id": "in-ad076245e1eef",
+    "titulo": "IT Internship - Spring 2027",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "skillconsultoriaempresarial:devwebjrbelohorizontemg",
+    "titulo": "Desenvolvedor Web Júnior - Belo Horizonte/MG",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "grupocev:estagioemti",
+    "titulo": "ESTÁGIO EM TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "in-e1ac60bc8a3d2",
+    "titulo": "Software Engineer, Intern (Summer 2027) - US",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "consumerdirectcarenetwork:devi",
+    "titulo": "Software Engineer I",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "gupy-12060018",
+    "titulo": "Desenvolvedor(a) de Software Júnior | Full-Stack | Produtos Digitais I Vila Olímpia - SP I Híbrido",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "isasaude:devjr",
+    "titulo": "Desenvolvedor Junior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "rok-1137417",
+    "titulo": "Software Developer Security Analytics",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
     "id": "reddit:backendengineeriam",
     "titulo": "Backend Engineer, IAM",
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "kpisolutions:softwaredeploymentengineer",
-    "titulo": "Software Deployment Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "wwr-24899f43953c",
-    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "rok-1137408",
-    "titulo": "Software Deployment Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12416733",
-    "titulo": "Estágio Compras - (TI)",
+    "id": "gupy-12584540",
+    "titulo": "Estágio TI - (Sistemas)",
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "rok-1136569",
-    "titulo": "Software Engineer II Golang",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "spatialfrontinc:associatesoftwaredeveloperrecentgraduates",
-    "titulo": "Associate Software Developer — Recent Graduates",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "helborempreendimentossa:programadeestagiosuportedeti",
-    "titulo": "Programa de Estágio - Suporte de TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "sem_empresa:4c1b",
-    "titulo": "docs: add openings.dev community page",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12693024",
-    "titulo": "Estágio Superior Não Obrigatório - TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "bjak:frontendengineer",
-    "titulo": "Frontend Engineer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "sem_empresa:14f0",
-    "titulo": "[Remoto] Frontend Engineer @Botcity",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "point:associatedev",
+    "id": "in-a850fb00670de",
     "titulo": "Associate Software Engineer",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
-    "id": "in-795d8f6b46351",
-    "titulo": "Software Engineer I",
+    "id": "gh-backend-br-vagas-5303971679",
+    "titulo": "[Remoto] PL Software Engineer - GitTalent",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12383448",
+    "titulo": "ESTÁGIO EM TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12699284",
+    "titulo": "ESTÁGIO EM TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12692056",
+    "titulo": "Desenvolvedor Full Stack java - Junior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "sem_empresa:bd97",
+    "titulo": "[Remoto] PL Software Engineer - GitTalent",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-11832006",
+    "titulo": "Desenvolvedor(a) RPA Júnior - Volkswagen Blumenau",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "devvo:brasiliaqajrnadevvotecnologia",
+    "titulo": "[Brasília] QA Jr na Devvo Tecnologia",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "netjets:devassociatenjus",
+    "titulo": "Software Engineer, Associate (NJUS)",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
-    "id": "gupy-12628096",
+    "id": "somosbhs:pessoadevafullstackjrpresencialbhvagaafirmativaparamulheres",
+    "titulo": "Pessoa Desenvolvedora Fullstack Júnior (Presencial/BH) (Vaga afirmativa para Mulheres)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12378629",
+    "titulo": "Analista Desenvolvedor Java Júnior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "sem_empresa:b2eb",
+    "titulo": "[Remoto] Full-stack Engineer React.js • UX Design • Node.js(Strider)",
+    "capturado": "2026-10-09T22:42:12.2376331-03:00"
+  },
+  {
+    "id": "carreirassoftexpert:devafullstackjrphpreact",
     "titulo": "Desenvolvedor(a) Full Stack Júnior (PHP/React)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12416733",
+    "titulo": "Estágio Compras - (TI)",
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
@@ -275,29 +235,49 @@
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "pradoluxindustriaecomercio:bancodetalentostiestagioseefetivos",
-    "titulo": "Banco de Talentos - TI - Estágios e Efetivos",
+    "id": "gh-backend-br-vagas-5330541757",
+    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "redmimicry:softwaredevelopersecurityanalytics",
+    "titulo": "Software Developer Security Analytics",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "in-2275eb39f3801",
+    "titulo": "Associate Software Engineer",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "emonicsllc:associatedev",
+    "titulo": "Associate Software Engineer",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "bjak:frontendengineer",
+    "titulo": "Frontend Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12506875",
+    "titulo": "Programa de Estágio - Suporte de TI",
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "gupy-12670628",
-    "titulo": "Estágio Nível Universitário - TI | Salvador/BA",
+    "id": "losangelescapitalmanagement:devi",
+    "titulo": "Software Engineer I",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "venhasersanguelaranja:devfullstackjavajr",
+    "titulo": "Desenvolvedor Full Stack java - Junior",
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
     "id": "sem_empresa:f6ec",
     "titulo": "[Remoto] Back-end Java  developer - USD",
     "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gh-backend-br-vagas-5330541757",
-    "titulo": "[Remoto] Back-end Engineer Node.js - Strider",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "petrobahia:estagioniveluniversitariotisalvadorba",
-    "titulo": "Estágio Nível Universitário - TI | Salvador/BA",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
     "id": "sodramar:estagioemti",
@@ -310,214 +290,9 @@
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "grupocev:estagioemti",
-    "titulo": "ESTÁGIO EM TI",
+    "id": "gupy-12670628",
+    "titulo": "Estágio Nível Universitário - TI | Salvador/BA",
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12543590",
-    "titulo": "Desenvolvedor(a) Full Stack Júnior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "clera:javadeveloper",
-    "titulo": "Java Developer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "agronegocio:estagiocomprasti",
-    "titulo": "Estágio Compras - (TI)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-10819920",
-    "titulo": "Estágio TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gruporpn:gruporpnestagioemtisuporteamericanasp",
-    "titulo": "Grupo RPN | Estágio em TI (Suporte) - Americana/SP",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "somosbhs:pessoadevafullstackjrpresencialbhvagaafirmativaparamulheres",
-    "titulo": "Pessoa Desenvolvedora Fullstack Júnior (Presencial/BH) (Vaga afirmativa para Mulheres)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "yooli:fulltimedevpositionreactandrest",
-    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12378629",
-    "titulo": "Analista Desenvolvedor Java Júnior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12436826",
-    "titulo": "Desenvolvedor Junior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "stone:deviigolang",
-    "titulo": "Software Engineer II Golang",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "sem_empresa:bd97",
-    "titulo": "[Remoto] PL Software Engineer - GitTalent",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "claro:devafullstackjr",
-    "titulo": "Desenvolvedor(a) Full Stack Júnior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "in-de7de6afa9209",
-    "titulo": "Software Engineer, Associate (NJUS)",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "gupy-12589901",
-    "titulo": "Analista Desenvolvedor Júnior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "in-e1ac60bc8a3d2",
-    "titulo": "Software Engineer, Intern (Summer 2027) - US",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "andradegutierrez:estagioemti",
-    "titulo": "Estágio em TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "redmimicry:softwaredevelopersecurityanalytics",
-    "titulo": "Software Developer Security Analytics",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12170231",
-    "titulo": "Estágio em TI (Help Desk)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gh-qa-brasil-vagas-5286276284",
-    "titulo": "docs: add openings.dev community page",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12584540",
-    "titulo": "Estágio TI - (Sistemas)",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "in-22812c03adc69",
-    "titulo": "Software Engineer 1 - Guest \u0026 Loyalty Domain",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "in-2275eb39f3801",
-    "titulo": "Associate Software Engineer",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "in-a850fb00670de",
-    "titulo": "Associate Software Engineer",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "rok-1136188",
-    "titulo": "Java Developer",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "grupobreitkopf:devarpajrvolkswagenblumenau",
-    "titulo": "Desenvolvedor(a) RPA Júnior - Volkswagen Blumenau",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "doordash:devestagiosummer2027us",
-    "titulo": "Software Engineer, Intern (Summer 2027) - US",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "consumerdirectcarenetwork:devi",
-    "titulo": "Software Engineer I",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "gupy-12506875",
-    "titulo": "Programa de Estágio - Suporte de TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gh-backend-br-vagas-5316344098",
-    "titulo": "[Remoto] Back-end Java  developer - USD",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "gupy-12060018",
-    "titulo": "Desenvolvedor(a) de Software Júnior | Full-Stack | Produtos Digitais I Vila Olímpia - SP I Híbrido",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "pgt-55d2214cea49",
-    "titulo": "Desenvolvedor(a) Full Stack Júnior — React e TypeScriptNOVA",
-    "capturado": "2026-10-09T22:42:12.2376331-03:00"
-  },
-  {
-    "id": "gupy-11832006",
-    "titulo": "Desenvolvedor(a) RPA Júnior - Volkswagen Blumenau",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "enerfab:itestagioshipspring2027",
-    "titulo": "IT Internship - Spring 2027",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "losangelescapitalmanagement:devi",
-    "titulo": "Software Engineer I",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "devvo:brasiliaqajrnadevvotecnologia",
-    "titulo": "[Brasília] QA Jr na Devvo Tecnologia",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "grupoabainfra:analistadevjr",
-    "titulo": "Analista Desenvolvedor Júnior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gh-backend-br-vagas-5303971679",
-    "titulo": "[Remoto] PL Software Engineer - GitTalent",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
-  },
-  {
-    "id": "empresanoprogramathor:devafullstackjrreactetypescriptnova",
-    "titulo": "Desenvolvedor(a) Full Stack Júnior — React e TypeScriptNOVA",
-    "capturado": "2026-10-09T22:42:12.2376331-03:00"
-  },
-  {
-    "id": "isasaude:devjr",
-    "titulo": "Desenvolvedor Junior",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "gupy-12383448",
-    "titulo": "ESTÁGIO EM TI",
-    "capturado": "2026-10-09T22:48:57.0148826-03:00"
-  },
-  {
-    "id": "wwr-c69758c26215",
-    "titulo": "Backend Engineer, IAM",
-    "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
     "id": "mirantis:dev",
@@ -525,18 +300,43 @@
     "capturado": "2026-10-04T03:41:41.489231392Z"
   },
   {
-    "id": "in-cf40f472dd3db",
-    "titulo": "Software Engineer, Data Software Engineering and Cloud Platforms, Early Careers",
+    "id": "sem_empresa:74f1",
+    "titulo": "[Remoto ou Híbrido - São Paulo/SP] Full Stack Developer - Cogfy",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
+  },
+  {
+    "id": "rok-1137387",
+    "titulo": "Software Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "agronegocio:estagiotisistemas",
+    "titulo": "Estágio TI - (Sistemas)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-10070627",
+    "titulo": "Banco de Talentos - TI - Estágios e Efetivos",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "rok-1137408",
+    "titulo": "Software Deployment Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "spatialfrontinc:associatesoftwaredeveloperrecentgraduates",
+    "titulo": "Associate Software Developer — Recent Graduates",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "pradoluxindustriaecomercio:bancodetalentostiestagioseefetivos",
+    "titulo": "Banco de Talentos - TI - Estágios e Efetivos",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
     "id": "cuattro:devadesoftwarejrfullstackprodutosdigitaisivilaolimpiaspihibrido",
     "titulo": "Desenvolvedor(a) de Software Júnior | Full-Stack | Produtos Digitais I Vila Olímpia - SP I Híbrido",
-    "capturado": "2026-10-09T22:50:22.4709855-03:00"
-  },
-  {
-    "id": "emonicsllc:associatedev",
-    "titulo": "Associate Software Engineer",
     "capturado": "2026-10-09T22:50:22.4709855-03:00"
   },
   {
@@ -545,8 +345,248 @@
     "capturado": "2026-10-09T22:48:57.0148826-03:00"
   },
   {
-    "id": "sem_empresa:b2eb",
+    "id": "choicehotelsinternational:dev1guestloyaltydomain",
+    "titulo": "Software Engineer 1 - Guest \u0026 Loyalty Domain",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "agronegocio:estagiocomprasti",
+    "titulo": "Estágio Compras - (TI)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gh-backend-br-vagas-5556670583",
+    "titulo": "[Remoto] Lead Database \u0026 Data Platform Engineer (Strider)",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
+  },
+  {
+    "id": "gh-qa-brasil-vagas-4335924636",
+    "titulo": "[Brasília] QA Jr na Devvo Tecnologia",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12589901",
+    "titulo": "Analista Desenvolvedor Júnior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "in-22812c03adc69",
+    "titulo": "Software Engineer 1 - Guest \u0026 Loyalty Domain",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "sem_empresa:df17",
+    "titulo": "[Remoto] Full-stack Engineer (Net+React)",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
+  },
+  {
+    "id": "in-4ff886e756543",
+    "titulo": "Spring 2027 Graphic Design \u0026 Print Production Intern",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "yooli:fulltimedevpositionreactandrest",
+    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "empresanoprogramathor:jrfullstackdeveloper",
+    "titulo": "Junior Fullstack Developer",
+    "capturado": "2026-10-04T01:24:35.9579616-03:00"
+  },
+  {
+    "id": "gh-frontendbr-vagas-5746322825",
     "titulo": "[Remoto] Full-stack Engineer React.js • UX Design • Node.js(Strider)",
     "capturado": "2026-10-09T22:42:12.2376331-03:00"
+  },
+  {
+    "id": "helborempreendimentossa:programadeestagiosuportedeti",
+    "titulo": "Programa de Estágio - Suporte de TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "sem_empresa:4c1b",
+    "titulo": "docs: add openings.dev community page",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12628096",
+    "titulo": "Desenvolvedor(a) Full Stack Júnior (PHP/React)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "claro:devafullstackjr",
+    "titulo": "Desenvolvedor(a) Full Stack Júnior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "grupobreitkopf:devarpajrvolkswagenblumenau",
+    "titulo": "Desenvolvedor(a) RPA Júnior - Volkswagen Blumenau",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "clera:javadeveloper",
+    "titulo": "Java Developer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gh-qa-brasil-vagas-5286276284",
+    "titulo": "docs: add openings.dev community page",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "grupoabainfra:analistadevjr",
+    "titulo": "Analista Desenvolvedor Júnior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gh-backend-br-vagas-4518401903",
+    "titulo": "[Remoto] Full-stack Engineer (Net+React)",
+    "capturado": "2026-10-10T06:12:18.676380198Z"
+  },
+  {
+    "id": "in-795d8f6b46351",
+    "titulo": "Software Engineer I",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "gupy-12170231",
+    "titulo": "Estágio em TI (Help Desk)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "doordash:devestagiosummer2027us",
+    "titulo": "Software Engineer, Intern (Summer 2027) - US",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "in-c8184d4901d9c",
+    "titulo": "Software Engineer I",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "gupy-12073887",
+    "titulo": "Grupo RPN | Estágio em TI (Suporte) - Americana/SP",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12601484",
+    "titulo": "Desenvolvedor(a) de Software Júnior | .NET, Python e JavaScript (Bahia)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "reisystems:associatedevjava",
+    "titulo": "Associate Software Engineer- Java",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "wwr-24899f43953c",
+    "titulo": "FULL TIME: Software Engineer Position - React and Rest",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-10819920",
+    "titulo": "Estágio TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "stone:deviigolang",
+    "titulo": "Software Engineer II Golang",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "empresanoprogramathor:devafullstackjrreactetypescriptnova",
+    "titulo": "Desenvolvedor(a) Full Stack Júnior — React e TypeScriptNOVA",
+    "capturado": "2026-10-09T22:42:12.2376331-03:00"
+  },
+  {
+    "id": "altardstate:spring2027ithelpdeskestagio",
+    "titulo": "Spring 2027 IT Help Desk Intern",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "ecogen:estagioemtihelpdesk",
+    "titulo": "Estágio em TI (Help Desk)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "in-7c7be78deae13",
+    "titulo": "Spring 2027 IT Help Desk Intern",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "point:associatedev",
+    "titulo": "Associate Software Engineer",
+    "capturado": "2026-10-09T22:50:22.4709855-03:00"
+  },
+  {
+    "id": "gupy-12436826",
+    "titulo": "Desenvolvedor Junior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "andradegutierrez:estagioemti",
+    "titulo": "Estágio em TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "confidencial430:estagioti",
+    "titulo": "Estágio TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "kpisolutions:softwaredeploymentengineer",
+    "titulo": "Software Deployment Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12543590",
+    "titulo": "Desenvolvedor(a) Full Stack Júnior",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "petrobahia:estagioniveluniversitariotisalvadorba",
+    "titulo": "Estágio Nível Universitário - TI | Salvador/BA",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "rok-1137427",
+    "titulo": "Software Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "rok-1136188",
+    "titulo": "Java Developer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "wwr-c69758c26215",
+    "titulo": "Backend Engineer, IAM",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12676663",
+    "titulo": "Pessoa Desenvolvedora Fullstack Júnior (Presencial/BH) (Vaga afirmativa para Mulheres)",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "sem_empresa:14f0",
+    "titulo": "[Remoto] Frontend Engineer @Botcity",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "gupy-12699603",
+    "titulo": "Desenvolvedor Web Júnior - Belo Horizonte/MG",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
+  },
+  {
+    "id": "rok-1137420",
+    "titulo": "Frontend Engineer",
+    "capturado": "2026-10-04T03:41:41.489231392Z"
+  },
+  {
+    "id": "gupy-12567947",
+    "titulo": "Estágio em TI",
+    "capturado": "2026-10-09T22:48:57.0148826-03:00"
   }
 ]
