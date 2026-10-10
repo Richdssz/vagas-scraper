@@ -53,18 +53,15 @@ func main() {
 	}
 
 	// 2. Instancia as fontes ativas
-	termoPrincipal := "desenvolvedor"
-	if len(cfg.Filtros.TermosBusca) > 0 {
-		termoPrincipal = cfg.Filtros.TermosBusca[0]
-	}
+	termosPortais := scrapers.ResolverTermosPortais(cfg.Filtros.TermosBusca)
 
 	var listaScrapers []scrapers.Scraper
 	for _, fonte := range cfg.FontesHabilitadas {
 		switch fonte {
 		case "linkedin":
-			listaScrapers = append(listaScrapers, scrapers.NovoLinkedInScraper(termoPrincipal))
+			listaScrapers = append(listaScrapers, scrapers.NovoLinkedInScraper(termosPortais...))
 		case "gupy":
-			listaScrapers = append(listaScrapers, scrapers.NovoGupyScraper(termoPrincipal))
+			listaScrapers = append(listaScrapers, scrapers.NovoGupyScraper(termosPortais...))
 		case "backend_br":
 			listaScrapers = append(listaScrapers, scrapers.NovoGitHubScraper("backend-br/vagas", "Backend-BR"))
 		case "frontend_br":

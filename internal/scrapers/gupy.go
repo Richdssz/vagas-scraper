@@ -16,14 +16,21 @@ import (
 
 // GupyScraper extrai oportunidades do portal público da Gupy
 type GupyScraper struct {
-	termoBusca string
+	termosBusca []string
 }
 
-func NovoGupyScraper(termoBusca string) *GupyScraper {
-	if termoBusca == "" {
-		termoBusca = "desenvolvedor"
+func NovoGupyScraper(termos ...string) *GupyScraper {
+	var limpos []string
+	for _, t := range termos {
+		t = strings.TrimSpace(t)
+		if t != "" {
+			limpos = append(limpos, t)
+		}
 	}
-	return &GupyScraper{termoBusca: termoBusca}
+	if len(limpos) == 0 {
+		limpos = []string{"desenvolvedor"}
+	}
+	return &GupyScraper{termosBusca: limpos}
 }
 
 func (g *GupyScraper) Nome() string {
@@ -31,7 +38,27 @@ func (g *GupyScraper) Nome() string {
 }
 
 func (g *GupyScraper) Buscar() ([]models.Vaga, error) {
-	termo := url.QueryEscape(g.termoBusca)
+	var todasVagas []models.Vaga
+	vistos := make(map[string]bool)
+
+	for _, termo := range g.termosBusca {
+		vagasTermo, err := g.buscarPorTermo(termo)
+		if err != nil {
+			continue
+		}
+		for _, v := range vagasTermo {
+			if !vistos[v.ID] && !vistos[v.Link] {
+				vistos[v.ID] = true
+				vistos[v.Link] = true
+				todasVagas = append(todasVagas, v)
+			}
+		}
+	}
+	return todasVagas, nil
+}
+
+func (g *GupyScraper) buscarPorTermo(termoBusca string) ([]models.Vaga, error) {
+	termo := url.QueryEscape(termoBusca)
 	urlBusca := fmt.Sprintf("https://portal.gupy.io/job-search/term=%s", termo)
 
 	req, err := http.NewRequest("GET", urlBusca, nil)

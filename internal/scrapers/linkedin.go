@@ -14,14 +14,21 @@ import (
 
 // LinkedInScraper consulta a API pública para visitantes do LinkedIn
 type LinkedInScraper struct {
-	termoBusca string
+	termosBusca []string
 }
 
-func NovoLinkedInScraper(termoBusca string) *LinkedInScraper {
-	if termoBusca == "" {
-		termoBusca = "desenvolvedor"
+func NovoLinkedInScraper(termos ...string) *LinkedInScraper {
+	var limpos []string
+	for _, t := range termos {
+		t = strings.TrimSpace(t)
+		if t != "" {
+			limpos = append(limpos, t)
+		}
 	}
-	return &LinkedInScraper{termoBusca: termoBusca}
+	if len(limpos) == 0 {
+		limpos = []string{"desenvolvedor"}
+	}
+	return &LinkedInScraper{termosBusca: limpos}
 }
 
 func (l *LinkedInScraper) Nome() string {
@@ -29,7 +36,27 @@ func (l *LinkedInScraper) Nome() string {
 }
 
 func (l *LinkedInScraper) Buscar() ([]models.Vaga, error) {
-	termoEscapado := url.QueryEscape(l.termoBusca)
+	var todasVagas []models.Vaga
+	vistos := make(map[string]bool)
+
+	for _, termo := range l.termosBusca {
+		vagasTermo, err := l.buscarPorTermo(termo)
+		if err != nil {
+			continue
+		}
+		for _, v := range vagasTermo {
+			if !vistos[v.ID] && !vistos[v.Link] {
+				vistos[v.ID] = true
+				vistos[v.Link] = true
+				todasVagas = append(todasVagas, v)
+			}
+		}
+	}
+	return todasVagas, nil
+}
+
+func (l *LinkedInScraper) buscarPorTermo(termoBusca string) ([]models.Vaga, error) {
+	termoEscapado := url.QueryEscape(termoBusca)
 	apiURL := fmt.Sprintf("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=%s&location=Brasil&sortBy=DD", termoEscapado)
 
 	req, err := http.NewRequest("GET", apiURL, nil)

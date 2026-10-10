@@ -61,9 +61,11 @@ func (p *ProgramaThorScraper) Buscar() ([]models.Vaga, error) {
 			link = "https://programathor.com.br" + link
 		}
 
-		titulo := strings.TrimSpace(s.Find("h3, .cell-list-content-title").First().Text())
+		titleElem := s.Find("h3, .cell-list-content-title").First().Clone()
+		titleElem.Find(".badge, span").Remove()
+		titulo := strings.TrimSpace(titleElem.Text())
 		if titulo == "" {
-			return
+			titulo = strings.TrimSpace(s.Find("h3, .cell-list-content-title").First().Text())
 		}
 
 		empresa := strings.TrimSpace(s.Find("span[class*='company'], .cell-list-content-subtitle").First().Text())
